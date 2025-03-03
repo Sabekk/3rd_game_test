@@ -1,6 +1,7 @@
 using Newtonsoft.Json.Linq;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Gameplay.Items
@@ -10,12 +11,13 @@ namespace Gameplay.Items
 
         #region VARIABLES
 
-        private GameServerMock gameServerMock = new();
+        private GameServerMock gameServerMock;
 
         #endregion
 
         #region PROPERTIES
 
+        private CancellationTokenSource TokenSource { get; set; }
         public GameServerMock GameServerMock
         {
             get
@@ -29,15 +31,28 @@ namespace Gameplay.Items
         #endregion
 
 
+        #region UNITY_METHODS
+
+        private void OnDestroy()
+        {
+            TokenSource?.Cancel();
+            TokenSource?.Dispose();
+        }
+
+        #endregion
+
         #region METHODS
 
-        [Button]
-        public async Task<List<Item>> DebugItems()
+        public async Task<List<Item>> GetRandomItems()
         {
             List<Item> items = new();
-            string itemsData = await GameServerMock.GetItemsAsync();
-            JObject jObjectOfItems = JObject.Parse(itemsData);
+            TokenSource = new();
+            string itemsData = await GameServerMock.GetItemsAsync(TokenSource.Token);
 
+            if (TokenSource.IsCancellationRequested == true)
+                return items;
+
+            JObject jObjectOfItems = JObject.Parse(itemsData);
             if (jObjectOfItems.TryGetValue("Items", out var jToken))
             {
                 var children = jToken.Children<JObject>();
