@@ -1,0 +1,3 @@
+SIRENIX
+Source: https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041#description
+Licence: https://odininspector.com/eula
