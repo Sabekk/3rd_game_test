@@ -1,7 +1,6 @@
 using Gameplay.Character;
 using Gameplay.Items;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gameplay.Equipment
