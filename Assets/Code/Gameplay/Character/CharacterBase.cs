@@ -1,3 +1,4 @@
+using Gameplay.Equipment;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,12 +11,16 @@ namespace Gameplay.Character
         #region VARIABLES
 
         [SerializeField, ReadOnly] private int idOfCharacterInGame;
-        [SerializeField, HideInInspector] protected List<CharacterController> controllers;
+        [SerializeField, HideInInspector] protected List<CharacterControllerBase> controllers;
         [SerializeField, HideInInspector] private bool isInitialzied;
+
+        [SerializeField, FoldoutGroup("Controllers")] private EquipmentController equipmentController;
 
         #endregion
 
         #region PROPERTIES
+
+        public EquipmentController EquipmentController => equipmentController;
 
         #endregion
 
@@ -42,7 +47,7 @@ namespace Gameplay.Character
         protected virtual void SetControllers()
         {
             controllers = new();
-
+            controllers.Add(equipmentController);
         }
 
         protected void InitializeControllers()

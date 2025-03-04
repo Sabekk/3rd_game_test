@@ -1,14 +1,16 @@
+using Gameplay.Controller.Module;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gameplay.Character
 {
-    public class CharacterController
+    public class CharacterControllerBase
     {
         #region VARIABLES
 
         [SerializeField, HideInInspector] private CharacterBase character;
+        [SerializeField, HideInInspector] protected List<ControllerModuleBase> modules;
 
         #endregion
 
@@ -25,8 +27,21 @@ namespace Gameplay.Character
             this.character = character;
         }
 
-        public virtual void CleanUp() { }
-        public virtual void OnUpdate() { }
+        public virtual void CleanUp()
+        {
+            modules.ForEach(c => c.CleanUp());
+        }
+
+        public virtual void OnUpdate()
+        {
+            modules.ForEach(c => c.OnUpdate());
+        }
+
+        public virtual void SetModules()
+        {
+            modules = new();
+        }
+
         public virtual void AttachEvents() { }
         public virtual void DetachEvents() { }
 

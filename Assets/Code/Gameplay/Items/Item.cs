@@ -1,14 +1,16 @@
 using Newtonsoft.Json.Linq;
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gameplay.Items
 {
-    public class Item : MonoBehaviour
+    public class Item : IIdEqualable
     {
         #region VARIABLES
 
+        [SerializeField, ReadOnly] private int id;
         [SerializeField] private string itemName;
         [SerializeField] private ItemCategory category;
         [SerializeField] private int rarity;
@@ -27,6 +29,7 @@ namespace Gameplay.Items
 
         public string ItemName => itemName;
         public ItemCategory Category => category;
+        public int Id => id;
         public int Rarity => rarity;
         public int Damage => damage;
         public int HealthPoints => healthPoints;
@@ -55,6 +58,11 @@ namespace Gameplay.Items
             attackSpeed = jObject.Value<int>("AttackSpeed");
             movementSpeed = jObject.Value<int>("MovementSpeed");
             luck = jObject.Value<int>("Luck");
+        }
+
+        public bool IdEquals(int id)
+        {
+            return Id == id;
         }
 
         #endregion
