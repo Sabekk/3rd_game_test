@@ -23,8 +23,9 @@ namespace Gameplay.Character.Movement
         public override void SetModules()
         {
             base.SetModules();
-            modules.Add(animatorModule);
-            modules.Add(movingModule);
+
+            modules.Add(animatorModule = new());
+            modules.Add(movingModule = new());
         }
 
         #endregion

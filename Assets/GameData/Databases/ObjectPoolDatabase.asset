@@ -12,4 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65e7970197b4c124486746260b5777e3, type: 3}
   m_Name: ObjectPoolDatabase
   m_EditorClassIdentifier: 
-  poolCategories: []
+  poolCategories:
+  - id: -435045827
+    categoryName: CharactersInGame
+    groups:
+    - groupName: Characters
+      instances:
+      - id: 1373553022
+        name: Human
+        poolObject: {fileID: 1169863767875663488, guid: a0973fb447535e048bd151004ad8c24c,
+          type: 3}
+        size: 2

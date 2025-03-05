@@ -1,4 +1,7 @@
+using Database;
+using Database.Character.Data;
 using Gameplay.Equipment;
+using ObjectPooling;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,23 +14,43 @@ namespace Gameplay.Character
         #region VARIABLES
 
         [SerializeField, ReadOnly] private int idOfCharacterInGame;
-        [SerializeField, HideInInspector] protected List<CharacterControllerBase> controllers;
-        [SerializeField, HideInInspector] private bool isInitialzied;
+        [SerializeField] protected List<CharacterControllerBase> controllers;
+        [SerializeField] private bool isInitialzied;
+        [SerializeField] private int dataId;
 
         [SerializeField, FoldoutGroup("Controllers")] private EquipmentController equipmentController;
 
         private CharacterInGame characterInGame;
+        private CharacterData data;
 
         #endregion
 
         #region PROPERTIES
+
+        public CharacterData Data
+        {
+            get
+            {
+                if (data == null)
+                    data = MainDatabases.Instance.CharacterDataDatabase.GetData(dataId);
+                return data;
+            }
+        }
 
         public CharacterInGame CharacterInGame => characterInGame;
         public EquipmentController EquipmentController => equipmentController;
 
         #endregion
 
-        protected virtual void OnUpdate()
+        #region CONSTRUCTORS
+
+        public CharacterBase() { }
+
+        #endregion
+
+        #region METHODS
+
+        public virtual void OnUpdate()
         {
             if (!isInitialzied)
                 return;
@@ -43,14 +66,36 @@ namespace Gameplay.Character
             InitializeControllers();
 
             isInitialzied = true;
-
         }
-        #region METHODS
+
+        public void SetData(CharacterData data)
+        {
+            dataId = data.Id;
+            this.data = data;
+        }
+
+        public bool TryCreateVisualization(Transform parent = null)
+        {
+            if (Data == null)
+                return false;
+
+            if (characterInGame != null)
+                return true;
+
+            characterInGame = ObjectPool.Instance.GetFromPool(Data.CharacterInGamePoolId).GetComponent<CharacterInGame>();
+            if (characterInGame != null)
+            {
+                characterInGame.transform.SetParent(parent);
+                return true;
+            }
+            else
+                return false;
+        }
 
         protected virtual void SetControllers()
         {
             controllers = new();
-            controllers.Add(equipmentController);
+            controllers.Add(equipmentController = new());
         }
 
         protected void InitializeControllers()

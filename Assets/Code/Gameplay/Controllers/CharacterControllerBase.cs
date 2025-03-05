@@ -25,6 +25,9 @@ namespace Gameplay.Character
         public virtual void Initialize(CharacterBase character)
         {
             this.character = character;
+            SetModules();
+
+            modules.ForEach(c => c.Initialize(character));
         }
 
         public virtual void CleanUp()

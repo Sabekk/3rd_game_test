@@ -39,19 +39,19 @@ namespace Gameplay.Inputs
         public void OnJump(InputAction.CallbackContext context)
         {
             if (context.performed)
-                OnJumping.Invoke();
+                OnJumping?.Invoke();
         }
 
         public void OnLookAround(InputAction.CallbackContext context)
         {
             if (!context.started)
-                OnLookInDirection.Invoke(context.ReadValue<Vector2>());
+                OnLookInDirection?.Invoke(context.ReadValue<Vector2>());
         }
 
         public void OnMovement(InputAction.CallbackContext context)
         {
             if (!context.started)
-                OnMoveInDirection.Invoke(context.ReadValue<Vector2>());
+                OnMoveInDirection?.Invoke(context.ReadValue<Vector2>());
         }
 
         #endregion

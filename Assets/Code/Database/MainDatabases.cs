@@ -1,3 +1,4 @@
+using Database.Character;
 using ObjectPooling;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ namespace Database
         #region VARIABLES
 
         [SerializeField] private ObjectPoolDatabase objectPoolDatabase;
+        [SerializeField] private CharacterDataDatabase characterDataDatabase;
 
         #endregion
 
@@ -17,6 +19,7 @@ namespace Database
         public new static MainDatabases Instance => GetInstance("Singletons/MainDatabases");
 
         public ObjectPoolDatabase ObjectPoolDatabase => objectPoolDatabase;
+        public CharacterDataDatabase CharacterDataDatabase => characterDataDatabase;
 
         #endregion
 

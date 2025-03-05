@@ -20,8 +20,8 @@ namespace Gameplay.Character
 
         protected override void SetControllers()
         {
-            controllers = new();
-            controllers.Add(movementController);
+            base.SetControllers();
+            controllers.Add(movementController = new());
         }
 
         #endregion

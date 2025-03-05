@@ -39,9 +39,9 @@ namespace Gameplay.Equipment
         {
             base.SetModules();
 
-            modules.Add(inventoryModule);
-            modules.Add(equipmentModule);
-            modules.Add(visualizationModule);
+            modules.Add(inventoryModule = new());
+            modules.Add(equipmentModule = new());
+            modules.Add(visualizationModule = new());
         }
 
 
