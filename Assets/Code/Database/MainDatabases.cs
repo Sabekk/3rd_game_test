@@ -1,3 +1,4 @@
+using ObjectPooling;
 using UnityEngine;
 
 namespace Database
@@ -7,11 +8,15 @@ namespace Database
     {
         #region VARIABLES
 
+        [SerializeField] private ObjectPoolDatabase objectPoolDatabase;
+
         #endregion
 
         #region PROPERTIES
 
         public new static MainDatabases Instance => GetInstance("Singletons/MainDatabases");
+
+        public ObjectPoolDatabase ObjectPoolDatabase => objectPoolDatabase;
 
         #endregion
 
