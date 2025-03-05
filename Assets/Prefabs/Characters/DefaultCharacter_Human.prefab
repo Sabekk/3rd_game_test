@@ -1783,6 +1783,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   capsuleCollider: {fileID: 0}
   aniamtor: {fileID: 1255771872660752458}
+  characterController: {fileID: 1255771872660752459}
 --- !u!143 &1255771872660752459
 CharacterController:
   m_ObjectHideFlags: 0

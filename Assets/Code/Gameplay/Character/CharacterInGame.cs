@@ -8,17 +8,15 @@ namespace Gameplay.Character
     {
         #region VARIABLES
 
-        [SerializeField] private Rigidbody rb;
-        [SerializeField] private CapsuleCollider capsuleCollider;
         [SerializeField] private Animator aniamtor;
+        [SerializeField] private CharacterController characterController;
 
         #endregion
 
         #region PROPERTIES
 
-        public Rigidbody Rb => rb;
-        public CapsuleCollider CapsuleCollider => capsuleCollider;
         public Animator Aniamtor => aniamtor;
+        public CharacterController CharacterController => characterController;
 
         #endregion
 

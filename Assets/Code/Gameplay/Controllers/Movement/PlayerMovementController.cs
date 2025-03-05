@@ -10,7 +10,7 @@ namespace Gameplay.Character.Movement
         #region VARIABLES
 
         [SerializeField] private PlayerAnimatorStateModule animatorModule;
-        [SerializeField] private CharacterMovingModule movingModule;
+        [SerializeField] private PlayerMovingModule movingModule;
 
         #endregion
 
