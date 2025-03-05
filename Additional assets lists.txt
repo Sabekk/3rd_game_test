@@ -1,3 +1,16 @@
 SIRENIX
 Source: https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041#description
 Licence: https://odininspector.com/eula
+
+Starter Pack - Synty POLYGON - Stylized Low Poly 3D Art
+Source: https://assetstore.unity.com/packages/essentials/tutorial-projects/starter-pack-synty-polygon-stylized-low-poly-3d-art-156819?srsltid=AfmBOopPtevPNM3QOobIJ3YKQxVGfSPHVYD8T1blJ7UXe_RpPXE6qt4R
+Licence: Extension Asset
+Restricted Asset
+The publisher has designated this as a Restricted Asset under Section 2.2.2 of the Asset Store EULA. Specifically, the publisher added the following restrictions:
+
+END USER may not monetize this Asset in an application whose primary purpose is to create user-generated content. (Metaverse)
+
+END USER may not incorporate the Asset into a product whose primary purpose is to enable the minting and exchange of non-fungible tokens.
+
+Extension Asset
+One license required for each individual user.
