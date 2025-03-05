@@ -16,10 +16,13 @@ namespace Gameplay.Character
 
         [SerializeField, FoldoutGroup("Controllers")] private EquipmentController equipmentController;
 
+        private CharacterInGame characterInGame;
+
         #endregion
 
         #region PROPERTIES
 
+        public CharacterInGame CharacterInGame => characterInGame;
         public EquipmentController EquipmentController => equipmentController;
 
         #endregion

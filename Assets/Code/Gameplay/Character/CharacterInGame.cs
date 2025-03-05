@@ -10,6 +10,7 @@ namespace Gameplay.Character
 
         [SerializeField] private Rigidbody rb;
         [SerializeField] private CapsuleCollider capsuleCollider;
+        [SerializeField] private Animator aniamtor;
 
         #endregion
 
@@ -17,6 +18,7 @@ namespace Gameplay.Character
 
         public Rigidbody Rb => rb;
         public CapsuleCollider CapsuleCollider => capsuleCollider;
+        public Animator Aniamtor => aniamtor;
 
         #endregion
 
