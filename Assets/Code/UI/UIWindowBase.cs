@@ -1,4 +1,5 @@
 using ObjectPooling;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,12 @@ namespace UI.Window
 {
     public abstract class UIWindowBase : MonoBehaviour, IPoolable
     {
+        #region ACTIONS
+
+        public event Action OnCloseWindow;
+
+        #endregion
+
         #region VARIABLES
 
         #endregion
@@ -41,6 +48,11 @@ namespace UI.Window
         public virtual void CleanUp()
         {
             InitializingDetachEvents();
+        }
+
+        public void CloseFromUI()
+        {
+            OnCloseWindow?.Invoke();
         }
 
         public void AssignPoolable(PoolObject poolable)

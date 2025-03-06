@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCanvas: {fileID: 6685443066184229050}
-  defaultUIWindowPoolCategory: UIWindow
+  defaultUIWindowPoolCategory: 1626339135
 --- !u!1 &6034071947174169357
 GameObject:
   m_ObjectHideFlags: 0

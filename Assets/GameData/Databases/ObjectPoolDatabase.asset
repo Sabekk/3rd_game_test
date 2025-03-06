@@ -33,3 +33,13 @@ MonoBehaviour:
         poolObject: {fileID: 4263427378441311600, guid: feb5251a787497e44b35efeb946e27de,
           type: 3}
         size: 1
+  - id: 1626339135
+    categoryName: UIWindows
+    groups:
+    - groupName: Windows
+      instances:
+      - id: -2008946247
+        name: InventoryWindow
+        poolObject: {fileID: 8201746004194123709, guid: ffc8abdba511f044ca4f766cccbc0677,
+          type: 3}
+        size: 1

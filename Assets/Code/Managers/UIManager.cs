@@ -16,6 +16,7 @@ namespace UI
         [SerializeField, ValueDropdown(ObjectPoolDatabase.GET_POOL_CATEGORIES_METHOD)] private int defaultUIWindowPoolCategory;
 
         private List<UIWindowBase> openedWindows;
+        private UIManagerBindsListener bindsListener;
 
         #endregion
 
@@ -29,6 +30,17 @@ namespace UI
         {
             base.Awake();
             openedWindows = new();
+            bindsListener = new();
+        }
+
+        private void Start()
+        {
+            bindsListener.Initialize(this);
+        }
+
+        private void OnDestroy()
+        {
+            CleanUp();
         }
 
         #endregion
@@ -73,6 +85,8 @@ namespace UI
                 Debug.LogError($"[{GetType().Name}] Missing window type from pool {poolObject.Category} - {poolObject.Name} - {typeof(T).Name}");
                 return null;
             }
+
+            window.OnCloseWindow += CloseWindow<T>;
 
             //If is opened but for firstly
             if (openedWindows.Contains(window) && openedWindows.GetLastElement() != window)
@@ -120,10 +134,12 @@ namespace UI
                     openedWindows.Remove(window);
                 }
 
+                window.OnCloseWindow -= CloseWindow<T>;
                 window.CleanUp();
                 ObjectPool.Instance.ReturnToPool(window);
             }
         }
+
 
         public bool IsOpenened<T>() where T : UIWindowBase
         {
@@ -131,6 +147,17 @@ namespace UI
             UIWindowBase window = openedWindows.Find(x => x.GetType() == windowType);
 
             return window != null;
+        }
+
+        public void CloseAllWindow()
+        {
+            for (int i = openedWindows.Count; i >= 0; i--)
+            {
+                openedWindows[i].CleanUp();
+                ObjectPool.Instance.ReturnToPool(openedWindows[i]);
+            }
+
+            openedWindows.Clear();
         }
 
         private PoolObject GetPoolWindow(int poolCategory, int poolWindowId)
@@ -157,6 +184,12 @@ namespace UI
             }
 
             return poolObject;
+        }
+
+        private void CleanUp()
+        {
+            CloseAllWindow();
+            bindsListener.CleanUp();
         }
 
         #endregion
