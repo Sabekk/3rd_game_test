@@ -36,7 +36,7 @@ namespace Gameplay.Cameras
 
         private FollowingCamera TryGetCamera(int cameraId)
         {
-            return ObjectPool.Instance.GetFromPool(cameraId).GetComponent<FollowingCamera>();
+            return ObjectPool.Instance.GetFromPool(cameraId, -1).GetComponent<FollowingCamera>();
         }
 
         #endregion

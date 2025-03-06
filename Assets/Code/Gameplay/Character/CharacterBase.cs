@@ -89,7 +89,7 @@ namespace Gameplay.Character
             if (characterInGame != null)
                 return true;
 
-            characterInGame = ObjectPool.Instance.GetFromPool(Data.CharacterInGamePoolId).GetComponent<CharacterInGame>();
+            characterInGame = ObjectPool.Instance.GetFromPool(Data.CharacterInGamePoolId, -1).GetComponent<CharacterInGame>();
             if (characterInGame != null)
             {
                 characterInGame.transform.SetParent(parent);
