@@ -1,7 +1,5 @@
 using Gameplay.Controller.Module;
 using Sirenix.OdinInspector;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gameplay.Character.Movement
@@ -11,11 +9,8 @@ namespace Gameplay.Character.Movement
         #region VARIABLES
 
         [SerializeField, FoldoutGroup("Values")] protected float walkSpeed = 4;
-        [SerializeField, FoldoutGroup("Values")] protected float runSpeed = 7;
-        [SerializeField, FoldoutGroup("Values")] protected float jumpPower = 10;
         [SerializeField, FoldoutGroup("Values")] protected float gravity = 5;
-        [SerializeField, FoldoutGroup("Values")] protected float rotationSpeed = 25;
-        [SerializeField, FoldoutGroup("Values")] protected float moveAcceleration = 0.25f;
+        [SerializeField, FoldoutGroup("Values")] protected float rotationSpeed = 10f;
 
         protected Vector2 direction = Vector3.zero;
         protected Vector2 lookDirection = Vector3.zero;
@@ -42,7 +37,7 @@ namespace Gameplay.Character.Movement
                 return;
 
             MoveCharacter();
-            //RotateCharacterByLookDirection();
+            RotateCharacterByLookDirection();
         }
 
         protected virtual void MoveCharacter()
@@ -50,7 +45,6 @@ namespace Gameplay.Character.Movement
             if (IsMoving)
             {
                 moveDirection = CharacterTransform.right * direction.x + CharacterTransform.forward * direction.y;
-                Debug.Log(moveDirection);
                 CharacterController?.Move(moveDirection * Time.deltaTime * walkSpeed);
             }
 
@@ -61,12 +55,21 @@ namespace Gameplay.Character.Movement
             }
         }
 
-        protected virtual void MoveInDirection(Vector2 direction)
+        protected virtual void RotateCharacterByLookDirection()
+        {
+            if (lookDirection != Vector2.zero)
+            {
+                Quaternion deltaRotation = Quaternion.Euler(0, lookDirection.x * rotationSpeed * Time.fixedDeltaTime, 0);
+                CharacterTransform.rotation = Quaternion.RotateTowards(CharacterTransform.rotation, deltaRotation, rotationSpeed * Time.fixedDeltaTime);
+            }
+        }
+
+        protected virtual void HandleMoveInDirection(Vector2 direction)
         {
             this.direction = direction;
         }
 
-        protected virtual void LookInDirection(Vector2 direction)
+        protected virtual void HandleLookInDirection(Vector2 direction)
         {
             this.lookDirection = direction;
         }

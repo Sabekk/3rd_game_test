@@ -1,6 +1,4 @@
-using Gameplay.Controller.Module;
 using Gameplay.Inputs;
-using UnityEngine;
 
 namespace Gameplay.Character.Movement
 {

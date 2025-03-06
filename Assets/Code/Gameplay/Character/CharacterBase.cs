@@ -3,6 +3,7 @@ using Database.Character.Data;
 using Gameplay.Equipment;
 using ObjectPooling;
 using Sirenix.OdinInspector;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,12 @@ namespace Gameplay.Character
 {
     public class CharacterBase
     {
+        #region ACTION
+
+        public event Action OnCharacterInGameCreated;
+
+        #endregion
+
         #region VARIABLES
 
         [SerializeField, ReadOnly] private int idOfCharacterInGame;
@@ -86,6 +93,7 @@ namespace Gameplay.Character
             if (characterInGame != null)
             {
                 characterInGame.transform.SetParent(parent);
+                OnCharacterInGameCreated?.Invoke();
                 return true;
             }
             else

@@ -14,6 +14,8 @@ namespace Gameplay.Character
 
         #region PROPERTIES
 
+        public PlayerMovementController MovementController => movementController;
+
         #endregion
 
         #region METHODS

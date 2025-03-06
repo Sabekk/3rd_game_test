@@ -1,8 +1,5 @@
-using Gameplay.Controller.Module;
+using Gameplay.Cameras;
 using Gameplay.Inputs;
-using Sirenix.OdinInspector;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gameplay.Character.Movement
@@ -15,6 +12,9 @@ namespace Gameplay.Character.Movement
 
         #region PROPERTIES
 
+        protected Player Player => Character as Player;
+        public FollowingCamera CharacterCamera => Player.MovementController.CameraModule.CharacterCamera;
+
         #endregion
 
         #region METHODS
@@ -24,7 +24,8 @@ namespace Gameplay.Character.Movement
             base.AttachEvents();
             if (InputManager.Instance)
             {
-                InputManager.Instance.CharacterInputs.OnMoveInDirection += MoveInDirection;
+                InputManager.Instance.CharacterInputs.OnMoveInDirection += HandleMoveInDirection;
+                InputManager.Instance.CharacterInputs.OnLookInDirection += HandleLookInDirection;
             }
         }
 
@@ -33,7 +34,25 @@ namespace Gameplay.Character.Movement
             base.DetachEvents();
             if (InputManager.Instance)
             {
-                InputManager.Instance.CharacterInputs.OnMoveInDirection -= MoveInDirection;
+                InputManager.Instance.CharacterInputs.OnMoveInDirection -= HandleMoveInDirection;
+                InputManager.Instance.CharacterInputs.OnLookInDirection -= HandleLookInDirection;
+            }
+        }
+
+        protected override void RotateCharacterByLookDirection()
+        {
+            if (CharacterCamera == null)
+                return;
+
+            if (CharacterCamera.MainCameraTransform != null && IsMoving)
+            {
+                Vector3 forward = CharacterCamera.MainCameraTransform.forward;
+                forward.y = 0;
+                if (forward.sqrMagnitude > 0.01f)
+                {
+                    Quaternion targetRotation = Quaternion.LookRotation(forward);
+                    CharacterTransform.rotation = Quaternion.Slerp(CharacterTransform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+                }
             }
         }
 

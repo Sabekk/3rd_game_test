@@ -23,3 +23,13 @@ MonoBehaviour:
         poolObject: {fileID: 1169863767875663488, guid: a0973fb447535e048bd151004ad8c24c,
           type: 3}
         size: 2
+  - id: 1595673248
+    categoryName: Camera
+    groups:
+    - groupName: FollowingCamera
+      instances:
+      - id: 109433523
+        name: CharacterCamera
+        poolObject: {fileID: 4263427378441311600, guid: feb5251a787497e44b35efeb946e27de,
+          type: 3}
+        size: 1
