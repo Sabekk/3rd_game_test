@@ -15,8 +15,11 @@ namespace Database.Character.Data
 
         //Starting values?
         [SerializeField, ReadOnly] private int id = Guid.NewGuid().GetHashCode();
-        [SerializeField] private string characterName;
-        [SerializeField, ValueDropdown(ObjectPoolDatabase.GET_POOL_CHARACTERS_IN_GAME_METHOD)] private int characterInGamePoolId;
+
+        [SerializeField, FoldoutGroup("Character settings")] private string characterName;
+        [SerializeField, FoldoutGroup("Character settings"), ValueDropdown(ObjectPoolDatabase.GET_POOL_CHARACTERS_IN_GAME_METHOD)] private int characterInGamePoolId;
+
+        [SerializeField, FoldoutGroup("Starting settings")] private int maxInventorySlots;
 
         #endregion
 
@@ -24,6 +27,7 @@ namespace Database.Character.Data
 
         public int Id => id;
         public int CharacterInGamePoolId => characterInGamePoolId;
+        public int MaxInventorySlots => maxInventorySlots;
         public string CharacterName => characterName;
 
         #endregion

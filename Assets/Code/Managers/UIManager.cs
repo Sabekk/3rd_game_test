@@ -13,7 +13,7 @@ namespace UI
         #region VARIABLES
 
         [SerializeField] private Canvas mainCanvas;
-        [SerializeField, ValueDropdown(ObjectPoolDatabase.GET_POOL_CATEGORIES_METHOD)] private int defaultUIWindowPoolCategory;
+        [SerializeField, ValueDropdown(ObjectPoolDatabase.GET_POOL_CATEGORIES_METHOD)] private int defaultUIPoolCategory;
 
         private List<UIWindowBase> openedWindows;
         private UIManagerBindsListener bindsListener;
@@ -21,6 +21,7 @@ namespace UI
         #endregion
 
         #region PROPERTIES
+        public int DefaultUIPoolCategory => defaultUIPoolCategory;
 
         #endregion
 
@@ -49,12 +50,12 @@ namespace UI
 
         public T OpenWindow<T>(int poolWindowId) where T : UIWindowBase
         {
-            return OpenWindow<T>(defaultUIWindowPoolCategory, poolWindowId);
+            return OpenWindow<T>(defaultUIPoolCategory, poolWindowId);
         }
 
         public T OpenWindow<T>(string poolWindownName) where T : UIWindowBase
         {
-            return OpenWindow<T>(defaultUIWindowPoolCategory, poolWindownName);
+            return OpenWindow<T>(defaultUIPoolCategory, poolWindownName);
         }
         public T OpenWindow<T>(int poolCategory, int poolWindowId, bool registerAsOpened = true) where T : UIWindowBase
         {
@@ -111,6 +112,7 @@ namespace UI
                     window.gameObject.SetActiveOptimize(true);
             }
 
+            window.Initialize();
             window.gameObject.transform.SetParent(mainCanvas.transform, false);
 
             return window;

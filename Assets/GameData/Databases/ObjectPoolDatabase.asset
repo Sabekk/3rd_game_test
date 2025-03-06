@@ -36,10 +36,18 @@ MonoBehaviour:
   - id: 1626339135
     categoryName: UIWindows
     groups:
-    - groupName: Windows
+    - groupName: InventoryWindow
       instances:
       - id: -2008946247
         name: InventoryWindow
         poolObject: {fileID: 8201746004194123709, guid: ffc8abdba511f044ca4f766cccbc0677,
           type: 3}
         size: 1
+      - id: 792685087
+        name: InventorySlot
+        poolObject: {fileID: 1544445963241610363, guid: d38cca08dbde8c140b2d4a5f7bf0650c,
+          type: 3}
+        size: 10
+  - id: 1629130278
+    categoryName: NewCategory
+    groups: []

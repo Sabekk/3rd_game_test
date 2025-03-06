@@ -1,3 +1,4 @@
+using Database;
 using Newtonsoft.Json.Linq;
 using Sirenix.OdinInspector;
 using System.Collections;
@@ -23,6 +24,8 @@ namespace Gameplay.Items
         [SerializeField] private int movementSpeed;
         [SerializeField] private int luck;
 
+        private Sprite icon;
+
         #endregion
 
         #region PROPERTIES
@@ -39,6 +42,15 @@ namespace Gameplay.Items
         public int AttackSpeed => attackSpeed;
         public int MovementSpeed => movementSpeed;
         public int Luck => luck;
+        public Sprite Icon
+        {
+            get
+            {
+                if (icon == null)
+                    CacheIcon();
+                return icon;
+            }
+        }
 
         #endregion
 
@@ -58,11 +70,17 @@ namespace Gameplay.Items
             attackSpeed = jObject.Value<int>("AttackSpeed");
             movementSpeed = jObject.Value<int>("MovementSpeed");
             luck = jObject.Value<int>("Luck");
+            CacheIcon();
         }
 
         public bool IdEquals(int id)
         {
             return Id == id;
+        }
+
+        private void CacheIcon()
+        {
+            icon = MainDatabases.Instance.ItemsDatabase.TryGetItemIcon(Category);
         }
 
         #endregion

@@ -1,8 +1,10 @@
+using Gameplay.Character;
 using Newtonsoft.Json.Linq;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Gameplay.Items
 {
@@ -64,6 +66,17 @@ namespace Gameplay.Items
             }
 
             return items;
+        }
+
+        [Button]
+        private async void TestRandomItems()
+        {
+            if (CharacterManager.Instance.Player == null)
+                return;
+
+            List<Item> itemsToAdd = await GetRandomItems();
+            itemsToAdd.ForEach(item => CharacterManager.Instance.Player.EquipmentController.CollectItem(item));
+            Debug.Log("Done");
         }
 
         #endregion

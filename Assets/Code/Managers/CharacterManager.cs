@@ -20,6 +20,8 @@ namespace Gameplay.Character
 
         #region PROPERTIES
 
+        public Player Player { get; set; }
+
         #endregion
 
         #region UNITY_METHODS
@@ -79,7 +81,7 @@ namespace Gameplay.Character
         [Button]
         private void CreatePlayer()
         {
-            Player player = CreateCharacter<Player>(defaultPlayerCharacterDataId);
+            Player = CreateCharacter<Player>(defaultPlayerCharacterDataId);
         }
 
         #endregion

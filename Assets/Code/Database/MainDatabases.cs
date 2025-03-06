@@ -11,6 +11,7 @@ namespace Database
 
         [SerializeField] private ObjectPoolDatabase objectPoolDatabase;
         [SerializeField] private CharacterDataDatabase characterDataDatabase;
+        [SerializeField] private ItemsDatabase itemsDatabase;
 
         #endregion
 
@@ -20,6 +21,7 @@ namespace Database
 
         public ObjectPoolDatabase ObjectPoolDatabase => objectPoolDatabase;
         public CharacterDataDatabase CharacterDataDatabase => characterDataDatabase;
+        public ItemsDatabase ItemsDatabase => itemsDatabase;
 
         #endregion
 

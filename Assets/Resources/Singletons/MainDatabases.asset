@@ -15,3 +15,4 @@ MonoBehaviour:
   objectPoolDatabase: {fileID: 11400000, guid: fac79e6b58702d34d84e60e40c6f1f85, type: 2}
   characterDataDatabase: {fileID: 11400000, guid: 53d2f8d6f292dd44caa96cdc16ab3dcc,
     type: 2}
+  itemsDatabase: {fileID: 11400000, guid: 2eaaaf1b567990948bd4772b1e7820cd, type: 2}

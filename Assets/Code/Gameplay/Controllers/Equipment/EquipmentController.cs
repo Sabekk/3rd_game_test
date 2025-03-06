@@ -76,7 +76,8 @@ namespace Gameplay.Equipment
 
         public void CollectItem(Item item)
         {
-            OnItemCollect?.Invoke(item);
+            if (InventoryModule.CanAddItem())
+                OnItemCollect?.Invoke(item);
         }
 
         public void RemoveItem(Item item)

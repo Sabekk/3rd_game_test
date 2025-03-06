@@ -1,5 +1,6 @@
 using Gameplay.Inputs;
 using UI.Window;
+using UI.Window.Inventory;
 
 namespace UI
 {
