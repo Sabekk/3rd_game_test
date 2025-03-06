@@ -1,4 +1,5 @@
 using ObjectPooling;
+using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace UI
         #region VARIABLES
 
         [SerializeField] private Canvas mainCanvas;
-        [SerializeField] private string defaultUIWindowPoolCategory = "UIWindow";
+        [SerializeField, ValueDropdown(ObjectPoolDatabase.GET_POOL_CATEGORIES_METHOD)] private int defaultUIWindowPoolCategory;
 
         private List<UIWindowBase> openedWindows;
 
@@ -34,21 +35,42 @@ namespace UI
 
         #region METHODS
 
-        public T OpenWindow<T>(string poolCategory, string poolWindowId, bool registerAsOpened = true) where T : UIWindowBase
+        public T OpenWindow<T>(int poolWindowId) where T : UIWindowBase
         {
-            PoolObject poolObject = ObjectPool.Instance.GetFromPool(poolWindowId, poolCategory);
+            return OpenWindow<T>(defaultUIWindowPoolCategory, poolWindowId);
+        }
+
+        public T OpenWindow<T>(string poolWindownName) where T : UIWindowBase
+        {
+            return OpenWindow<T>(defaultUIWindowPoolCategory, poolWindownName);
+        }
+        public T OpenWindow<T>(int poolCategory, int poolWindowId, bool registerAsOpened = true) where T : UIWindowBase
+        {
+            PoolObject poolObject = GetPoolWindow(poolCategory, poolWindowId);
 
             if (poolObject == null)
-            {
-                Debug.LogError($"[{GetType().Name}] Missing window in pool {poolCategory} - {poolWindowId}");
                 return null;
-            }
 
+            return OpenWindow<T>(poolObject, registerAsOpened);
+        }
+
+        public T OpenWindow<T>(int poolCategory, string poolWindowName, bool registerAsOpened = true) where T : UIWindowBase
+        {
+            PoolObject poolObject = GetPoolWindow(poolCategory, poolWindowName);
+
+            if (poolObject == null)
+                return null;
+
+            return OpenWindow<T>(poolObject, registerAsOpened);
+        }
+
+        public T OpenWindow<T>(PoolObject poolObject, bool registerAsOpened = true) where T : UIWindowBase
+        {
             T window = poolObject.GetComponent<T>();
 
             if (window == null)
             {
-                Debug.LogError($"[{GetType().Name}] Missing window type from pool {poolCategory} - {poolWindowId} - {typeof(T).Name}");
+                Debug.LogError($"[{GetType().Name}] Missing window type from pool {poolObject.Category} - {poolObject.Name} - {typeof(T).Name}");
                 return null;
             }
 
@@ -80,11 +102,6 @@ namespace UI
             return window;
         }
 
-        public T OpenWindow<T>(string poolWindowId) where T : UIWindowBase
-        {
-            return OpenWindow<T>(defaultUIWindowPoolCategory, poolWindowId);
-        }
-
         public void CloseWindow<T>() where T : UIWindowBase
         {
             Type windowType = typeof(T);
@@ -114,6 +131,32 @@ namespace UI
             UIWindowBase window = openedWindows.Find(x => x.GetType() == windowType);
 
             return window != null;
+        }
+
+        private PoolObject GetPoolWindow(int poolCategory, int poolWindowId)
+        {
+            PoolObject poolObject = ObjectPool.Instance.GetFromPool(poolWindowId, poolCategory);
+
+            if (poolObject == null)
+            {
+                Debug.LogError($"[{GetType().Name}] Missing window in pool {poolCategory} - {poolWindowId}");
+                return null;
+            }
+
+            return poolObject;
+        }
+
+        private PoolObject GetPoolWindow(int poolCategory, string poolWindowName)
+        {
+            PoolObject poolObject = ObjectPool.Instance.GetFromPool(poolWindowName, poolCategory);
+
+            if (poolObject == null)
+            {
+                Debug.LogError($"[{GetType().Name}] Missing window in pool {poolCategory} - {poolWindowName}");
+                return null;
+            }
+
+            return poolObject;
         }
 
         #endregion
