@@ -151,7 +151,7 @@ namespace UI
 
         public void CloseAllWindow()
         {
-            for (int i = openedWindows.Count; i >= 0; i--)
+            for (int i = openedWindows.Count - 1; i >= 0; i--)
             {
                 openedWindows[i].CleanUp();
                 ObjectPool.Instance.ReturnToPool(openedWindows[i]);
