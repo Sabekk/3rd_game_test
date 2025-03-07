@@ -48,7 +48,6 @@ namespace Gameplay.Equipment
 
         public bool CanAddItem()
         {
-            Debug.Log(EmptySlots);
             return EmptySlots > 0;
         }
 

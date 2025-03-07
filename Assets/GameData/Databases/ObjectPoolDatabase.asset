@@ -45,7 +45,7 @@ MonoBehaviour:
         size: 1
       - id: 792685087
         name: InventorySlot
-        poolObject: {fileID: 1544445963241610363, guid: d38cca08dbde8c140b2d4a5f7bf0650c,
+        poolObject: {fileID: 1664994831226736172, guid: df64a872518b757428ff96cdc2060ecf,
           type: 3}
         size: 10
   - id: 1629130278

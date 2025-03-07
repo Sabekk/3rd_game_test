@@ -11,9 +11,9 @@ namespace UI.Window.Inventory
     {
         #region VARIABLES
 
-        [SerializeField] private Image frame;
-        [SerializeField] private Image itemIcon;
-        [SerializeField] private Sprite defaultFrame;
+        [SerializeField] protected Image frame;
+        [SerializeField] protected Image itemIcon;
+        [SerializeField] protected Sprite defaultFrame;
 
         [SerializeField] private List<SpriteAndIdPair> rarityFrames;
 
@@ -45,27 +45,13 @@ namespace UI.Window.Inventory
             RefreshItemInSlot();
         }
 
-        private void RefreshItemInSlot()
+        protected void RefreshItemInSlot()
         {
             SetIcon();
             SetFrame();
         }
 
-        private void SetIcon()
-        {
-            if (ItemInSlot != null)
-            {
-                itemIcon.gameObject.SetActiveOptimize(true);
-                itemIcon.sprite = ItemInSlot.Data.Icon;
-            }
-            else
-            {
-                itemIcon.sprite = null;
-                itemIcon.gameObject.SetActiveOptimize(false);
-            }
-        }
-
-        private void SetFrame()
+        protected void SetFrame()
         {
             Sprite frameToSet = defaultFrame;
 
@@ -77,6 +63,20 @@ namespace UI.Window.Inventory
             }
 
             frame.sprite = frameToSet;
+        }
+
+        protected virtual void SetIcon()
+        {
+            if (ItemInSlot != null)
+            {
+                itemIcon.gameObject.SetActiveOptimize(true);
+                itemIcon.sprite = ItemInSlot.Data.Icon;
+            }
+            else
+            {
+                itemIcon.sprite = null;
+                itemIcon.gameObject.SetActiveOptimize(false);
+            }
         }
 
         public bool IdEquals(int id)

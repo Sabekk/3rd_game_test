@@ -24,6 +24,16 @@ namespace Gameplay.Equipment
 
         #region PROPERTIES
 
+        public Dictionary<ItemCategory, Item> EquippedItems
+        {
+            get
+            {
+                if (equippedItems == null)
+                    equippedItems = new();
+                return equippedItems;
+            }
+        }
+
         #endregion
 
         #region METHODS
@@ -38,7 +48,7 @@ namespace Gameplay.Equipment
 
         public bool IsItemTypeEquiped(ItemCategory type, out Item equipedItem)
         {
-            return equippedItems.TryGetValue(type, out equipedItem);
+            return EquippedItems.TryGetValue(type, out equipedItem);
         }
 
         protected override void AttachEvents()
@@ -59,15 +69,15 @@ namespace Gameplay.Equipment
 
         private void HandleItemEquip(Item item)
         {
-            if (equippedItems.TryAdd(item.Category, item))
+            if (EquippedItems.TryAdd(item.Category, item))
                 OnItemEquiped?.Invoke(item);
         }
 
         private void HandleItemUnequip(Item item)
         {
-            if (equippedItems.ContainsKey(item.Category))
+            if (EquippedItems.ContainsKey(item.Category))
             {
-                equippedItems.Remove(item.Category);
+                EquippedItems.Remove(item.Category);
                 OnItemUnequiped?.Invoke(item);
             }
         }
