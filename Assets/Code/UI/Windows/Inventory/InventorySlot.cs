@@ -1,7 +1,5 @@
 using Gameplay.Items;
 using ObjectPooling;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,8 +9,8 @@ namespace UI.Window.Inventory
     {
         #region VARIABLES
 
-        [SerializeField] private Image icon;
-        [SerializeField] private Sprite emptyIcon;
+        [SerializeField] private Image frame;
+        [SerializeField] private Image itemIcon;
 
         private Item itemInSlot;
         private int itemId;
@@ -45,9 +43,15 @@ namespace UI.Window.Inventory
         private void SetIcon()
         {
             if (ItemInSlot != null)
-                icon.sprite = ItemInSlot.Icon;
+            {
+                itemIcon.gameObject.SetActiveOptimize(true);
+                itemIcon.sprite = ItemInSlot.Data.Icon;
+            }
             else
-                icon.sprite = emptyIcon;
+            {
+                itemIcon.sprite = null;
+                itemIcon.gameObject.SetActiveOptimize(false);
+            }
         }
 
         public bool IdEquals(int id)

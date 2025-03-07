@@ -15,6 +15,7 @@ namespace ObjectPooling
         public const string GET_POOL_CHARACTERS_IN_GAME_METHOD = "@" + nameof(ObjectPoolDatabase) + "." + nameof(GetCharactersInGame) + "()";
         public const string GET_POOL_CAMERAS_METHOD = "@" + nameof(ObjectPoolDatabase) + "." + nameof(GetCameras) + "()";
         public const string GET_POOL_UI_WINDOW_METHOD = "@" + nameof(ObjectPoolDatabase) + "." + nameof(GetUIWindows) + "()";
+        public const string GET_POOL_ITEMS_METHOD = "@" + nameof(ObjectPoolDatabase) + "." + nameof(GetItems) + "()";
 
         [SerializeField] private List<PoolCategoryData> poolCategories;
 
@@ -63,6 +64,11 @@ namespace ObjectPooling
         public static IEnumerable GetUIWindows()
         {
             return GetCategoryInstancesIds("UIWindows");
+        }
+
+        public static IEnumerable GetItems()
+        {
+            return GetCategoryInstancesIds("Items");
         }
 
 

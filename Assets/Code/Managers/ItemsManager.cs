@@ -61,6 +61,11 @@ namespace Gameplay.Items
                 foreach (var child in children)
                 {
                     Item item = new(child);
+                    if (item.Data == null)
+                    {
+                        Debug.LogError($"Missing data in database for {item.ItemName}, check settings of database");
+                        continue;
+                    }
                     items.Add(item);
                 }
             }

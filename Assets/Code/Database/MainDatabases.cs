@@ -1,4 +1,5 @@
 using Database.Character;
+using Database.Items;
 using ObjectPooling;
 using UnityEngine;
 
