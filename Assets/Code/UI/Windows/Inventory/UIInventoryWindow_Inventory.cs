@@ -61,6 +61,7 @@ namespace UI.Window.Inventory
             {
                 Player.EquipmentController.InventoryModule.OnItemCollected += HandleItemCollected;
                 Player.EquipmentController.InventoryModule.OnItemRemoved += HandleItemRemoved;
+                Player.EquipmentController.InventoryModule.OnItemsReplaced += HandleItemsReplaced;
             }
         }
 
@@ -71,6 +72,7 @@ namespace UI.Window.Inventory
             {
                 Player.EquipmentController.InventoryModule.OnItemCollected -= HandleItemCollected;
                 Player.EquipmentController.InventoryModule.OnItemRemoved -= HandleItemRemoved;
+                Player.EquipmentController.InventoryModule.OnItemsReplaced -= HandleItemsReplaced;
             }
         }
 
@@ -151,6 +153,18 @@ namespace UI.Window.Inventory
             {
                 Player.EquipmentController.EquipItem(slot.ItemInSlot);
             }
+        }
+
+        private void HandleItemsReplaced(Item newItem, Item oldItem)
+        {
+            InventorySlot slot = GetSlotByItem(oldItem);
+            if (slot == null)
+            {
+                Debug.LogError($"Item wasn't in inventory {oldItem.ItemName}");
+                SetItemToFirstEmptySlot(newItem);
+            }
+            else
+                slot.SetItem(newItem);
         }
 
         private void HandleItemCollected(Item item)

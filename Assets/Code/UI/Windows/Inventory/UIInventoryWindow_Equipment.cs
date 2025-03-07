@@ -61,6 +61,7 @@ namespace UI.Window.Inventory
             {
                 Player.EquipmentController.EquipmentModule.OnItemEquiped += HandleItemEquiped;
                 Player.EquipmentController.EquipmentModule.OnItemUnequiped += HandleItemUnequiped;
+                Player.EquipmentController.EquipmentModule.OnItemsReplaced += HandleItemsReplaced;
             }
         }
         protected override void DetachEvents()
@@ -70,6 +71,7 @@ namespace UI.Window.Inventory
             {
                 Player.EquipmentController.EquipmentModule.OnItemEquiped -= HandleItemEquiped;
                 Player.EquipmentController.EquipmentModule.OnItemUnequiped -= HandleItemUnequiped;
+                Player.EquipmentController.EquipmentModule.OnItemsReplaced -= HandleItemsReplaced;
             }
         }
 
@@ -93,6 +95,11 @@ namespace UI.Window.Inventory
         private void HandleSlotClick(EquipmentSlot slot)
         {
 
+        }
+
+        private void HandleItemsReplaced(Item newEquipedItem, Item oldEquipedItem)
+        {
+            TrySetItemOnSlot(oldEquipedItem.Category, newEquipedItem);
         }
 
         private void HandleItemEquiped(Item item)

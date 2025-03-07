@@ -53,6 +53,7 @@ namespace UI.Window.Inventory
         public virtual void CleanUp()
         {
             button.onClick.RemoveListener(HandleClickButton);
+            SetSelected(false);
         }
 
         public void SetItem(Item item)
@@ -60,6 +61,7 @@ namespace UI.Window.Inventory
             itemInSlot = item;
             itemId = item != null ? item.Id : -1;
             RefreshItemInSlot();
+            SetSelected(false);
         }
 
         public void RemoveItem()

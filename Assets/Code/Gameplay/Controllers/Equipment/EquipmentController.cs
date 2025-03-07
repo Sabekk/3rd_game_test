@@ -14,6 +14,10 @@ namespace Gameplay.Equipment
         public event Action<Item> OnItemRemove;
         public event Action<Item> OnItemEquip;
         public event Action<Item> OnItemUnequip;
+        /// <summary>
+        /// Item to equip | equipped item
+        /// </summary>
+        public event Action<Item, Item> OnItemsReplace;
 
         #endregion
 
@@ -65,9 +69,10 @@ namespace Gameplay.Equipment
                 return;
 
             if (IsItemTypeEquiped(item.Category, out Item equipedItem))
-                UnequipItem(equipedItem);
-
-            OnItemEquip?.Invoke(item);
+                ReplaceItems(item, equipedItem);
+            //UnequipItem(equipedItem);
+            else
+                OnItemEquip?.Invoke(item);
         }
 
         public void UnequipItem(Item item)
@@ -76,6 +81,11 @@ namespace Gameplay.Equipment
                 return;
 
             OnItemUnequip?.Invoke(item);
+        }
+
+        private void ReplaceItems(Item itemToEquip, Item equippedItem)
+        {
+            OnItemsReplace?.Invoke(itemToEquip, equippedItem);
         }
 
         public void CollectItem(Item item)

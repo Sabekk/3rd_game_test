@@ -14,6 +14,10 @@ namespace Gameplay.Equipment
 
         public event Action<Item> OnItemCollected;
         public event Action<Item> OnItemRemoved;
+        /// <summary>
+        /// New item in inventory | old item in inventory
+        /// </summary>
+        public event Action<Item, Item> OnItemsReplaced;
 
         #endregion
 
@@ -59,6 +63,8 @@ namespace Gameplay.Equipment
 
             Character.EquipmentController.OnItemCollect += HandleItemCollect;
             Character.EquipmentController.OnItemRemove += HandleItemRemove;
+
+            Character.EquipmentController.OnItemsReplace += HandleItemsReplace;
         }
 
         protected override void DetachEvents()
@@ -69,6 +75,8 @@ namespace Gameplay.Equipment
 
             Character.EquipmentController.OnItemCollect -= HandleItemCollect;
             Character.EquipmentController.OnItemRemove -= HandleItemRemove;
+
+            Character.EquipmentController.OnItemsReplace -= HandleItemsReplace;
         }
 
         private void AddItem(Item item)
@@ -87,6 +95,23 @@ namespace Gameplay.Equipment
         }
 
         #region HANDLERS
+
+        private void HandleItemsReplace(Item itemToEquip, Item equipedItem)
+        {
+            int indexOfReplacingItem = ItemsInventory.IndexOf(itemToEquip);
+            if (indexOfReplacingItem >= 0)
+            {
+                ItemsInventory.RemoveAt(indexOfReplacingItem);
+                ItemsInventory.Insert(indexOfReplacingItem, equipedItem);
+                OnItemsReplaced?.Invoke(equipedItem, itemToEquip);
+            }
+            else
+            {
+                Debug.LogError($"Item didnt found in inventory {equipedItem.ItemName}");
+                RemoveItem(itemToEquip);
+                AddItem(equipedItem);
+            }
+        }
 
         private void HandleItemEquip(Item item)
         {
