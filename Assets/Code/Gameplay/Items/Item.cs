@@ -14,6 +14,7 @@ namespace Gameplay.Items
         [SerializeField, ReadOnly] private int id;
         [SerializeField] private string itemName;
         [SerializeField] private ItemCategory category;
+        [SerializeField] private ItemType itemType;
         [SerializeField] private int rarity;
         [SerializeField] private int damage;
         [SerializeField] private int healthPoints;
@@ -32,6 +33,7 @@ namespace Gameplay.Items
 
         public string ItemName => itemName;
         public ItemCategory Category => category;
+        public ItemType ItemType => itemType;
         public int Id => id;
         public int Rarity => rarity;
         public int Damage => damage;
@@ -59,8 +61,27 @@ namespace Gameplay.Items
         public Item() { }
         public Item(JObject jObject)
         {
-            itemName = jObject.Value<string>("Name");
-            category = (ItemCategory)System.Enum.Parse(typeof(ItemCategory), jObject.Value<string>("Category"));
+            string itemName = jObject.Value<string>("Name");
+            string categoryName = jObject.Value<string>("Category");
+            string typeOfItem = itemName.Replace(categoryName, "");
+
+            if (System.Enum.TryParse(categoryName, true, out ItemCategory category))
+                this.category = category;
+            else
+            {
+                Debug.LogError($"Missing item category [{categoryName}]");
+                this.category = ItemCategory.Armor;
+            }
+
+            if (System.Enum.TryParse(typeOfItem, true, out ItemType itemType))
+                this.itemType = itemType;
+            else
+            {
+                Debug.LogError($"Missing item type [{typeOfItem}]");
+                this.itemType = ItemType.Death;
+            }
+
+            this.itemName = itemName;
             rarity = jObject.Value<int>("Rarity");
             damage = jObject.Value<int>("Damage");
             healthPoints = jObject.Value<int>("HealthPoints");
@@ -80,7 +101,7 @@ namespace Gameplay.Items
 
         private void CacheIcon()
         {
-            icon = MainDatabases.Instance.ItemsDatabase.TryGetItemIcon(Category);
+            icon = MainDatabases.Instance.ItemsDatabase.TryGetItemInCategoryIcon(ItemType, Category);
         }
 
         #endregion

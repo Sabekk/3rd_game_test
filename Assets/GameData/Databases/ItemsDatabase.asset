@@ -13,4 +13,154 @@ MonoBehaviour:
   m_Name: ItemsDatabase
   m_EditorClassIdentifier: 
   missingItemIcon: {fileID: 21300000, guid: 46e448129b478504eb321562d1f8a5a9, type: 3}
-  itemIcons: []
+  itemIcons:
+  - itemCategory: 0
+    categoryIcon: {fileID: 21300000, guid: 8921da5b6bb26264bb43316cf578f7c2, type: 3}
+    itemsInCategory:
+    - itemType: 0
+      icon: {fileID: 21300000, guid: 14721057dc4c2cf4daa8b84c446d8f4b, type: 3}
+    - itemType: 1
+      icon: {fileID: 21300000, guid: 26323923ae080b5489b324e35f6707b1, type: 3}
+    - itemType: 2
+      icon: {fileID: 21300000, guid: e3ad800b22a49064b9b223e758f96510, type: 3}
+    - itemType: 3
+      icon: {fileID: 21300000, guid: be8a5b97921161e49b43634d5465980d, type: 3}
+    - itemType: 4
+      icon: {fileID: 21300000, guid: 6d83102d0132a05448247495f8177ddd, type: 3}
+    - itemType: 5
+      icon: {fileID: 21300000, guid: 797d6fe5f155d8548acc6c620d39de77, type: 3}
+    - itemType: 6
+      icon: {fileID: 21300000, guid: 41c11e55aa6fd8444b5f98b8ec480b5f, type: 3}
+    - itemType: 7
+      icon: {fileID: 21300000, guid: ead5c7818f9457742800a5267a2345a2, type: 3}
+    - itemType: 8
+      icon: {fileID: 21300000, guid: 26fe8f56967766f489f822d64b4ec286, type: 3}
+    - itemType: 9
+      icon: {fileID: 21300000, guid: 7a9f7aff001d7f74f8da27efac9f9262, type: 3}
+    - itemType: 10
+      icon: {fileID: 21300000, guid: 63198d7f88a9dfd4994991fa37655dba, type: 3}
+  - itemCategory: 1
+    categoryIcon: {fileID: 21300000, guid: da587cadb4cd47641aa70de69ee44bcc, type: 3}
+    itemsInCategory:
+    - itemType: 0
+      icon: {fileID: 21300000, guid: d07dae03a11e8d34cba1a21bc7c1fadd, type: 3}
+    - itemType: 1
+      icon: {fileID: 21300000, guid: 855746fde26c71645a97544d674213c2, type: 3}
+    - itemType: 2
+      icon: {fileID: 21300000, guid: 1976716720475cf4ca80340323d4a92a, type: 3}
+    - itemType: 3
+      icon: {fileID: 21300000, guid: 01192234247a632478e78f043cc5ed6e, type: 3}
+    - itemType: 4
+      icon: {fileID: 21300000, guid: 71eb48b6333e9f6499045a93b2d4121b, type: 3}
+    - itemType: 5
+      icon: {fileID: 21300000, guid: b9906d4362eb94e4189a86a38f8e2365, type: 3}
+    - itemType: 6
+      icon: {fileID: 21300000, guid: ba87c0254b4e3a14981dc4e0a57259f6, type: 3}
+    - itemType: 7
+      icon: {fileID: 21300000, guid: 0cf44fb2fffecc64a8ae918405ab04f8, type: 3}
+    - itemType: 8
+      icon: {fileID: 21300000, guid: 779ee0f3d9831ba47aa0ebaf3d5d8974, type: 3}
+    - itemType: 9
+      icon: {fileID: 21300000, guid: eb7877020725c714a89695e7b699a25d, type: 3}
+    - itemType: 10
+      icon: {fileID: 21300000, guid: ff8a1b820a7b024409d108f79fd16dea, type: 3}
+  - itemCategory: 2
+    categoryIcon: {fileID: 21300000, guid: 6cc40ac475afda64193bfe7d69a47e9a, type: 3}
+    itemsInCategory:
+    - itemType: 0
+      icon: {fileID: 21300000, guid: f51a7d9c3befa5742bd16c1616604f30, type: 3}
+    - itemType: 1
+      icon: {fileID: 21300000, guid: 82cc2774e147c144e92f6f474e427db4, type: 3}
+    - itemType: 2
+      icon: {fileID: 21300000, guid: 7b34c31450dd51748b586e04e6e8feb5, type: 3}
+    - itemType: 3
+      icon: {fileID: 21300000, guid: abe1b3cf0c9901b4b80615187df71c14, type: 3}
+    - itemType: 4
+      icon: {fileID: 21300000, guid: 158728f684e56a248ba80c8888db70a2, type: 3}
+    - itemType: 5
+      icon: {fileID: 21300000, guid: 725d7772f8320834f9d65819230d1ac5, type: 3}
+    - itemType: 6
+      icon: {fileID: 21300000, guid: 5d529e585142af346bd59657a697b169, type: 3}
+    - itemType: 7
+      icon: {fileID: 21300000, guid: 34cc3b4e9d579a642a1d1212f70edc7c, type: 3}
+    - itemType: 8
+      icon: {fileID: 21300000, guid: 4e5c8c49bde4b8042a4467abd3b883d6, type: 3}
+    - itemType: 9
+      icon: {fileID: 21300000, guid: 7d0770e47aa87fc4b8498edc288f3541, type: 3}
+    - itemType: 10
+      icon: {fileID: 21300000, guid: 3bdd24a76b168134d806903a53fbdff8, type: 3}
+  - itemCategory: 3
+    categoryIcon: {fileID: 21300000, guid: 0a7f6d31e192a3f4590e882f5a26b0d5, type: 3}
+    itemsInCategory:
+    - itemType: 0
+      icon: {fileID: 21300000, guid: 6bb18d1a794ba8b45bde4ea16a5eca16, type: 3}
+    - itemType: 1
+      icon: {fileID: 21300000, guid: 8ba1a9c148e5b7a4babd9fde6e27f6ee, type: 3}
+    - itemType: 2
+      icon: {fileID: 21300000, guid: f862cbfc395c35245abfdd07431d4b4b, type: 3}
+    - itemType: 3
+      icon: {fileID: 21300000, guid: f34d77635268add49a92a9587b56cc86, type: 3}
+    - itemType: 4
+      icon: {fileID: 21300000, guid: 5144eb4d6f5f1774a9474a5ee3ad2b34, type: 3}
+    - itemType: 5
+      icon: {fileID: 21300000, guid: 884a27b31e2dfb3479b7a06bace536ce, type: 3}
+    - itemType: 6
+      icon: {fileID: 21300000, guid: 3a9d7af7466f90c4d8d99660e1382915, type: 3}
+    - itemType: 7
+      icon: {fileID: 21300000, guid: 1aed0c769cc2e9647b1c1234b13920f9, type: 3}
+    - itemType: 8
+      icon: {fileID: 21300000, guid: 20d1237efc955724b980b1d319b1ec48, type: 3}
+    - itemType: 9
+      icon: {fileID: 21300000, guid: 4d2e3ae3a76e4b04bb6e9d7c644ddfcd, type: 3}
+    - itemType: 10
+      icon: {fileID: 21300000, guid: 35600dfb1ea1a914b81c958cf5aacdfa, type: 3}
+  - itemCategory: 4
+    categoryIcon: {fileID: 21300000, guid: d3acbd47390bac448b8336fec43cb879, type: 3}
+    itemsInCategory:
+    - itemType: 0
+      icon: {fileID: 21300000, guid: 8b35b640cb9c8df459717fa36f554af3, type: 3}
+    - itemType: 1
+      icon: {fileID: 21300000, guid: 9b231d18ff144b647b39c7250ac5ad04, type: 3}
+    - itemType: 2
+      icon: {fileID: 21300000, guid: 3aa026e0f9aa94b429e383e1ee73663e, type: 3}
+    - itemType: 3
+      icon: {fileID: 21300000, guid: 766d2f9785f9ec44298978f734287de3, type: 3}
+    - itemType: 4
+      icon: {fileID: 21300000, guid: fb3ff3aa34b9d234291d453beb2da194, type: 3}
+    - itemType: 5
+      icon: {fileID: 21300000, guid: 3658f5e396a346d4084286f626f96163, type: 3}
+    - itemType: 6
+      icon: {fileID: 21300000, guid: ea6608a405b89724fa191cfda82b8d28, type: 3}
+    - itemType: 7
+      icon: {fileID: 21300000, guid: 8e63755f016c9c7458780a8b5b837da6, type: 3}
+    - itemType: 8
+      icon: {fileID: 21300000, guid: a0eaf9c62b87d9b449f50ae29cffbda2, type: 3}
+    - itemType: 9
+      icon: {fileID: 21300000, guid: f770ff1cebbce0f4bb6c3183f4cc6de1, type: 3}
+    - itemType: 10
+      icon: {fileID: 21300000, guid: 1e6c8c65fa0d2fb40a526bcfbfa1ba4c, type: 3}
+  - itemCategory: 5
+    categoryIcon: {fileID: 21300000, guid: e252dca4cd58b284cafba1e047dcbfb5, type: 3}
+    itemsInCategory:
+    - itemType: 0
+      icon: {fileID: 21300000, guid: 5d7c3271caadddf42a2ec31ccf523d8d, type: 3}
+    - itemType: 1
+      icon: {fileID: 21300000, guid: 5d606b6a108745249a58680e1042c99c, type: 3}
+    - itemType: 2
+      icon: {fileID: 21300000, guid: 1e5f1cd825117aa44b2592716bcc1926, type: 3}
+    - itemType: 3
+      icon: {fileID: 21300000, guid: 1f385c70e41ff0f4380a363cce4d42a9, type: 3}
+    - itemType: 4
+      icon: {fileID: 21300000, guid: e5775f06845677b418f38919ff9219fe, type: 3}
+    - itemType: 5
+      icon: {fileID: 21300000, guid: 4752c1326acb6bd41a5ff3438f72d447, type: 3}
+    - itemType: 6
+      icon: {fileID: 21300000, guid: 48e9178538fa6404caa111b916090881, type: 3}
+    - itemType: 7
+      icon: {fileID: 21300000, guid: 5758d187bc0d9724596abe48aada54fc, type: 3}
+    - itemType: 8
+      icon: {fileID: 21300000, guid: 1c7f54fb883c9344b9ff073f0b8480fb, type: 3}
+    - itemType: 9
+      icon: {fileID: 21300000, guid: 4baf8326fbc55554b86dfedc2da864f2, type: 3}
+    - itemType: 10
+      icon: {fileID: 21300000, guid: 76ad1286352d8e04cbcfddb30a500dea, type: 3}
