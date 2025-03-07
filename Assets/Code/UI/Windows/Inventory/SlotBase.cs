@@ -1,5 +1,6 @@
 using Gameplay.Items;
 using ObjectPooling;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,10 +8,19 @@ using UnityEngine.UI;
 
 namespace UI.Window.Inventory
 {
-    public class SlotBase : MonoBehaviour, IIdEqualable, IPoolable
+    [RequireComponent(typeof(Button))]
+    public abstract class SlotBase : MonoBehaviour, IIdEqualable, IPoolable
     {
+        #region ACTIONS
+
+        private Action OnClickAction;
+
+        #endregion
+
         #region VARIABLES
 
+        [SerializeField] protected Button button;
+        [SerializeField] protected GameObject selectionFrame;
         [SerializeField] protected Image frame;
         [SerializeField] protected Image itemIcon;
         [SerializeField] protected Sprite defaultFrame;
@@ -27,10 +37,23 @@ namespace UI.Window.Inventory
         public int Id => itemId;
         public Item ItemInSlot => itemInSlot;
         public PoolObject Poolable { get; set; }
+        public bool HasItem => ItemInSlot != null;
+        public bool IsSelected { get; private set; }
 
         #endregion
 
         #region METHODS
+
+        public virtual void Initialize(Action onClickAction)
+        {
+            OnClickAction = onClickAction;
+            button.onClick.AddListener(HandleClickButton);
+        }
+
+        public virtual void CleanUp()
+        {
+            button.onClick.RemoveListener(HandleClickButton);
+        }
 
         public void SetItem(Item item)
         {
@@ -45,6 +68,12 @@ namespace UI.Window.Inventory
             RefreshItemInSlot();
         }
 
+        public void SetSelected(bool state)
+        {
+            selectionFrame.SetActiveOptimize(state);
+            IsSelected = state;
+        }
+
         protected void RefreshItemInSlot()
         {
             SetIcon();
@@ -55,7 +84,7 @@ namespace UI.Window.Inventory
         {
             Sprite frameToSet = defaultFrame;
 
-            if (ItemInSlot != null)
+            if (HasItem)
             {
                 SpriteAndIdPair spritePair = rarityFrames.GetElementById(ItemInSlot.Rarity);
                 if (spritePair != null)
@@ -67,7 +96,7 @@ namespace UI.Window.Inventory
 
         protected virtual void SetIcon()
         {
-            if (ItemInSlot != null)
+            if (HasItem)
             {
                 itemIcon.gameObject.SetActiveOptimize(true);
                 itemIcon.sprite = ItemInSlot.Data.Icon;
@@ -88,6 +117,15 @@ namespace UI.Window.Inventory
         {
             Poolable = poolable;
         }
+
+        #region HANDLERS
+
+        private void HandleClickButton()
+        {
+            OnClickAction?.Invoke();
+        }
+
+        #endregion
 
         #endregion
     }

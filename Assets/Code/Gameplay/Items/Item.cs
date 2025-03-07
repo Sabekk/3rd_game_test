@@ -2,6 +2,7 @@ using Database;
 using Database.Items;
 using Newtonsoft.Json.Linq;
 using Sirenix.OdinInspector;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -63,11 +64,12 @@ namespace Gameplay.Items
         public Item() { }
         public Item(JObject jObject)
         {
+            id = Guid.NewGuid().GetHashCode();
             string itemName = jObject.Value<string>("Name");
             string categoryName = jObject.Value<string>("Category");
             string typeOfItem = itemName.Replace(categoryName, "");
 
-            if (System.Enum.TryParse(categoryName, true, out ItemCategory category))
+            if (Enum.TryParse(categoryName, true, out ItemCategory category))
                 this.category = category;
             else
             {
@@ -75,7 +77,7 @@ namespace Gameplay.Items
                 this.category = ItemCategory.Armor;
             }
 
-            if (System.Enum.TryParse(typeOfItem, true, out ItemType itemType))
+            if (Enum.TryParse(typeOfItem, true, out ItemType itemType))
                 this.itemType = itemType;
             else
             {

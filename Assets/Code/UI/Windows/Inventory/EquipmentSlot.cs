@@ -1,5 +1,6 @@
 using Database;
 using Database.Items;
+using System;
 using UnityEngine;
 
 namespace UI.Window.Inventory
@@ -22,8 +23,10 @@ namespace UI.Window.Inventory
 
         #region METHODS
 
-        public void Initialize()
+        public override void Initialize(Action onClickAction)
         {
+            base.Initialize(onClickAction);
+
             ItemsCategoryData categoryData = MainDatabases.Instance.ItemsDatabase.GetCategory(ItemSlotCategory);
             if (categoryData == null)
             {

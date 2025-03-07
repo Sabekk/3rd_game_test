@@ -37,6 +37,23 @@ namespace UI.Window.Inventory
             InitRefreshSlot();
         }
 
+        public override void CleanUp()
+        {
+            for (int i = slots.Count - 1; i >= 0; i--)
+            {
+                slots[i].CleanUp();
+                ObjectPool.Instance.ReturnToPool(slots[i]);
+            }
+
+            base.CleanUp();
+        }
+
+        protected override void Refresh()
+        {
+            base.Refresh();
+            RefreshAllSlots();
+        }
+
         protected override void AttachEvents()
         {
             base.AttachEvents();
@@ -57,15 +74,6 @@ namespace UI.Window.Inventory
             }
         }
 
-        public override void CleanUp()
-        {
-            base.CleanUp();
-            for (int i = slots.Count - 1; i >= 0; i--)
-            {
-                ObjectPool.Instance.ReturnToPool(slots[i]);
-            }
-        }
-
         private void InitRefreshSlot()
         {
             if (Player == null)
@@ -78,25 +86,30 @@ namespace UI.Window.Inventory
                 AddSlot(null);
         }
 
+        private void RefreshAllSlots()
+        {
+            if (slots == null || slots.Count == 0)
+                return;
+
+            for (int i = 0; i < slots.Count; i++)
+                slots[i].SetItem(null);
+
+            for (int i = 0; i < Player.EquipmentController.InventoryModule.ItemsInventory.Count; i++)
+                slots[i].SetItem(Player.EquipmentController.InventoryModule.ItemsInventory[i]);
+        }
+
         private void AddSlot(Item item)
         {
             InventorySlot slot = ObjectPool.Instance.GetFromPool(slotPrefabId, UIManager.Instance.DefaultUIPoolCategory).GetComponent<InventorySlot>();
             slot.transform.SetParent(slotsContainer);
             slot.SetItem(item);
+            slot.Initialize(() => HandleSlotClick(slot));
             slots.Add(slot);
         }
 
-        private InventorySlot GetSlotByItem(Item item)
+        private void SetItemToFirstEmptySlot(Item item)
         {
-            return slots.GetElementById(item.Id);
-        }
-
-
-        #region HANDLERS
-
-        private void HandleItemCollected(Item item)
-        {
-            InventorySlot emptySlot = slots.FirstOrDefault(x => x.ItemInSlot == null);
+            InventorySlot emptySlot = slots.FirstOrDefault(x => x.HasItem == false);
             if (emptySlot == null)
             {
                 Debug.LogError("No empty slot for item. This not should happend. Check inventory settings");
@@ -106,7 +119,7 @@ namespace UI.Window.Inventory
             emptySlot.SetItem(item);
         }
 
-        private void HandleItemRemoved(Item item)
+        private void RemoveItemFromInventory(Item item)
         {
             InventorySlot slot = GetSlotByItem(item);
             slot.SetItem(null);
@@ -115,6 +128,39 @@ namespace UI.Window.Inventory
             slots.Remove(slot);
             slots.Add(slot);
             slot.transform.SetAsLastSibling();
+        }
+
+        private InventorySlot GetSlotByItem(Item item)
+        {
+            return slots.GetElementById(item.Id);
+        }
+
+        #region HANDLERS
+
+        private void HandleSlotClick(InventorySlot slot)
+        {
+            if (slot.HasItem == false)
+                return;
+
+            if (slot.IsSelected == false)
+            {
+                for (int i = 0; i < slots.Count; i++)
+                    slots[i].SetSelected(slots[i] == slot);
+            }
+            else
+            {
+                Player.EquipmentController.EquipItem(slot.ItemInSlot);
+            }
+        }
+
+        private void HandleItemCollected(Item item)
+        {
+            SetItemToFirstEmptySlot(item);
+        }
+
+        private void HandleItemRemoved(Item item)
+        {
+            RemoveItemFromInventory(item);
         }
 
         #endregion

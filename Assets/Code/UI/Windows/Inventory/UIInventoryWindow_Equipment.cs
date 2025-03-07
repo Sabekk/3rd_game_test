@@ -31,13 +31,21 @@ namespace UI.Window.Inventory
 
             for (int i = 0; i < slots.Count; i++)
             {
-                slots[i].Initialize();
+                slots[i].Initialize(() => HandleSlotClick(slots[i]));
 
                 if (categorySlots.TryAdd(slots[i].ItemSlotCategory, slots[i]) == false)
                     Debug.LogError($"Duplicated slots category in equipment slots. Check settings of prefab", this);
             }
 
             FullyRefreshSlots();
+        }
+
+        public override void CleanUp()
+        {
+            for (int i = 0; i < slots.Count; i++)
+                slots[i].CleanUp();
+
+            base.CleanUp();
         }
 
         protected override void Refresh()
@@ -81,6 +89,11 @@ namespace UI.Window.Inventory
         }
 
         #region HANDLERS
+
+        private void HandleSlotClick(EquipmentSlot slot)
+        {
+
+        }
 
         private void HandleItemEquiped(Item item)
         {
