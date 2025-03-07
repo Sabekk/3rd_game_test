@@ -62,6 +62,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   frame: {fileID: 1847863346846881073}
   itemIcon: {fileID: 2078470453015255164}
+  defaultFrame: {fileID: 21300000, guid: 5be4320d448dd9040a0c9abd3f40f100, type: 3}
+  rarityFrames:
+  - id: 0
+    sprite: {fileID: 21300000, guid: 5be4320d448dd9040a0c9abd3f40f100, type: 3}
+  - id: 1
+    sprite: {fileID: 21300000, guid: 6ea0dbadcf0b28f489fb0a777ef529f4, type: 3}
+  - id: 2
+    sprite: {fileID: 21300000, guid: 35e96054fbe19d4468494a8ab806345f, type: 3}
+  - id: 3
+    sprite: {fileID: 21300000, guid: 72afd0e677f3d364ba6d5dce08a7b2a1, type: 3}
+  - id: 4
+    sprite: {fileID: 21300000, guid: 5d4d6e1bf40b87c4db405ecb536a1222, type: 3}
 --- !u!1 &2892539104462282985
 GameObject:
   m_ObjectHideFlags: 0

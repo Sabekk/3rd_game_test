@@ -29,4 +29,15 @@ public static class CollectionExtensions
         }
         return false;
     }
+
+    public static T GetElementById<T>(this IList<T> list, int id) where T : IIdEqualable
+    {
+        if (list != null)
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i].IdEquals(id))
+                    return list[i];
+            }
+        return default(T);
+    }
 }
