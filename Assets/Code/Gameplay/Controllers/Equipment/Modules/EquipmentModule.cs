@@ -1,5 +1,6 @@
 using Gameplay.Controller.Module;
 using Gameplay.Items;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,13 @@ namespace Gameplay.Equipment
 {
     public class EquipmentModule : ControllerModuleBase
     {
+        #region ACTIONS
+
+        public event Action<Item> OnItemEquiped;
+        public event Action<Item> OnItemUnequiped;
+
+        #endregion
+
         #region VARIABLES
 
         [SerializeField] private Dictionary<ItemCategory, Item> equippedItems;
@@ -51,12 +59,17 @@ namespace Gameplay.Equipment
 
         private void HandleItemEquip(Item item)
         {
-            equippedItems.TryAdd(item.Category, item);
+            if (equippedItems.TryAdd(item.Category, item))
+                OnItemEquiped?.Invoke(item);
         }
 
         private void HandleItemUnequip(Item item)
         {
-            equippedItems.Remove(item.Category);
+            if (equippedItems.ContainsKey(item.Category))
+            {
+                equippedItems.Remove(item.Category);
+                OnItemUnequiped?.Invoke(item);
+            }
         }
 
         #endregion

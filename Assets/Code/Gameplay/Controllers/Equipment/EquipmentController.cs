@@ -10,10 +10,10 @@ namespace Gameplay.Equipment
     {
         #region ACTIONS
 
-        public Action<Item> OnItemCollect;
-        public Action<Item> OnItemRemove;
-        public Action<Item> OnItemEquip;
-        public Action<Item> OnItemUnequip;
+        public event Action<Item> OnItemCollect;
+        public event Action<Item> OnItemRemove;
+        public event Action<Item> OnItemEquip;
+        public event Action<Item> OnItemUnequip;
 
         #endregion
 
@@ -44,6 +44,10 @@ namespace Gameplay.Equipment
             modules.Add(visualizationModule = new());
         }
 
+        public void InitializeActionToModules()
+        {
+
+        }
 
         public bool IsEquiped(Item item)
         {

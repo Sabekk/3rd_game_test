@@ -4,6 +4,7 @@ using ObjectPooling;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace UI.Window.Inventory
@@ -36,6 +37,26 @@ namespace UI.Window.Inventory
             InitRefreshSlot();
         }
 
+        protected override void AttachEvents()
+        {
+            base.AttachEvents();
+            if (Player != null)
+            {
+                Player.EquipmentController.InventoryModule.OnItemCollected += HandleItemCollected;
+                Player.EquipmentController.InventoryModule.OnItemRemoved += HandleItemRemoved;
+            }
+        }
+
+        protected override void DetachEvents()
+        {
+            base.DetachEvents();
+            if (Player != null)
+            {
+                Player.EquipmentController.InventoryModule.OnItemCollected -= HandleItemCollected;
+                Player.EquipmentController.InventoryModule.OnItemRemoved -= HandleItemRemoved;
+            }
+        }
+
         public override void CleanUp()
         {
             base.CleanUp();
@@ -64,6 +85,39 @@ namespace UI.Window.Inventory
             slot.SetItem(item);
             slots.Add(slot);
         }
+
+        private InventorySlot GetSlotByItem(Item item)
+        {
+            return slots.GetElementById(item.Id);
+        }
+
+
+        #region HANDLERS
+
+        private void HandleItemCollected(Item item)
+        {
+            InventorySlot emptySlot = slots.FirstOrDefault(x => x.ItemInSlot == null);
+            if (emptySlot == null)
+            {
+                Debug.LogError("No empty slot for item. This not should happend. Check inventory settings");
+                return;
+            }
+
+            emptySlot.SetItem(item);
+        }
+
+        private void HandleItemRemoved(Item item)
+        {
+            InventorySlot slot = GetSlotByItem(item);
+            slot.SetItem(null);
+
+            //Add slot at last place
+            slots.Remove(slot);
+            slots.Add(slot);
+            slot.transform.SetAsLastSibling();
+        }
+
+        #endregion
 
         #endregion
     }

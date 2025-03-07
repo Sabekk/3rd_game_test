@@ -14,6 +14,24 @@ namespace UI.Window
 
         #region PROPERTIES
 
+        protected UIWindowBase Parent { get; set; }
+
+        #endregion
+
+        #region UNITY_METHODS
+
+        protected override void OnEnable()
+        {
+            if (Parent == null)
+                base.OnEnable();
+        }
+
+        protected override void OnDisable()
+        {
+            if (Parent == null)
+                base.OnDisable();
+        }
+
         #endregion
 
         #region METHODS
@@ -22,7 +40,10 @@ namespace UI.Window
         {
             base.Initialize();
             for (int i = 0; i < subWindows.Length; i++)
+            {
+                subWindows[i].Parent = this;
                 subWindows[i].Initialize();
+            }
         }
 
         public override void CleanUp()

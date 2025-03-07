@@ -52,13 +52,13 @@ namespace ObjectPooling
 
         #region METHODS
 
-        public PoolObject GetFromPool()
+        public PoolObject GetFromPool(bool activateObject = true)
         {
             if (objects.Count == 0)
                 AddToPool();
             PoolObject poolObject = objects.Pop();
             poolObject.SetTaken(true);
-            poolObject.Prefab.SetActive(true);
+            poolObject.Prefab.SetActive(activateObject);
             taken.Add(poolObject);
             return poolObject;
         }

@@ -1,6 +1,7 @@
 using Gameplay.Character;
 using Gameplay.Controller.Module;
 using Gameplay.Items;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,13 @@ namespace Gameplay.Equipment
 {
     public class InventoryModule : ControllerModuleBase
     {
+        #region ACTIONS
+
+        public event Action<Item> OnItemCollected;
+        public event Action<Item> OnItemRemoved;
+
+        #endregion
+
         #region VARIABLES
 
         [SerializeField] private List<Item> itemsInventory;
@@ -40,6 +48,7 @@ namespace Gameplay.Equipment
 
         public bool CanAddItem()
         {
+            Debug.Log(EmptySlots);
             return EmptySlots > 0;
         }
 
@@ -66,11 +75,16 @@ namespace Gameplay.Equipment
         private void AddItem(Item item)
         {
             ItemsInventory.Add(item);
+            OnItemCollected?.Invoke(item);
         }
 
         private void RemoveItem(Item item)
         {
-            ItemsInventory.Remove(item);
+            if (ItemsInventory.ContainsId(item.Id))
+            {
+                ItemsInventory.Remove(item);
+                OnItemRemoved?.Invoke(item);
+            }
         }
 
         #region HANDLERS

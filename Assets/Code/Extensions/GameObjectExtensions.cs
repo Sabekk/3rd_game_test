@@ -6,7 +6,7 @@ public static class GameObjectExtensions
 {
    public static void SetActiveOptimize(this GameObject gameObject, bool state)
     {
-        if (gameObject.activeInHierarchy == state)
+        if (gameObject.activeSelf == state)
             return;
 
         gameObject.SetActive(state);

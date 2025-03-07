@@ -41,7 +41,7 @@ namespace ObjectPooling
 
         #region METHODS
 
-        public PoolObject GetFromPool(string instanceName, string categoryName = "")
+        public PoolObject GetFromPool(string instanceName, string categoryName = "", bool activateObject = true)
         {
             foreach (var category in poolCategories)
             {
@@ -52,7 +52,7 @@ namespace ObjectPooling
                 PoolInstance instance = category.TryGetInstance(instanceName);
 
                 if (instance != null)
-                    return instance.GetFromPool();
+                    return instance.GetFromPool(activateObject);
                 else if (!string.IsNullOrEmpty(categoryName))
                 {
                     Debug.LogError("Pool cannot be found");
@@ -64,7 +64,7 @@ namespace ObjectPooling
             return null;
         }
 
-        public PoolObject GetFromPool(int instanceId, string categoryName = "")
+        public PoolObject GetFromPool(int instanceId, string categoryName = "", bool activateObject = true)
         {
             foreach (var category in poolCategories)
             {
@@ -75,7 +75,7 @@ namespace ObjectPooling
                 PoolInstance instance = category.TryGetInstance(instanceId);
 
                 if (instance != null)
-                    return instance.GetFromPool();
+                    return instance.GetFromPool(activateObject);
                 else if (!string.IsNullOrEmpty(categoryName))
                 {
                     Debug.LogError("Pool cannot be found");
@@ -87,7 +87,7 @@ namespace ObjectPooling
             return null;
         }
 
-        public PoolObject GetFromPool(string instanceName, int categoryId = -1)
+        public PoolObject GetFromPool(string instanceName, int categoryId = -1, bool activateObject = true)
         {
             foreach (var category in poolCategories)
             {
@@ -98,7 +98,7 @@ namespace ObjectPooling
                 PoolInstance instance = category.TryGetInstance(instanceName);
 
                 if (instance != null)
-                    return instance.GetFromPool();
+                    return instance.GetFromPool(activateObject);
                 else if (categoryId != -1)
                 {
                     Debug.LogError("Pool cannot be found");
@@ -110,7 +110,7 @@ namespace ObjectPooling
             return null;
         }
 
-        public PoolObject GetFromPool(int instanceId, int categoryId = -1)
+        public PoolObject GetFromPool(int instanceId, int categoryId = -1, bool activateObject = true)
         {
             foreach (var category in poolCategories)
             {
@@ -121,7 +121,7 @@ namespace ObjectPooling
                 PoolInstance instance = category.TryGetInstance(instanceId);
 
                 if (instance != null)
-                    return instance.GetFromPool();
+                    return instance.GetFromPool(activateObject);
                 else if (categoryId != -1)
                 {
                     Debug.LogError("Pool cannot be found");

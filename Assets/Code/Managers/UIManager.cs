@@ -80,6 +80,7 @@ namespace UI
         public T OpenWindow<T>(PoolObject poolObject, bool registerAsOpened = true) where T : UIWindowBase
         {
             T window = poolObject.GetComponent<T>();
+            window.Initialize();
 
             if (window == null)
             {
@@ -112,7 +113,6 @@ namespace UI
                     window.gameObject.SetActiveOptimize(true);
             }
 
-            window.Initialize();
             window.gameObject.transform.SetParent(mainCanvas.transform, false);
 
             return window;
@@ -164,7 +164,7 @@ namespace UI
 
         private PoolObject GetPoolWindow(int poolCategory, int poolWindowId)
         {
-            PoolObject poolObject = ObjectPool.Instance.GetFromPool(poolWindowId, poolCategory);
+            PoolObject poolObject = ObjectPool.Instance.GetFromPool(poolWindowId, poolCategory, false);
 
             if (poolObject == null)
             {
@@ -177,7 +177,7 @@ namespace UI
 
         private PoolObject GetPoolWindow(int poolCategory, string poolWindowName)
         {
-            PoolObject poolObject = ObjectPool.Instance.GetFromPool(poolWindowName, poolCategory);
+            PoolObject poolObject = ObjectPool.Instance.GetFromPool(poolWindowName, poolCategory, false);
 
             if (poolObject == null)
             {
