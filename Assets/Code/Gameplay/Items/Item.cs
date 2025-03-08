@@ -1,5 +1,6 @@
 using Database;
 using Database.Items;
+using Gameplay.Values;
 using Newtonsoft.Json.Linq;
 using Sirenix.OdinInspector;
 using System;
@@ -18,14 +19,15 @@ namespace Gameplay.Items
         [SerializeField] private ItemCategory category;
         [SerializeField] private ItemType itemType;
         [SerializeField] private int rarity;
-        [SerializeField] private int damage;
-        [SerializeField] private int healthPoints;
-        [SerializeField] private int defense;
-        [SerializeField] private int lifeSteal;
-        [SerializeField] private int criticalStrikeChance;
-        [SerializeField] private int attackSpeed;
-        [SerializeField] private int movementSpeed;
-        [SerializeField] private int luck;
+        [SerializeField] private ModifiableValue healthPoints;
+        [SerializeField] private ModifiableValue damage;
+        [SerializeField] private ModifiableValue defence;
+        [SerializeField] private ModifiableValue critChance;
+        [SerializeField] private ModifiableValue lifeSteal;
+        [SerializeField] private ModifiableValue attackSpeed;
+        [SerializeField] private ModifiableValue movementSpeed;
+        [SerializeField] private ModifiableValue luck;
+
         [SerializeField, HideInInspector] private int dataId;
 
         private ItemData data;
@@ -39,14 +41,14 @@ namespace Gameplay.Items
         public ItemType ItemType => itemType;
         public int Id => id;
         public int Rarity => rarity;
-        public int Damage => damage;
-        public int HealthPoints => healthPoints;
-        public int Defense => defense;
-        public int LifeSteal => lifeSteal;
-        public int CriticalStrikeChance => criticalStrikeChance;
-        public int AttackSpeed => attackSpeed;
-        public int MovementSpeed => movementSpeed;
-        public int Luck => luck;
+        public ModifiableValue Damage => damage;
+        public ModifiableValue HealthPoints => healthPoints;
+        public ModifiableValue Defence => defence;
+        public ModifiableValue LifeSteal => lifeSteal;
+        public ModifiableValue CritChance => critChance;
+        public ModifiableValue AttackSpeed => attackSpeed;
+        public ModifiableValue MovementSpeed => movementSpeed;
+        public ModifiableValue Luck => luck;
         public ItemData Data
         {
             get
@@ -89,14 +91,14 @@ namespace Gameplay.Items
 
             this.itemName = itemName;
             rarity = jObject.Value<int>("Rarity");
-            damage = jObject.Value<int>("Damage");
-            healthPoints = jObject.Value<int>("HealthPoints");
-            defense = jObject.Value<int>("Defense");
-            lifeSteal = jObject.Value<int>("LifeSteal");
-            criticalStrikeChance = jObject.Value<int>("CriticalStrikeChance");
-            attackSpeed = jObject.Value<int>("AttackSpeed");
-            movementSpeed = jObject.Value<int>("MovementSpeed");
-            luck = jObject.Value<int>("Luck");
+            damage = new(jObject.Value<int>("Damage"));
+            healthPoints = new(jObject.Value<int>("HealthPoints"));
+            defence = new(jObject.Value<int>("Defense"));
+            lifeSteal = new(jObject.Value<int>("LifeSteal"));
+            critChance = new(jObject.Value<int>("CriticalStrikeChance"));
+            attackSpeed = new(jObject.Value<int>("AttackSpeed"));
+            movementSpeed = new(jObject.Value<int>("MovementSpeed"));
+            luck = new(jObject.Value<int>("Luck"));
 
             CacheDataByItemType();
             Visualizations = new();

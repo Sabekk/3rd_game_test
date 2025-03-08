@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Gameplay.Targeting
 {
-    [RequireComponent (typeof(Collider))]
+    [RequireComponent(typeof(Collider))]
     public class DamagableProp : DamageTarget, IDamagable
     {
         #region VARIABLES
@@ -71,9 +71,8 @@ namespace Gameplay.Targeting
                     Vector3 pos = GetRandomPostion(objectCollider.bounds);
                     destroyedProp.transform.position = pos;
                 }
-
-                Destroy(gameObject);
             }
+            Destroy(gameObject);
         }
 
         Vector3 GetRandomPostion(Bounds bounds)

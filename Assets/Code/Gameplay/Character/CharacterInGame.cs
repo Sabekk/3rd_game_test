@@ -1,4 +1,5 @@
 using Gameplay.Character.Items;
+using Gameplay.Character.Values;
 using Gameplay.Targeting;
 using ObjectPooling;
 using Sirenix.OdinInspector;
@@ -32,13 +33,16 @@ namespace Gameplay.Character
         public CharacterController CharacterController => characterController;
         public List<ItemSocket> ItemSockets => itemSockets;
 
-        public override float Health { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public override float Health
+        {
+            get => CharacterValues.CurrentHealth.CurrentValue;
+            set => CharacterValues.CurrentHealth.SetBaseValue(value);
+        }
 
-        public override float MaxHealth => throw new System.NotImplementedException();
-
-        public override bool IsKilled { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-
+        public override float MaxHealth => CharacterValues.Health.CurrentValue;
+        public override bool IsKilled { get; set; }
         public PoolObject Poolable { get; set; }
+        private CharacterValues CharacterValues => Character.ValuesController.CharacterValues;
 
         #endregion
 
@@ -46,8 +50,8 @@ namespace Gameplay.Character
 
         public override void Kill()
         {
-            OnKill?.Invoke();
             base.Kill();
+            OnKill?.Invoke();
         }
 
         public void AssignPoolable(PoolObject poolable)

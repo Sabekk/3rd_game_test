@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Gameplay.Items
@@ -14,7 +15,8 @@ namespace Gameplay.Items
 
         public float GetDamageToDeal()
         {
-            return 100;
+            bool isCritical = UnityEngine.Random.Range(0, 100) < Owner.ValuesController.CharacterValues.CritChance.CurrentValue;
+            return Owner.ValuesController.CharacterValues.Damage.CurrentValue * (isCritical ? 2f : 1f);
         }
 
         protected override void OnCollisionInterract(Collider collider)

@@ -20,6 +20,7 @@ namespace Database.Character.Data
         [SerializeField, FoldoutGroup("Character settings"), ValueDropdown(ObjectPoolDatabase.GET_POOL_CHARACTERS_IN_GAME_METHOD)] private int characterInGamePoolId;
 
         [SerializeField, FoldoutGroup("Starting settings")] private int maxInventorySlots;
+        [SerializeField, FoldoutGroup("Starting settings")] private StartingCharacterValues startingValues;
 
         #endregion
 
@@ -29,6 +30,7 @@ namespace Database.Character.Data
         public int CharacterInGamePoolId => characterInGamePoolId;
         public int MaxInventorySlots => maxInventorySlots;
         public string CharacterName => characterName;
+        public StartingCharacterValues StartingValues => startingValues;
 
         #endregion
 

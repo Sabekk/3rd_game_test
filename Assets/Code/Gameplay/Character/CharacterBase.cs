@@ -1,5 +1,6 @@
 using Database;
 using Database.Character.Data;
+using Gameplay.Character.Values;
 using Gameplay.Equipment;
 using Gameplay.Targeting;
 using ObjectPooling;
@@ -26,12 +27,11 @@ namespace Gameplay.Character
         [SerializeField] private bool isInitialzied;
         [SerializeField] private int dataId;
 
+        [SerializeField, FoldoutGroup("Controllers")] private ValuesController valuesController;
         [SerializeField, FoldoutGroup("Controllers")] private EquipmentController equipmentController;
 
         private CharacterInGame characterInGame;
         private CharacterData data;
-
-        private float tmpHealth;
 
         #endregion
 
@@ -49,6 +49,8 @@ namespace Gameplay.Character
 
         public CharacterInGame CharacterInGame => characterInGame;
         public EquipmentController EquipmentController => equipmentController;
+        public ValuesController ValuesController => valuesController;
+
         public bool CanAttack => true;
 
         #endregion
@@ -71,8 +73,6 @@ namespace Gameplay.Character
 
         public void Initialize()
         {
-            //TODO Add values
-
             SetControllers();
             InitializeControllers();
 
@@ -117,7 +117,12 @@ namespace Gameplay.Character
         protected virtual void SetControllers()
         {
             controllers = new();
-            controllers.Add(equipmentController = new());
+
+            valuesController = new();
+            equipmentController = new();
+
+            controllers.Add(valuesController);
+            controllers.Add(equipmentController);
         }
 
         protected void InitializeControllers()

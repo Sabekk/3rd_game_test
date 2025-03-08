@@ -27,11 +27,13 @@ namespace Gameplay.Character
             this.character = character;
             SetModules();
 
+            AttachEvents();
             modules.ForEach(c => c.Initialize(character));
         }
 
         public virtual void CleanUp()
         {
+            DetachEvents();
             modules.ForEach(c => c.CleanUp());
         }
 
