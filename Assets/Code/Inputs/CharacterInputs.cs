@@ -13,6 +13,7 @@ namespace Gameplay.Inputs
         public event Action<Vector2> OnMoveInDirection;
         public event Action<Vector2> OnLookInDirection;
         public event Action OnJumping;
+        public event Action OnAttackTrigger;
 
         #endregion
 
@@ -52,6 +53,12 @@ namespace Gameplay.Inputs
         {
             if (!context.started)
                 OnMoveInDirection?.Invoke(context.ReadValue<Vector2>());
+        }
+
+        public void OnAttack(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+                OnAttackTrigger?.Invoke();
         }
 
         #endregion

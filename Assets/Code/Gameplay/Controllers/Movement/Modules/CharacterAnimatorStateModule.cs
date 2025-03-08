@@ -43,6 +43,12 @@ namespace Gameplay.Character.Movement
             dirY = direction.y;
         }
 
+        protected virtual void TriggerAttack()
+        {
+            if (Character.CanAttack)
+                CharacterAnimator.SetTrigger("Attack");
+        }
+
         private void SetMovementAnimation(float xDir, float yDir)
         {
             if (CharacterAnimator == null)

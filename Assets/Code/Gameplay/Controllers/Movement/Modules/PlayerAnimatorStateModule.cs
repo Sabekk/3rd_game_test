@@ -20,6 +20,7 @@ namespace Gameplay.Character.Movement
             if (InputManager.Instance)
             {
                 InputManager.Instance.CharacterInputs.OnMoveInDirection += MoveInDirection;
+                InputManager.Instance.CharacterInputs.OnAttackTrigger += TriggerAttack;
             }
         }
 
@@ -29,6 +30,7 @@ namespace Gameplay.Character.Movement
             if (InputManager.Instance)
             {
                 InputManager.Instance.CharacterInputs.OnMoveInDirection -= MoveInDirection;
+                InputManager.Instance.CharacterInputs.OnAttackTrigger -= TriggerAttack;
             }
         }
 

@@ -46,6 +46,7 @@ namespace Gameplay.Character
 
         public CharacterInGame CharacterInGame => characterInGame;
         public EquipmentController EquipmentController => equipmentController;
+        public bool CanAttack => true;
 
         #endregion
 
