@@ -59,9 +59,10 @@ namespace UI.Window.Inventory
             base.AttachEvents();
             if (Player != null)
             {
-                Player.EquipmentController.OnItemEquipped += HandleItemEquipped;
-                Player.EquipmentController.OnItemCollected += HandleItemCollected;
-                Player.EquipmentController.OnItemRemoved += HandleItemRemoved;
+                Player.EquipmentController.OnItemEquipped += HandleRemoveItemToInventory;
+                Player.EquipmentController.OnItemUnequipped += HandleAddItemToInventory;
+                Player.EquipmentController.OnItemCollected += HandleAddItemToInventory;
+                Player.EquipmentController.OnItemRemoved += HandleRemoveItemToInventory;
                 Player.EquipmentController.OnItemsReplaced += HandleItemsReplaced;
             }
         }
@@ -71,9 +72,10 @@ namespace UI.Window.Inventory
             base.DetachEvents();
             if (Player != null)
             {
-                Player.EquipmentController.OnItemEquipped -= HandleItemEquipped;
-                Player.EquipmentController.OnItemCollected -= HandleItemCollected;
-                Player.EquipmentController.OnItemRemoved -= HandleItemRemoved;
+                Player.EquipmentController.OnItemEquipped -= HandleRemoveItemToInventory;
+                Player.EquipmentController.OnItemUnequipped -= HandleAddItemToInventory;
+                Player.EquipmentController.OnItemCollected -= HandleAddItemToInventory;
+                Player.EquipmentController.OnItemRemoved -= HandleRemoveItemToInventory;
                 Player.EquipmentController.OnItemsReplaced -= HandleItemsReplaced;
             }
         }
@@ -169,17 +171,12 @@ namespace UI.Window.Inventory
                 slot.SetItem(equippedItem);
         }
 
-        private void HandleItemCollected(Item item)
+        private void HandleAddItemToInventory(Item item)
         {
             SetItemToFirstEmptySlot(item);
         }
 
-        private void HandleItemRemoved(Item item)
-        {
-            RemoveItemFromInventory(item);
-        }
-
-        private void HandleItemEquipped(Item item)
+        private void HandleRemoveItemToInventory(Item item)
         {
             RemoveItemFromInventory(item);
         }

@@ -29,11 +29,11 @@ namespace UI.Window.Inventory
             base.Initialize();
             categorySlots = new();
 
-            for (int i = 0; i < slots.Count; i++)
+            foreach (var slot in slots)
             {
-                slots[i].Initialize(() => HandleSlotClick(slots[i]));
+                slot.Initialize(() => HandleSlotClick(slot));
 
-                if (categorySlots.TryAdd(slots[i].ItemSlotCategory, slots[i]) == false)
+                if (categorySlots.TryAdd(slot.ItemSlotCategory, slot) == false)
                     Debug.LogError($"Duplicated slots category in equipment slots. Check settings of prefab", this);
             }
 
@@ -94,7 +94,18 @@ namespace UI.Window.Inventory
 
         private void HandleSlotClick(EquipmentSlot slot)
         {
+            if (slot.HasItem == false)
+                return;
 
+            if (slot.IsSelected == false)
+            {
+                for (int i = 0; i < slots.Count; i++)
+                    slots[i].SetSelected(slots[i] == slot);
+            }
+            else
+            {
+                Player.EquipmentController.UnequipItem(slot.ItemInSlot);
+            }
         }
 
         private void HandleItemsReplaced(Item newEquipedItem, Item oldEquipedItem)

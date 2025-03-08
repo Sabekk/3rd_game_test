@@ -59,6 +59,17 @@ namespace Gameplay.Equipment
             return true;
         }
 
+        internal bool ReplaceItems(Item newItem, Item oldItem)
+        {
+            int indexOfOldItem = ItemsInventory.IndexOf(oldItem);
+            if (indexOfOldItem < 0)
+                return false;
+
+            ItemsInventory.RemoveAt(indexOfOldItem);
+            ItemsInventory.Insert(indexOfOldItem, newItem);
+
+            return true;
+        }
 
         #endregion
     }

@@ -89,8 +89,13 @@ namespace Gameplay.Equipment
         private void ReplaceItems(Item itemToEquip, Item equippedItem)
         {
             EquipmentModule.UneqipItem(equippedItem);
-            InventoryModule.RemoveItem(itemToEquip);
             EquipmentModule.EquipItem(itemToEquip);
+
+            if (InventoryModule.ReplaceItems(equippedItem, itemToEquip) == false)
+            {
+                InventoryModule.RemoveItem(itemToEquip, false);
+                InventoryModule.AddItem(equippedItem);
+            }
 
             OnItemsReplaced?.Invoke(itemToEquip, equippedItem);
         }
