@@ -9,15 +9,14 @@ namespace Gameplay.Equipment
     public class EquipmentController : CharacterControllerBase
     {
         #region ACTIONS
-
-        public event Action<Item> OnItemCollect;
-        public event Action<Item> OnItemRemove;
-        public event Action<Item> OnItemEquip;
-        public event Action<Item> OnItemUnequip;
+        public event Action<Item> OnItemCollected;
+        public event Action<Item> OnItemRemoved;
+        public event Action<Item> OnItemEquipped;
+        public event Action<Item> OnItemUnequipped;
         /// <summary>
         /// Item to equip | equipped item
         /// </summary>
-        public event Action<Item, Item> OnItemsReplace;
+        public event Action<Item, Item> OnItemsReplaced;
 
         #endregion
 
@@ -48,11 +47,6 @@ namespace Gameplay.Equipment
             modules.Add(visualizationModule = new());
         }
 
-        public void InitializeActionToModules()
-        {
-
-        }
-
         public bool IsEquiped(Item item)
         {
             return EquipmentModule.IsEquiped(item);
@@ -69,37 +63,48 @@ namespace Gameplay.Equipment
                 return;
 
             if (IsItemTypeEquiped(item.Category, out Item equipedItem))
+            {
                 ReplaceItems(item, equipedItem);
-            //UnequipItem(equipedItem);
+            }
             else
-                OnItemEquip?.Invoke(item);
+            {
+                InventoryModule.RemoveItem(item, false);
+                EquipmentModule.EquipItem(item);
+                OnItemEquipped?.Invoke(item);
+            }
         }
 
         public void UnequipItem(Item item)
         {
-            if (!IsEquiped(item))
+            if (InventoryModule.CanAddItem() == false)
                 return;
 
-            OnItemUnequip?.Invoke(item);
+            if (EquipmentModule.UneqipItem(item))
+            {
+                InventoryModule.AddItem(item);
+                OnItemUnequipped?.Invoke(item);
+            }
         }
 
         private void ReplaceItems(Item itemToEquip, Item equippedItem)
         {
-            OnItemsReplace?.Invoke(itemToEquip, equippedItem);
+            EquipmentModule.UneqipItem(equippedItem);
+            InventoryModule.RemoveItem(itemToEquip);
+            EquipmentModule.EquipItem(itemToEquip);
+
+            OnItemsReplaced?.Invoke(itemToEquip, equippedItem);
         }
 
         public void CollectItem(Item item)
         {
-            if (InventoryModule.CanAddItem())
-                OnItemCollect?.Invoke(item);
+            if (InventoryModule.AddItem(item, true))
+                OnItemCollected?.Invoke(item);
         }
 
         public void RemoveItem(Item item)
         {
-            UnequipItem(item);
-
-            if (InventoryModule.ContainItem(item))
-                OnItemRemove?.Invoke(item);
+            if (InventoryModule.RemoveItem(item))
+                OnItemRemoved?.Invoke(item);
         }
         #endregion
     }

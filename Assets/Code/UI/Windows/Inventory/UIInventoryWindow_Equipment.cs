@@ -59,9 +59,9 @@ namespace UI.Window.Inventory
             base.AttachEvents();
             if (Player != null)
             {
-                Player.EquipmentController.EquipmentModule.OnItemEquiped += HandleItemEquiped;
-                Player.EquipmentController.EquipmentModule.OnItemUnequiped += HandleItemUnequiped;
-                Player.EquipmentController.EquipmentModule.OnItemsReplaced += HandleItemsReplaced;
+                Player.EquipmentController.OnItemEquipped += HandleItemEquiped;
+                Player.EquipmentController.OnItemUnequipped += HandleItemUnequiped;
+                Player.EquipmentController.OnItemsReplaced += HandleItemsReplaced;
             }
         }
         protected override void DetachEvents()
@@ -69,9 +69,9 @@ namespace UI.Window.Inventory
             base.DetachEvents();
             if (Player != null)
             {
-                Player.EquipmentController.EquipmentModule.OnItemEquiped -= HandleItemEquiped;
-                Player.EquipmentController.EquipmentModule.OnItemUnequiped -= HandleItemUnequiped;
-                Player.EquipmentController.EquipmentModule.OnItemsReplaced -= HandleItemsReplaced;
+                Player.EquipmentController.OnItemEquipped -= HandleItemEquiped;
+                Player.EquipmentController.OnItemUnequipped -= HandleItemUnequiped;
+                Player.EquipmentController.OnItemsReplaced -= HandleItemsReplaced;
             }
         }
 

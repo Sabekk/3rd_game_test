@@ -59,9 +59,10 @@ namespace UI.Window.Inventory
             base.AttachEvents();
             if (Player != null)
             {
-                Player.EquipmentController.InventoryModule.OnItemCollected += HandleItemCollected;
-                Player.EquipmentController.InventoryModule.OnItemRemoved += HandleItemRemoved;
-                Player.EquipmentController.InventoryModule.OnItemsReplaced += HandleItemsReplaced;
+                Player.EquipmentController.OnItemEquipped += HandleItemEquipped;
+                Player.EquipmentController.OnItemCollected += HandleItemCollected;
+                Player.EquipmentController.OnItemRemoved += HandleItemRemoved;
+                Player.EquipmentController.OnItemsReplaced += HandleItemsReplaced;
             }
         }
 
@@ -70,9 +71,10 @@ namespace UI.Window.Inventory
             base.DetachEvents();
             if (Player != null)
             {
-                Player.EquipmentController.InventoryModule.OnItemCollected -= HandleItemCollected;
-                Player.EquipmentController.InventoryModule.OnItemRemoved -= HandleItemRemoved;
-                Player.EquipmentController.InventoryModule.OnItemsReplaced -= HandleItemsReplaced;
+                Player.EquipmentController.OnItemEquipped -= HandleItemEquipped;
+                Player.EquipmentController.OnItemCollected -= HandleItemCollected;
+                Player.EquipmentController.OnItemRemoved -= HandleItemRemoved;
+                Player.EquipmentController.OnItemsReplaced -= HandleItemsReplaced;
             }
         }
 
@@ -155,16 +157,16 @@ namespace UI.Window.Inventory
             }
         }
 
-        private void HandleItemsReplaced(Item newItem, Item oldItem)
+        private void HandleItemsReplaced(Item itemToEquip, Item equippedItem)
         {
-            InventorySlot slot = GetSlotByItem(oldItem);
+            InventorySlot slot = GetSlotByItem(itemToEquip);
             if (slot == null)
             {
-                Debug.LogError($"Item wasn't in inventory {oldItem.ItemName}");
-                SetItemToFirstEmptySlot(newItem);
+                Debug.LogError($"Item wasn't in inventory {itemToEquip.ItemName}");
+                SetItemToFirstEmptySlot(equippedItem);
             }
             else
-                slot.SetItem(newItem);
+                slot.SetItem(equippedItem);
         }
 
         private void HandleItemCollected(Item item)
@@ -173,6 +175,11 @@ namespace UI.Window.Inventory
         }
 
         private void HandleItemRemoved(Item item)
+        {
+            RemoveItemFromInventory(item);
+        }
+
+        private void HandleItemEquipped(Item item)
         {
             RemoveItemFromInventory(item);
         }
