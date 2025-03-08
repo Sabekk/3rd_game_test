@@ -11,6 +11,7 @@ namespace Database.Items
 
         [SerializeField] private ItemCategory itemCategory;
         [SerializeField] private Sprite categoryIcon;
+        [SerializeField] private ItemData defaultItemData;
         [SerializeField] private List<ItemData> itemsInCategory;
 
         #endregion
@@ -20,6 +21,7 @@ namespace Database.Items
         public ItemCategory ItemCategory => itemCategory;
         public Sprite CategoryIcon => categoryIcon;
         public List<ItemData> ItemsInCategory => itemsInCategory;
+        public ItemData DefaultItemData => defaultItemData;
 
         #endregion
 
@@ -43,12 +45,14 @@ namespace Database.Items
 
         public ItemData GetItemData(ItemType itemType)
         {
-            return itemsInCategory.Find(x => x.ItemType == itemType);
+            ItemData itemData = itemsInCategory.Find(x => x.ItemType == itemType);
+            return itemData == null ? DefaultItemData : itemData;
         }
 
         public ItemData GetItemData(int dataId)
         {
-            return itemsInCategory.Find(x => x.IdEquals(dataId));
+            ItemData itemData = itemsInCategory.Find(x => x.IdEquals(dataId));
+            return itemData == null ? DefaultItemData : itemData;
         }
 
         #endregion

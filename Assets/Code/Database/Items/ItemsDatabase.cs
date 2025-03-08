@@ -1,3 +1,4 @@
+using ObjectPooling;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections;
@@ -12,11 +13,14 @@ namespace Database.Items
     {
         #region VARIABLES
 
+        [SerializeField, ValueDropdown(ObjectPoolDatabase.GET_POOL_CATEGORIES_METHOD)] private int idOfItemVisualizationsFromPool;
         [SerializeField] private List<ItemsCategoryData> itemCategories;
 
         #endregion
 
         #region PROPERTIES
+
+        public int IdOfItemVisualizationsFromPool => idOfItemVisualizationsFromPool;
 
         #endregion
 
@@ -47,7 +51,7 @@ namespace Database.Items
         }
 
         [Button]
-        private void RebuildIconsDatabase()
+        private void RebuildItemsDatabase()
         {
             itemCategories.Clear();
 

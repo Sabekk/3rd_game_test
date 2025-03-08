@@ -29,4 +29,11 @@ public static class GameObjectExtensions
             UnityEngine.Object.DestroyImmediate(transform.GetChild(i).gameObject);
         }
     }
+
+    public static void SetParentWithReset(this Transform transform, Transform parent)
+    {
+        transform.SetParent(parent);
+        transform.localPosition = Vector3.zero;
+        transform.localRotation = Quaternion.identity;
+    }
 }

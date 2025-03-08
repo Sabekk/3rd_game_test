@@ -12,9 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34e65a66c294bd84c86b4e71d894e584, type: 3}
   m_Name: ItemsDatabase
   m_EditorClassIdentifier: 
+  idOfItemVisualizationsFromPool: 1629130278
   itemCategories:
   - itemCategory: 0
     categoryIcon: {fileID: 21300000, guid: 8921da5b6bb26264bb43316cf578f7c2, type: 3}
+    defaultItemData:
+      id: -428227178
+      itemType: 0
+      poolVisualizationId: 1571573469
+      icon: {fileID: 21300000, guid: 14721057dc4c2cf4daa8b84c446d8f4b, type: 3}
     itemsInCategory:
     - id: -428227178
       itemType: 0
@@ -62,6 +68,11 @@ MonoBehaviour:
       icon: {fileID: 21300000, guid: 63198d7f88a9dfd4994991fa37655dba, type: 3}
   - itemCategory: 1
     categoryIcon: {fileID: 21300000, guid: da587cadb4cd47641aa70de69ee44bcc, type: 3}
+    defaultItemData:
+      id: 730597352
+      itemType: 0
+      poolVisualizationId: -953138510
+      icon: {fileID: 21300000, guid: d07dae03a11e8d34cba1a21bc7c1fadd, type: 3}
     itemsInCategory:
     - id: 730597352
       itemType: 0
@@ -109,6 +120,11 @@ MonoBehaviour:
       icon: {fileID: 21300000, guid: ff8a1b820a7b024409d108f79fd16dea, type: 3}
   - itemCategory: 2
     categoryIcon: {fileID: 21300000, guid: 6cc40ac475afda64193bfe7d69a47e9a, type: 3}
+    defaultItemData:
+      id: -1378023722
+      itemType: 0
+      poolVisualizationId: 772315644
+      icon: {fileID: 21300000, guid: f51a7d9c3befa5742bd16c1616604f30, type: 3}
     itemsInCategory:
     - id: -1378023722
       itemType: 0
@@ -156,6 +172,11 @@ MonoBehaviour:
       icon: {fileID: 21300000, guid: 3bdd24a76b168134d806903a53fbdff8, type: 3}
   - itemCategory: 3
     categoryIcon: {fileID: 21300000, guid: 0a7f6d31e192a3f4590e882f5a26b0d5, type: 3}
+    defaultItemData:
+      id: -208633936
+      itemType: 0
+      poolVisualizationId: -2093555460
+      icon: {fileID: 21300000, guid: 6bb18d1a794ba8b45bde4ea16a5eca16, type: 3}
     itemsInCategory:
     - id: -208633936
       itemType: 0
@@ -203,6 +224,11 @@ MonoBehaviour:
       icon: {fileID: 21300000, guid: 35600dfb1ea1a914b81c958cf5aacdfa, type: 3}
   - itemCategory: 4
     categoryIcon: {fileID: 21300000, guid: d3acbd47390bac448b8336fec43cb879, type: 3}
+    defaultItemData:
+      id: -1212663940
+      itemType: 0
+      poolVisualizationId: -791366765
+      icon: {fileID: 21300000, guid: 8b35b640cb9c8df459717fa36f554af3, type: 3}
     itemsInCategory:
     - id: -1212663940
       itemType: 0
@@ -250,6 +276,11 @@ MonoBehaviour:
       icon: {fileID: 21300000, guid: 1e6c8c65fa0d2fb40a526bcfbfa1ba4c, type: 3}
   - itemCategory: 5
     categoryIcon: {fileID: 21300000, guid: e252dca4cd58b284cafba1e047dcbfb5, type: 3}
+    defaultItemData:
+      id: -209466239
+      itemType: 0
+      poolVisualizationId: 2025792240
+      icon: {fileID: 21300000, guid: 5d7c3271caadddf42a2ec31ccf523d8d, type: 3}
     itemsInCategory:
     - id: -209466239
       itemType: 0

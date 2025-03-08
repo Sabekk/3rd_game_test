@@ -57,6 +57,8 @@ namespace Gameplay.Items
             }
         }
 
+        public List<ItemVisualizationBase> Visualizations { get; set; }
+
         #endregion
 
         #region CONSTRUCTORS
@@ -95,7 +97,9 @@ namespace Gameplay.Items
             attackSpeed = jObject.Value<int>("AttackSpeed");
             movementSpeed = jObject.Value<int>("MovementSpeed");
             luck = jObject.Value<int>("Luck");
+
             CacheDataByItemType();
+            Visualizations = new();
         }
 
         public bool IdEquals(int id)

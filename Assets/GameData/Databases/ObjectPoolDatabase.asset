@@ -49,5 +49,37 @@ MonoBehaviour:
           type: 3}
         size: 10
   - id: 1629130278
-    categoryName: NewCategory
-    groups: []
+    categoryName: Items
+    groups:
+    - groupName: Base items
+      instances:
+      - id: 1571573469
+        name: Armor
+        poolObject: {fileID: 4281468764863913798, guid: 62d3b31b229ddd54e83a98c4089958fd,
+          type: 3}
+        size: 2
+      - id: -953138510
+        name: Boot
+        poolObject: {fileID: 3098896456785474879, guid: 6f664b42f31c26944936010b0a0b5d73,
+          type: 3}
+        size: 2
+      - id: 772315644
+        name: Helmet
+        poolObject: {fileID: 1430931098198630044, guid: a1769b034ddf4d249a11c947728b009c,
+          type: 3}
+        size: 2
+      - id: -2093555460
+        name: Necklace
+        poolObject: {fileID: 1100759013473616577, guid: 51aa9b6d6f490d5409f872c1a18763e8,
+          type: 3}
+        size: 2
+      - id: -791366765
+        name: Ring
+        poolObject: {fileID: 1450586402722779748, guid: 18f23a2845fa7284e8608e62e76c2455,
+          type: 3}
+        size: 2
+      - id: 2025792240
+        name: Weapon
+        poolObject: {fileID: 1917391421932174, guid: bf16ab0ef2bf2e043b708237e92f90cc,
+          type: 3}
+        size: 2
