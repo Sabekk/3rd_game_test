@@ -83,3 +83,30 @@ MonoBehaviour:
         poolObject: {fileID: 1917391421932174, guid: bf16ab0ef2bf2e043b708237e92f90cc,
           type: 3}
         size: 2
+  - id: 16369438
+    categoryName: Prop
+    groups:
+    - groupName: Damagable
+      instances:
+      - id: 89777242
+        name: Damagable_skeleton
+        poolObject: {fileID: 3644098256377186842, guid: 2d248834d85082d4fb97feac26a1e3a0,
+          type: 3}
+        size: 2
+      - id: 1254734716
+        name: Damagable pillar
+        poolObject: {fileID: 1522465102252100844, guid: fdd4d36a7ff6bc249a759d151b49b73c,
+          type: 3}
+        size: 2
+    - groupName: Props
+      instances:
+      - id: -115125149
+        name: Bone_Prop
+        poolObject: {fileID: 8236985532726015657, guid: eb8017c668760e540b665e0f0d552c76,
+          type: 3}
+        size: 5
+      - id: 763130782
+        name: Stone_Prop
+        poolObject: {fileID: 6351618957731382583, guid: b150e62b96683114cb6baceccf2c629b,
+          type: 3}
+        size: 5

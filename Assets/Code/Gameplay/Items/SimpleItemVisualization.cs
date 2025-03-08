@@ -4,7 +4,7 @@ namespace Gameplay.Items
 {
     public class SimpleItemVisualization : ItemVisualizationBase
     {
-        protected override void OnCollisionInterract(Collision collision)
+        protected override void OnCollisionInterract(Collider collider)
         {
             
         }

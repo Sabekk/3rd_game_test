@@ -22,22 +22,34 @@ namespace Gameplay.Items
 
         #region UNITY_METHODS
 
-        private void OnCollisionEnter(Collision collision)
+        private void OnTriggerEnter(Collider collider)
         {
             if (interracting == false)
                 return;
 
-            if (collision.gameObject == Owner.CharacterInGame)
+
+            if (collider.gameObject == Owner.CharacterInGame.gameObject)
                 return;
 
-            OnCollisionInterract(collision);
+            OnCollisionInterract(collider);
         }
+
+        //private void OnCollisionEnter(Collision collision)
+        //{
+        //    if (interracting == false)
+        //        return;
+
+        //    if (collision.gameObject == Owner.CharacterInGame)
+        //        return;
+
+        //    OnCollisionInterract(collision);
+        //}
 
         #endregion
 
         #region METHODS
 
-        protected abstract void OnCollisionInterract(Collision collision);
+        protected abstract void OnCollisionInterract(Collider collider);
 
         public void Initialize(CharacterBase owner, Item item)
         {

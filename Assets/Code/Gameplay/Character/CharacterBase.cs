@@ -1,6 +1,7 @@
 using Database;
 using Database.Character.Data;
 using Gameplay.Equipment;
+using Gameplay.Targeting;
 using ObjectPooling;
 using Sirenix.OdinInspector;
 using System;
@@ -10,7 +11,7 @@ using UnityEngine;
 
 namespace Gameplay.Character
 {
-    public class CharacterBase
+    public class CharacterBase : DamageTarget
     {
         #region ACTION
 
@@ -24,11 +25,14 @@ namespace Gameplay.Character
         [SerializeField] protected List<CharacterControllerBase> controllers;
         [SerializeField] private bool isInitialzied;
         [SerializeField] private int dataId;
+        [SerializeField] private bool isKilled;
 
         [SerializeField, FoldoutGroup("Controllers")] private EquipmentController equipmentController;
 
         private CharacterInGame characterInGame;
         private CharacterData data;
+
+        private float tmpHealth;
 
         #endregion
 
@@ -48,9 +52,22 @@ namespace Gameplay.Character
         public EquipmentController EquipmentController => equipmentController;
         public bool CanAttack => true;
 
-        #endregion
+        public override float Health
+        {
+            get { return tmpHealth; }
+            set { tmpHealth = value; }
+        }
 
-        #region CONSTRUCTORS
+        public override float MaxHealth => 100;
+        public override bool IsKilled
+        {
+            get { return isKilled; }
+            set { isKilled = value; }
+        }
+
+#endregion
+
+            #region CONSTRUCTORS
 
         public CharacterBase() { }
 
@@ -99,6 +116,12 @@ namespace Gameplay.Character
             }
             else
                 return false;
+        }
+
+        public override void Kill()
+        {
+            IsKilled = true;
+            Debug.Log("DEATH");
         }
 
         protected virtual void SetControllers()
