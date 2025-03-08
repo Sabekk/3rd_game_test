@@ -36,6 +36,8 @@ namespace Gameplay.Character
                     characters.Remove(characterTmp.Key);
             }
 
+            charactersTmp.Clear();
+
             for (int i = 0; i < characters.Count; i++)
                 characters[i].OnUpdate();
         }
@@ -73,9 +75,15 @@ namespace Gameplay.Character
             character.SetData(data);
             character.Initialize();
             if (character.TryCreateVisualization(transform))
-                characters.Add(character);
+                charactersTmp.Add(character, true);
 
             return character;
+        }
+
+        public void RemoveCharacter<T>(T character) where T : CharacterBase
+        {
+            character.CleanUp();
+            charactersTmp.Add(character, false);
         }
 
         [Button]

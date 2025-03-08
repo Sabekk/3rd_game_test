@@ -129,6 +129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 300
-  spawnDestroyedPrefab: 1
+  objectCollider: {fileID: 7491142105189512000}
+  spawnDestroyedPrefab: 0
   itemsCount: 5
   destroyedPropId: 763130782

@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace Gameplay.Character
 {
-    public class CharacterBase : DamageTarget
+    public class CharacterBase
     {
         #region ACTION
 
@@ -25,7 +25,6 @@ namespace Gameplay.Character
         [SerializeField] protected List<CharacterControllerBase> controllers;
         [SerializeField] private bool isInitialzied;
         [SerializeField] private int dataId;
-        [SerializeField] private bool isKilled;
 
         [SerializeField, FoldoutGroup("Controllers")] private EquipmentController equipmentController;
 
@@ -52,22 +51,9 @@ namespace Gameplay.Character
         public EquipmentController EquipmentController => equipmentController;
         public bool CanAttack => true;
 
-        public override float Health
-        {
-            get { return tmpHealth; }
-            set { tmpHealth = value; }
-        }
+        #endregion
 
-        public override float MaxHealth => 100;
-        public override bool IsKilled
-        {
-            get { return isKilled; }
-            set { isKilled = value; }
-        }
-
-#endregion
-
-            #region CONSTRUCTORS
+        #region CONSTRUCTORS
 
         public CharacterBase() { }
 
@@ -93,6 +79,15 @@ namespace Gameplay.Character
             isInitialzied = true;
         }
 
+        public void CleanUp()
+        {
+            if (CharacterInGame)
+            {
+                CharacterInGame.OnKill -= HandleCharacterKill;
+                ObjectPool.Instance.ReturnToPool(CharacterInGame);
+            }
+        }
+
         public void SetData(CharacterData data)
         {
             dataId = data.Id;
@@ -110,18 +105,13 @@ namespace Gameplay.Character
             characterInGame = ObjectPool.Instance.GetFromPool(Data.CharacterInGamePoolId, -1).GetComponent<CharacterInGame>();
             if (characterInGame != null)
             {
+                characterInGame.OnKill += HandleCharacterKill;
                 characterInGame.transform.SetParent(parent);
                 OnCharacterInGameCreated?.Invoke();
                 return true;
             }
             else
                 return false;
-        }
-
-        public override void Kill()
-        {
-            IsKilled = true;
-            Debug.Log("DEATH");
         }
 
         protected virtual void SetControllers()
@@ -144,6 +134,20 @@ namespace Gameplay.Character
         {
             controllers.ForEach(m => m.CleanUp());
         }
+
+
+        #region HANDLERS
+
+        private void HandleCharacterKill()
+        {
+            if (CharacterInGame)
+                CharacterInGame.OnKill -= HandleCharacterKill;
+            Debug.Log("DEATH");
+
+            CharacterManager.Instance.RemoveCharacter(this);
+        }
+
+        #endregion
 
         #endregion
     }

@@ -1,6 +1,8 @@
+using UnityEngine;
+
 namespace Gameplay.Targeting
 {
-    public abstract class DamageTarget : IDamagable
+    public abstract class DamageTarget : MonoBehaviour, IDamagable
     {
         #region VARIABLES
 

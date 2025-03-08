@@ -14,7 +14,7 @@ namespace Gameplay.Items
 
         public float GetDamageToDeal()
         {
-            return 10;
+            return 100;
         }
 
         protected override void OnCollisionInterract(Collider collider)
