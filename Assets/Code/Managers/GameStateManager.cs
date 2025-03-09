@@ -1,7 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using UI;
+using UI.Window;
+using UI.Window.Pause;
 
 namespace Gameplay.GameStates
 {
@@ -23,16 +23,90 @@ namespace Gameplay.GameStates
 
         #endregion
 
+        #region UNITY_METHODS
+
+        private void Start()
+        {
+            AttachEvents();
+            SetStartingState();
+        }
+
+        private void OnDestroy()
+        {
+            DetachEvents();
+        }
+
+        #endregion
+
         #region METHODS
 
-        public void ChangeState(GameStateType gameState)
+        private void AttachEvents()
         {
-            if (CurrentGameState == gameState)
+            if (UIManager.Instance)
+            {
+                UIManager.Instance.OnWindowOpened += HandleWindowOpened;
+                UIManager.Instance.OnWindowClosed += HandleWindowClosed;
+            }
+        }
+
+        private void DetachEvents()
+        {
+            if (UIManager.Instance)
+            {
+                UIManager.Instance.OnWindowOpened -= HandleWindowOpened;
+                UIManager.Instance.OnWindowClosed -= HandleWindowClosed;
+            }
+        }
+
+        private void SetStartingState()
+        {
+            bool setted = false;
+            if (UIManager.Instance)
+            {
+                if (UIManager.Instance.IsOpenened<UIPauseWindow>())
+                {
+                    ChangeState(GameStateType.PAUSE);
+                    setted = true;
+                }
+                else if (UIManager.Instance.AnyWindowIsOpened)
+                {
+                    ChangeState(GameStateType.WINDOW_VIEW);
+                    setted = true;
+                }
+            }
+            if (!setted)
+                ChangeState(GameStateType.PLAYING);
+        }
+
+        private void ChangeState(GameStateType gameState, bool force = false)
+        {
+            if (force == false && CurrentGameState == gameState)
                 return;
 
             CurrentGameState = gameState;
             OnCurrentGameStated?.Invoke();
         }
+
+
+        #region HANDLERS
+
+        private void HandleWindowOpened(UIWindowBase window)
+        {
+            if (window is UIPauseWindow)
+                ChangeState(GameStateType.PAUSE);
+            else
+                ChangeState(GameStateType.WINDOW_VIEW);
+        }
+
+        private void HandleWindowClosed(UIWindowBase window)
+        {
+            if (UIManager.Instance.AnyWindowIsOpened == false)
+            {
+                ChangeState(GameStateType.PLAYING);
+            }
+        }
+
+        #endregion
 
         #endregion
     }

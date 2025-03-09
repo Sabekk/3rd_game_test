@@ -17,6 +17,7 @@ namespace Gameplay.Inputs
 
         public UIInputs UiInputs { get; private set; }
         public CharacterInputs CharacterInputs { get; private set; }
+        public PauseInputs PauseInputs { get; private set; }
         public static InputBinds Input
         {
             get
@@ -37,11 +38,13 @@ namespace Gameplay.Inputs
             base.Awake();
             UiInputs = new(Input);
             CharacterInputs = new(Input);
+            PauseInputs = new(Input);
         }
 
         private void Start()
         {
             AttachEvents();
+            RefreshInputs();
         }
 
         private void OnDestroy()
@@ -59,7 +62,7 @@ namespace Gameplay.Inputs
 
         private void AttachEvents()
         {
-            if(GameStateManager.Instance)
+            if (GameStateManager.Instance)
             {
                 GameStateManager.Instance.OnCurrentGameStated += HandleCurrentGameStated;
             }
@@ -73,31 +76,39 @@ namespace Gameplay.Inputs
             }
         }
 
+        private void RefreshInputs()
+        {
+            if (GameStateManager.Instance)
+                switch (GameStateManager.Instance.CurrentGameState)
+                {
+                    case GameStateType.PLAYING:
+                        CharacterInputs.Enable();
+                        UiInputs.Enable();
+                        PauseInputs.Disable();
+                        break;
+                    case GameStateType.WINDOW_VIEW:
+                        CharacterInputs.Disable();
+                        UiInputs.Enable();
+                        PauseInputs.Disable();
+                        break;
+                    case GameStateType.PAUSE:
+                        CharacterInputs.Disable();
+                        UiInputs.Disable();
+                        PauseInputs.Enable();
+                        break;
+                    default:
+                        CharacterInputs.Enable();
+                        UiInputs.Enable();
+                        PauseInputs.Disable();
+                        break;
+                }
+        }
 
         #region HANDLERS
 
         private void HandleCurrentGameStated()
         {
-            if(GameStateManager.Instance)
-                switch (GameStateManager.Instance.CurrentGameState)
-                {
-                    case GameStateType.GAMEPLAY:
-                        CharacterInputs.Enable();
-                        UiInputs.Enable();
-                        break;
-                    case GameStateType.WINDOW_VIEW:
-                        CharacterInputs.Disable();
-                        UiInputs.Enable();
-                        break;
-                    case GameStateType.PAUSE:
-                        CharacterInputs.Disable();
-                        UiInputs.Disable();
-                        break;
-                    default:
-                        CharacterInputs.Enable();
-                        UiInputs.Enable();
-                        break;
-                }
+            RefreshInputs();
         }
 
         #endregion

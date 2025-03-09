@@ -191,9 +191,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Pause",
+                    "name": "CloseLast",
                     "type": "Button",
-                    "id": "6f66a006-e447-4532-9243-c79a9704fcac",
+                    "id": "a24917a7-d874-483e-bad4-2ebd9677cff7",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -214,7 +214,57 @@
                 },
                 {
                     "name": "",
-                    "id": "19ca2c6f-5042-4ce5-afee-5c2468b6a061",
+                    "id": "0c163300-fd60-47a3-a220-cec692eb055b",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CloseLast",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "19fc95f9-3ea2-4ba2-ab47-5ed1996c3460",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CloseLast",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Pause",
+            "id": "4751247e-320b-4052-807f-bafdaf633e6d",
+            "actions": [
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "335a1d12-4f80-4a83-ad26-2331e7e713a5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "4659a77d-5144-42d2-a08d-7c67d490eb53",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9389e318-33f7-476a-8759-c463566cb784",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",

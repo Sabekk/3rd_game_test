@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Gameplay.Inputs
@@ -10,7 +7,7 @@ namespace Gameplay.Inputs
     {
         #region ACTION
 
-        public event Action OnTogglePause;
+        public event Action OnForceCloseLast;
         public event Action OnToggleInventory;
 
         #endregion
@@ -50,10 +47,10 @@ namespace Gameplay.Inputs
                 OnToggleInventory?.Invoke();
         }
 
-        public void OnPause(InputAction.CallbackContext context)
+        public void OnCloseLast(InputAction.CallbackContext context)
         {
             if (context.started)
-                OnTogglePause?.Invoke();
+                OnForceCloseLast?.Invoke();
         }
 
         #endregion

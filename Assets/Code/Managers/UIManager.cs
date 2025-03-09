@@ -1,9 +1,7 @@
-using Gameplay.GameStates;
 using Gameplay.Timing;
 using ObjectPooling;
 using Sirenix.OdinInspector;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UI.Window;
 using UnityEngine;
@@ -12,6 +10,13 @@ namespace UI
 {
     public class UIManager : MonoSingleton<UIManager>
     {
+        #region ACTION
+
+        public event Action<UIWindowBase> OnWindowOpened;
+        public event Action<UIWindowBase> OnWindowClosed;
+
+        #endregion
+
         #region VARIABLES
 
         [SerializeField] private Canvas mainCanvas;
@@ -24,6 +29,7 @@ namespace UI
 
         #region PROPERTIES
         public int DefaultUIPoolCategory => defaultUIPoolCategory;
+        public bool AnyWindowIsOpened => openedWindows.Count > 0;
 
         #endregion
 
@@ -108,8 +114,8 @@ namespace UI
 
                 if (TimeManager.Instance)
                     TimeManager.Instance.TryToggleTime(false);
-                if (GameStateManager.Instance)
-                    GameStateManager.Instance.ChangeState(GameStateType.WINDOW_VIEW);
+
+                OnWindowOpened?.Invoke(window);
             }
 
             window.gameObject.transform.SetParent(mainCanvas.transform, false);
@@ -133,8 +139,6 @@ namespace UI
                     {
                         if (TimeManager.Instance)
                             TimeManager.Instance.TryToggleTime(true);
-                        if (GameStateManager.Instance)
-                            GameStateManager.Instance.ChangeState(GameStateType.GAMEPLAY);
                     }
                 }
                 else
@@ -143,11 +147,19 @@ namespace UI
                 }
 
                 window.OnCloseWindow -= CloseWindow<T>;
+                OnWindowClosed?.Invoke(window);
+
                 window.CleanUp();
                 ObjectPool.Instance.ReturnToPool(window);
             }
         }
 
+        public void TryCloseLastOpenedWindow()
+        {
+            UIWindowBase window = openedWindows.GetLastElement();
+            if (window != null)
+                window.CloseFromUI();
+        }
 
         public bool IsOpenened<T>() where T : UIWindowBase
         {

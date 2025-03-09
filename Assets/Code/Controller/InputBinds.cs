@@ -213,9 +213,9 @@ public partial class @InputBinds: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Pause"",
+                    ""name"": ""CloseLast"",
                     ""type"": ""Button"",
-                    ""id"": ""6f66a006-e447-4532-9243-c79a9704fcac"",
+                    ""id"": ""a24917a7-d874-483e-bad4-2ebd9677cff7"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -236,7 +236,57 @@ public partial class @InputBinds: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""19ca2c6f-5042-4ce5-afee-5c2468b6a061"",
+                    ""id"": ""0c163300-fd60-47a3-a220-cec692eb055b"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CloseLast"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""19fc95f9-3ea2-4ba2-ab47-5ed1996c3460"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CloseLast"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Pause"",
+            ""id"": ""4751247e-320b-4052-807f-bafdaf633e6d"",
+            ""actions"": [
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""335a1d12-4f80-4a83-ad26-2331e7e713a5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""4659a77d-5144-42d2-a08d-7c67d490eb53"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9389e318-33f7-476a-8759-c463566cb784"",
                     ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -259,7 +309,10 @@ public partial class @InputBinds: IInputActionCollection2, IDisposable
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Inventory = m_UI.FindAction("Inventory", throwIfNotFound: true);
-        m_UI_Pause = m_UI.FindAction("Pause", throwIfNotFound: true);
+        m_UI_CloseLast = m_UI.FindAction("CloseLast", throwIfNotFound: true);
+        // Pause
+        m_Pause = asset.FindActionMap("Pause", throwIfNotFound: true);
+        m_Pause_Pause = m_Pause.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -392,13 +445,13 @@ public partial class @InputBinds: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_UI;
     private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
     private readonly InputAction m_UI_Inventory;
-    private readonly InputAction m_UI_Pause;
+    private readonly InputAction m_UI_CloseLast;
     public struct UIActions
     {
         private @InputBinds m_Wrapper;
         public UIActions(@InputBinds wrapper) { m_Wrapper = wrapper; }
         public InputAction @Inventory => m_Wrapper.m_UI_Inventory;
-        public InputAction @Pause => m_Wrapper.m_UI_Pause;
+        public InputAction @CloseLast => m_Wrapper.m_UI_CloseLast;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -411,9 +464,9 @@ public partial class @InputBinds: IInputActionCollection2, IDisposable
             @Inventory.started += instance.OnInventory;
             @Inventory.performed += instance.OnInventory;
             @Inventory.canceled += instance.OnInventory;
-            @Pause.started += instance.OnPause;
-            @Pause.performed += instance.OnPause;
-            @Pause.canceled += instance.OnPause;
+            @CloseLast.started += instance.OnCloseLast;
+            @CloseLast.performed += instance.OnCloseLast;
+            @CloseLast.canceled += instance.OnCloseLast;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -421,9 +474,9 @@ public partial class @InputBinds: IInputActionCollection2, IDisposable
             @Inventory.started -= instance.OnInventory;
             @Inventory.performed -= instance.OnInventory;
             @Inventory.canceled -= instance.OnInventory;
-            @Pause.started -= instance.OnPause;
-            @Pause.performed -= instance.OnPause;
-            @Pause.canceled -= instance.OnPause;
+            @CloseLast.started -= instance.OnCloseLast;
+            @CloseLast.performed -= instance.OnCloseLast;
+            @CloseLast.canceled -= instance.OnCloseLast;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -441,6 +494,52 @@ public partial class @InputBinds: IInputActionCollection2, IDisposable
         }
     }
     public UIActions @UI => new UIActions(this);
+
+    // Pause
+    private readonly InputActionMap m_Pause;
+    private List<IPauseActions> m_PauseActionsCallbackInterfaces = new List<IPauseActions>();
+    private readonly InputAction m_Pause_Pause;
+    public struct PauseActions
+    {
+        private @InputBinds m_Wrapper;
+        public PauseActions(@InputBinds wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Pause => m_Wrapper.m_Pause_Pause;
+        public InputActionMap Get() { return m_Wrapper.m_Pause; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(PauseActions set) { return set.Get(); }
+        public void AddCallbacks(IPauseActions instance)
+        {
+            if (instance == null || m_Wrapper.m_PauseActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PauseActionsCallbackInterfaces.Add(instance);
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
+        }
+
+        private void UnregisterCallbacks(IPauseActions instance)
+        {
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
+        }
+
+        public void RemoveCallbacks(IPauseActions instance)
+        {
+            if (m_Wrapper.m_PauseActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IPauseActions instance)
+        {
+            foreach (var item in m_Wrapper.m_PauseActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_PauseActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public PauseActions @Pause => new PauseActions(this);
     public interface ICharacterActions
     {
         void OnJump(InputAction.CallbackContext context);
@@ -451,6 +550,10 @@ public partial class @InputBinds: IInputActionCollection2, IDisposable
     public interface IUIActions
     {
         void OnInventory(InputAction.CallbackContext context);
+        void OnCloseLast(InputAction.CallbackContext context);
+    }
+    public interface IPauseActions
+    {
         void OnPause(InputAction.CallbackContext context);
     }
 }
