@@ -1,3 +1,4 @@
+using Gameplay.Scenes;
 using System.Collections;
 using System.Collections.Generic;
 using UI.Window;
@@ -16,6 +17,12 @@ namespace UI.Window.Pause
         #endregion
 
         #region METHODS
+
+        public void BackToMenu()
+        {
+            if (ScenesManager.Instance)
+                ScenesManager.Instance.LoadMenuScene();
+        }
 
         #endregion
     }
