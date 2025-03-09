@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 namespace Gameplay.Inputs
 {
-    public class UIInputs : InputBinds.IUIActions
+    public class UIInputs : InputsBase, InputBinds.IUIActions
     {
         #region ACTION
 
@@ -25,15 +25,24 @@ namespace Gameplay.Inputs
 
         #region CONSTRUCTORS
 
-        public UIInputs() { }
-        public UIInputs(InputBinds binds)
+        public UIInputs(InputBinds binds) : base(binds)
         {
-            binds.UI.SetCallbacks(this);
+            Binds.UI.SetCallbacks(this);
         }
 
         #endregion
 
         #region METHODS
+
+        public override void Enable()
+        {
+            Binds.UI.Enable();
+        }
+
+        public override void Disable()
+        {
+            Binds.UI.Disable();
+        }
 
         public void OnInventory(InputAction.CallbackContext context)
         {
@@ -46,7 +55,6 @@ namespace Gameplay.Inputs
             if (context.started)
                 OnTogglePause?.Invoke();
         }
-
 
         #endregion
     }

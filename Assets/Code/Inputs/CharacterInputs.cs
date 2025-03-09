@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 namespace Gameplay.Inputs
 {
-    public class CharacterInputs : InputBinds.ICharacterActions
+    public class CharacterInputs : InputsBase, InputBinds.ICharacterActions
     {
         #region ACTIONS
 
@@ -27,15 +27,24 @@ namespace Gameplay.Inputs
 
         #region CONSTRUCTORS
 
-        public CharacterInputs() { }
-        public CharacterInputs(InputBinds binds)
+        public CharacterInputs(InputBinds binds) : base(binds)
         {
-            binds.Character.SetCallbacks(this);
+            Binds.Character.SetCallbacks(this);
         }
 
         #endregion
 
         #region METHODS
+
+        public override void Enable()
+        {
+            Binds.Character.Enable();
+        }
+
+        public override void Disable()
+        {
+            Binds.Character.Disable();
+        }
 
         public void OnJump(InputAction.CallbackContext context)
         {

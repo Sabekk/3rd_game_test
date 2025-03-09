@@ -1,3 +1,4 @@
+using Gameplay.GameStates;
 using Gameplay.Timing;
 using ObjectPooling;
 using Sirenix.OdinInspector;
@@ -58,27 +59,27 @@ namespace UI
         {
             return OpenWindow<T>(defaultUIPoolCategory, poolWindownName);
         }
-        public T OpenWindow<T>(int poolCategory, int poolWindowId, bool registerAsOpened = true) where T : UIWindowBase
+        public T OpenWindow<T>(int poolCategory, int poolWindowId) where T : UIWindowBase
         {
             PoolObject poolObject = GetPoolWindow(poolCategory, poolWindowId);
 
             if (poolObject == null)
                 return null;
 
-            return OpenWindow<T>(poolObject, registerAsOpened);
+            return OpenWindow<T>(poolObject);
         }
 
-        public T OpenWindow<T>(int poolCategory, string poolWindowName, bool registerAsOpened = true) where T : UIWindowBase
+        public T OpenWindow<T>(int poolCategory, string poolWindowName) where T : UIWindowBase
         {
             PoolObject poolObject = GetPoolWindow(poolCategory, poolWindowName);
 
             if (poolObject == null)
                 return null;
 
-            return OpenWindow<T>(poolObject, registerAsOpened);
+            return OpenWindow<T>(poolObject);
         }
 
-        public T OpenWindow<T>(PoolObject poolObject, bool registerAsOpened = true) where T : UIWindowBase
+        public T OpenWindow<T>(PoolObject poolObject) where T : UIWindowBase
         {
             T window = poolObject.GetComponent<T>();
 
@@ -97,24 +98,18 @@ namespace UI
                 openedWindows.Remove(window);
                 openedWindows.SetActiveOptimizeLastElement(false);
 
-                if (registerAsOpened)
-                    openedWindows.Add(window);
-                else
-                    window.gameObject.SetActiveOptimize(true);
+                openedWindows.Add(window);
             }
             else
             {
-                if (registerAsOpened)
-                {
-                    openedWindows.SetActiveOptimizeLastElement(false);
-                    openedWindows.Add(window);
-                    openedWindows.SetActiveOptimizeLastElement(true);
+                openedWindows.SetActiveOptimizeLastElement(false);
+                openedWindows.Add(window);
+                openedWindows.SetActiveOptimizeLastElement(true);
 
-                    if (TimeManager.Instance)
-                        TimeManager.Instance.TryToggleTime(false);
-                }
-                else
-                    window.gameObject.SetActiveOptimize(true);
+                if (TimeManager.Instance)
+                    TimeManager.Instance.TryToggleTime(false);
+                if (GameStateManager.Instance)
+                    GameStateManager.Instance.ChangeState(GameStateType.WINDOW_VIEW);
             }
 
             window.gameObject.transform.SetParent(mainCanvas.transform, false);
@@ -135,8 +130,12 @@ namespace UI
                     openedWindows.Remove(window);
 
                     if (openedWindows.Count == 0)
+                    {
                         if (TimeManager.Instance)
                             TimeManager.Instance.TryToggleTime(true);
+                        if (GameStateManager.Instance)
+                            GameStateManager.Instance.ChangeState(GameStateType.GAMEPLAY);
+                    }
                 }
                 else
                 {
