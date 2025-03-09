@@ -19,6 +19,7 @@ namespace UI.Window
         #endregion
 
         #region PROPERTIES
+
         public PoolObject Poolable { get; set; }
 
         #endregion

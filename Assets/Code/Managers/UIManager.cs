@@ -1,3 +1,4 @@
+using Gameplay.Timing;
 using ObjectPooling;
 using Sirenix.OdinInspector;
 using System;
@@ -80,7 +81,6 @@ namespace UI
         public T OpenWindow<T>(PoolObject poolObject, bool registerAsOpened = true) where T : UIWindowBase
         {
             T window = poolObject.GetComponent<T>();
-            window.Initialize();
 
             if (window == null)
             {
@@ -88,6 +88,7 @@ namespace UI
                 return null;
             }
 
+            window.Initialize();
             window.OnCloseWindow += CloseWindow<T>;
 
             //If is opened but for firstly
@@ -108,6 +109,9 @@ namespace UI
                     openedWindows.SetActiveOptimizeLastElement(false);
                     openedWindows.Add(window);
                     openedWindows.SetActiveOptimizeLastElement(true);
+
+                    if (TimeManager.Instance)
+                        TimeManager.Instance.TryToggleTime(false);
                 }
                 else
                     window.gameObject.SetActiveOptimize(true);
@@ -129,7 +133,10 @@ namespace UI
                 {
                     openedWindows.SetActiveOptimizeLastElement(false);
                     openedWindows.Remove(window);
-                    openedWindows.SetActiveOptimizeLastElement(true);
+
+                    if (openedWindows.Count == 0)
+                        if (TimeManager.Instance)
+                            TimeManager.Instance.TryToggleTime(true);
                 }
                 else
                 {
