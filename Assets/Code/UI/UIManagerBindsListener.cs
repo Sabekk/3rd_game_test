@@ -35,6 +35,28 @@ namespace UI
 
         private void AttachEvents()
         {
+            if (MainManager.Instance.Initialized)
+            {
+                LateAttachEvents();
+            }
+            else if (MainManager.Instance != null)
+            {
+                MainManager.Instance.OnGameplayManagersInitialized += HandleGameplayManagersInitialized;
+            }
+        }
+
+        private void DetachEvents()
+        {
+            if (MainManager.Instance != null)
+            {
+                MainManager.Instance.OnGameplayManagersInitialized -= HandleGameplayManagersInitialized;
+            }
+
+            DetachLateEvents();
+        }
+
+        private void LateAttachEvents()
+        {
             if (InputManager.Instance != null)
             {
                 InputManager.Instance.UiInputs.OnToggleInventory += HandleToggleInventory;
@@ -44,7 +66,7 @@ namespace UI
             }
         }
 
-        private void DetachEvents()
+        private void DetachLateEvents()
         {
             if (InputManager.Instance != null)
             {
@@ -56,6 +78,11 @@ namespace UI
         }
 
         #region HANDLERS
+
+        private void HandleGameplayManagersInitialized()
+        {
+            LateAttachEvents();
+        }
 
         private void HandleToggleInventory()
         {

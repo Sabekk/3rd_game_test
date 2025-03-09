@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gameplay.Timing
 {
-    public class TimeManager : MonoSingleton<TimeManager>
+    public class TimeManager : GameplayManager<TimeManager>
     {
         #region VARIABLES
 

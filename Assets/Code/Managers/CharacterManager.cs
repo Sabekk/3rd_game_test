@@ -2,13 +2,20 @@ using Database;
 using Database.Character;
 using Database.Character.Data;
 using Sirenix.OdinInspector;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gameplay.Character
 {
-    public class CharacterManager : MonoSingleton<CharacterManager>
+    public class CharacterManager : GameplayManager<CharacterManager>
     {
+        #region ACTIONS
+
+        public event Action OnPlayerCreated;
+
+        #endregion
+
         #region VARIABLES
 
         [SerializeField, ValueDropdown(CharacterDataDatabase.GET_DATA_METHOD)] private int defaultPlayerCharacterDataId;
@@ -46,6 +53,13 @@ namespace Gameplay.Character
 
         #region METHODS
 
+        public override void LateInitialzie()
+        {
+            base.LateInitialzie();
+            //TODO make spawnpoints etc
+            if (Player == null)
+                CreatePlayer();
+        }
 
         /// <summary>
         /// Spawn setted character
@@ -90,6 +104,7 @@ namespace Gameplay.Character
         private void CreatePlayer()
         {
             Player = CreateCharacter<Player>(defaultPlayerCharacterDataId);
+            OnPlayerCreated?.Invoke();
         }
 
         #endregion

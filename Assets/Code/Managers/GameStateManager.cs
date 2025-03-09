@@ -5,7 +5,7 @@ using UI.Window.Pause;
 
 namespace Gameplay.GameStates
 {
-    public class GameStateManager : MonoSingleton<GameStateManager>
+    public class GameStateManager : GameplayManager<GameStateManager>
     {
         #region ACTION
 
@@ -23,24 +23,15 @@ namespace Gameplay.GameStates
 
         #endregion
 
-        #region UNITY_METHODS
+        #region METHODS
 
-        private void Start()
+        public override void LateInitialzie()
         {
-            AttachEvents();
+            base.LateInitialzie();
             SetStartingState();
         }
 
-        private void OnDestroy()
-        {
-            DetachEvents();
-        }
-
-        #endregion
-
-        #region METHODS
-
-        private void AttachEvents()
+        protected override void AttachEvents()
         {
             if (UIManager.Instance)
             {
@@ -49,7 +40,7 @@ namespace Gameplay.GameStates
             }
         }
 
-        private void DetachEvents()
+        protected override void DetachEvents()
         {
             if (UIManager.Instance)
             {

@@ -1,22 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gameplay
 {
-    //Should be Manager between scenes
-    public class GameplayManager : MonoBehaviour
+    public abstract class GameplayManager<T> : MonoSingleton<T>, IGameplayManager where T : MonoBehaviour
     {
-        #region VARIABLES
-
-        #endregion
-
-        #region PROPERTIES
-
-        #endregion
-
-        #region METHODS
-
-        #endregion
+        public virtual void Initialzie() { }
+        /// <summary>
+        /// Late initialization with attaching events
+        /// </summary>
+        public virtual void LateInitialzie()
+        {
+            AttachEvents();
+        }
+        /// <summary>
+        /// Clearing with detaching events
+        /// </summary>
+        public virtual void CleanUp()
+        {
+            DetachEvents();
+        }
+        protected virtual void AttachEvents() { }
+        protected virtual void DetachEvents() { }
     }
 }

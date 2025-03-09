@@ -6,8 +6,26 @@ public class GlobalManagerParent : MonoBehaviour
 
     private void Awake()
     {
-        DontDestroyOnLoad(this);
+        CheckDontDestroy();
     }
+
+    #region METHODS
+
+    private bool CheckDontDestroy()
+    {
+        GlobalManagerParent[] objs = FindObjectsOfType<GlobalManagerParent>();
+        if (objs.Length > 1)
+        {
+            gameObject.SetActive(false);
+            DestroyImmediate(gameObject);
+            return false;
+        }
+
+        DontDestroyOnLoad(gameObject);
+        return true;
+    }
+
+    #endregion
 
     #endregion
 }

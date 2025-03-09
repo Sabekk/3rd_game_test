@@ -4,7 +4,7 @@ using Sirenix.OdinInspector;
 
 namespace Gameplay.Cameras
 {
-    public class CamerasManager : MonoSingleton<CamerasManager>
+    public class CamerasManager : GameplayManager<CamerasManager>
     {
         #region VARIABLES
 

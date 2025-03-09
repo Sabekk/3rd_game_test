@@ -1,11 +1,8 @@
 using Gameplay.GameStates;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 namespace Gameplay.Inputs
 {
-    public class InputManager : MonoSingleton<InputManager>
+    public class InputManager : GameplayManager<InputManager>
     {
         #region VARIABLES
 
@@ -33,25 +30,6 @@ namespace Gameplay.Inputs
 
         #region UNITY_METHODS
 
-        protected override void Awake()
-        {
-            base.Awake();
-            UiInputs = new(Input);
-            CharacterInputs = new(Input);
-            PauseInputs = new(Input);
-        }
-
-        private void Start()
-        {
-            AttachEvents();
-            RefreshInputs();
-        }
-
-        private void OnDestroy()
-        {
-            DetachEvents();
-        }
-
         private void OnEnable() => Input.Enable();
 
         private void OnDisable() => Input.Disable();
@@ -60,7 +38,21 @@ namespace Gameplay.Inputs
 
         #region METHODS
 
-        private void AttachEvents()
+        public override void Initialzie()
+        {
+            base.Initialzie();
+            UiInputs = new(Input);
+            CharacterInputs = new(Input);
+            PauseInputs = new(Input);
+        }
+
+        public override void LateInitialzie()
+        {
+            base.LateInitialzie();
+            RefreshInputs();
+        }
+
+        protected override void AttachEvents()
         {
             if (GameStateManager.Instance)
             {
@@ -68,7 +60,7 @@ namespace Gameplay.Inputs
             }
         }
 
-        private void DetachEvents()
+        protected override void DetachEvents()
         {
             if (GameStateManager.Instance)
             {

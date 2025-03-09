@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Gameplay.Items
 {
-    public class ItemsManager : MonoSingleton<ItemsManager>
+    public class ItemsManager : GameplayManager<ItemsManager>
     {
 
         #region VARIABLES
@@ -37,13 +37,24 @@ namespace Gameplay.Items
 
         private void OnDestroy()
         {
-            TokenSource?.Cancel();
-            TokenSource?.Dispose();
+            CleanUp();
         }
 
         #endregion
 
         #region METHODS
+
+        public override void CleanUp()
+        {
+            if (TokenSource != null)
+            {
+                if (!TokenSource.IsCancellationRequested)
+                    TokenSource.Cancel();
+                TokenSource.Dispose();
+            }
+
+            base.CleanUp();
+        }
 
         public async Task<List<Item>> GetRandomItems()
         {
@@ -73,16 +84,43 @@ namespace Gameplay.Items
             return items;
         }
 
+        protected override void AttachEvents()
+        {
+            base.AttachEvents();
+            if (CharacterManager.Instance)
+            {
+                CharacterManager.Instance.OnPlayerCreated += HandlePlayerCreated;
+            }
+        }
+
+        protected override void DetachEvents()
+        {
+            base.DetachEvents();
+            if (CharacterManager.Instance)
+            {
+                CharacterManager.Instance.OnPlayerCreated -= HandlePlayerCreated;
+            }
+        }
+
+
         [Button]
-        private async void TestRandomItems()
+        private async void GiveRandomItemsToPlayer()
         {
             if (CharacterManager.Instance.Player == null)
                 return;
 
             List<Item> itemsToAdd = await GetRandomItems();
             itemsToAdd.ForEach(item => CharacterManager.Instance.Player.EquipmentController.CollectItem(item));
-            Debug.Log("Done");
         }
+
+        #region HANDLERS
+
+        private void HandlePlayerCreated()
+        {
+            GiveRandomItemsToPlayer();
+        }
+
+        #endregion
 
         #endregion
     }
