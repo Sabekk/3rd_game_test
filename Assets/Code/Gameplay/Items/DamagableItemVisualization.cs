@@ -15,7 +15,7 @@ namespace Gameplay.Items
 
         public float GetDamageToDeal()
         {
-            bool isCritical = UnityEngine.Random.Range(0, 100) < Owner.ValuesController.CharacterValues.CritChance.CurrentValue;
+            bool isCritical = UnityEngine.Random.Range(0, 100) < Owner.ValuesController.CharacterValues.CritChance.CurrentRawValue;
             return Owner.ValuesController.CharacterValues.Damage.CurrentValue * (isCritical ? 2f : 1f);
         }
 

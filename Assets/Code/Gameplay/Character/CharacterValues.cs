@@ -43,11 +43,11 @@ namespace Gameplay.Character.Values
             health = new(startingValues.Health);
             damage = new(startingValues.Damage);
             defence = new(startingValues.Defence);
-            critChance = new(startingValues.CritChance);
-            lifeSteal = new(startingValues.LifeSteal);
-            attackSpeed = new(startingValues.AttackSpeed);
-            movementSpeed = new(startingValues.MovementSpeed);
-            luck = new(startingValues.Luck);
+            critChance = new(startingValues.CritChance, ValueType.PERCENTAGE);
+            lifeSteal = new(startingValues.LifeSteal, ValueType.PERCENTAGE);
+            attackSpeed = new(startingValues.AttackSpeed, ValueType.PERCENTAGE);
+            movementSpeed = new(startingValues.MovementSpeed, ValueType.PERCENTAGE);
+            luck = new(startingValues.Luck, ValueType.PERCENTAGE);
         }
 
         #endregion
