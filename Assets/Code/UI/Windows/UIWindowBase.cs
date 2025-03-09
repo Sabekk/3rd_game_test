@@ -21,6 +21,7 @@ namespace UI.Window
         #region PROPERTIES
 
         public PoolObject Poolable { get; set; }
+        public bool Initialized { get; set; }
 
         #endregion
 
@@ -28,12 +29,18 @@ namespace UI.Window
 
         protected virtual void OnEnable()
         {
+            if (Initialized == false)
+                return;
+
             AttachEvents();
             Refresh();
         }
 
         protected virtual void OnDisable()
         {
+            if (Initialized == false)
+                return;
+
             DetachEvents();
         }
 
@@ -43,11 +50,13 @@ namespace UI.Window
 
         public virtual void Initialize()
         {
+            Initialized = true;
             InitializingAttachEvents();
         }
 
         public virtual void CleanUp()
         {
+            Initialized = false;
             InitializingDetachEvents();
         }
 

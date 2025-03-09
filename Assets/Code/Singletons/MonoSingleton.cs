@@ -28,7 +28,7 @@ public abstract class MonoSingleton<T> : MonoBehaviour where T : Component {
 			if (_instance == null)
 				_instance = this as T;
 			else {
-				Debug.LogError ("Instance exist!", this);
+				Debug.LogWarning ("Instance exist!", this);
 				return;
 			}
 		}

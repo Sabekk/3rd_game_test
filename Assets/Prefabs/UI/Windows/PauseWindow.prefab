@@ -256,7 +256,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8613035078861130804}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5344310982917870819}
+        m_TargetAssemblyTypeName: UI.Window.Pause.UIPauseWindow, Assembly-CSharp
+        m_MethodName: BackToMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4343135550529402255
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,5 +1,7 @@
 using Core.Drawer;
+using ObjectPooling;
 using System.Threading.Tasks;
+using UI;
 using UnityEngine;
 
 namespace Gameplay.Scenes
@@ -21,6 +23,9 @@ namespace Gameplay.Scenes
 
         public async void LoadMenuScene()
         {
+            if (UIManager.Instance)
+                UIManager.Instance.CloseAllWindow();
+
             await LoadSceneAsync(menuScene);
         }
 
@@ -32,16 +37,8 @@ namespace Gameplay.Scenes
         private async Task LoadSceneAsync(string sceneName)
         {
             await Task.Yield();
-
-            AsyncOperation loadingScene = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneName, UnityEngine.SceneManagement.LoadSceneMode.Additive);
-            loadingScene.allowSceneActivation = false;
-
-            while (loadingScene.isDone == false)
-            {
-                await Task.Yield();
-            }
-
-            loadingScene.allowSceneActivation = true;
+            UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneName, UnityEngine.SceneManagement.LoadSceneMode.Single);
+            //TODO make loading screen or progress bar with Progress from above AsyncOperation 
         }
 
         #endregion
