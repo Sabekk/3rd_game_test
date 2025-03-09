@@ -1,3 +1,5 @@
+using ObjectPooling;
+using UI.HUD;
 using UnityEngine;
 
 namespace Gameplay.Targeting
@@ -5,6 +7,12 @@ namespace Gameplay.Targeting
     public abstract class DamageTarget : MonoBehaviour, IDamagable
     {
         #region VARIABLES
+
+        [SerializeField] private bool useHealthBar;
+
+        private HealthBarHUD healthBar;
+
+        const string HEALTH_BAR = "HUD_healthBar";
 
         #endregion
 
@@ -27,6 +35,18 @@ namespace Gameplay.Targeting
 
             Health -= damage;
 
+            if (useHealthBar)
+            {
+                if (!healthBar)
+                {
+                    healthBar = ObjectPool.Instance.GetFromPool(HEALTH_BAR, "HUD").GetComponent<HealthBarHUD>();
+                    healthBar.Initiliaze(transform);
+                    healthBar.OnDisposed += () => HandleHealthBarRemoved(healthBar);
+                }
+
+                healthBar.UpdateStatus(Health / MaxHealth);
+            }
+
             if (!IsAlive)
                 Kill();
         }
@@ -34,7 +54,22 @@ namespace Gameplay.Targeting
         public virtual void Kill()
         {
             IsKilled = true;
+            if (useHealthBar && healthBar)
+                healthBar.Dispose();
         }
+
+        #region HANDLERS
+
+        void HandleHealthBarRemoved(HealthBarHUD healthBar)
+        {
+            if (this.healthBar == healthBar)
+            {
+                healthBar.OnDisposed -= () => HandleHealthBarRemoved(healthBar);
+                this.healthBar = null;
+            }
+        }
+
+        #endregion
 
         #endregion
     }

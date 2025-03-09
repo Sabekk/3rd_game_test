@@ -110,3 +110,13 @@ MonoBehaviour:
         poolObject: {fileID: 6351618957731382583, guid: b150e62b96683114cb6baceccf2c629b,
           type: 3}
         size: 5
+  - id: -317093503
+    categoryName: HUD
+    groups:
+    - groupName: FadingElements
+      instances:
+      - id: -102900421
+        name: HUD_healthBar
+        poolObject: {fileID: 1184561215905739285, guid: 5b8150761e67bb04aa74dd206616cf8e,
+          type: 3}
+        size: 2
