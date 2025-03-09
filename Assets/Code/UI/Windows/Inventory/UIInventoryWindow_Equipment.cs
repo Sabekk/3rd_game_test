@@ -3,6 +3,8 @@ using Gameplay.Items;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
+using UI.BaseElements;
 
 namespace UI.Window.Inventory
 {
@@ -11,6 +13,15 @@ namespace UI.Window.Inventory
         #region VARIABLES
 
         [SerializeField] private List<EquipmentSlot> slots;
+
+        [SerializeField, FoldoutGroup("Value fields")] private ValueField healthField;
+        [SerializeField, FoldoutGroup("Value fields")] private ValueField damageField;
+        [SerializeField, FoldoutGroup("Value fields")] private ValueField criticalChanceField;
+        [SerializeField, FoldoutGroup("Value fields")] private ValueField attackSpeedField;
+        [SerializeField, FoldoutGroup("Value fields")] private ValueField defenceField;
+        [SerializeField, FoldoutGroup("Value fields")] private ValueField lifeStealField;
+        [SerializeField, FoldoutGroup("Value fields")] private ValueField movementSpeedField;
+        [SerializeField, FoldoutGroup("Value fields")] private ValueField luckField;
 
         private Dictionary<ItemCategory, EquipmentSlot> categorySlots;
 
@@ -62,6 +73,15 @@ namespace UI.Window.Inventory
                 Player.EquipmentController.OnItemEquipped += HandleItemEquiped;
                 Player.EquipmentController.OnItemUnequipped += HandleItemUnequiped;
                 Player.EquipmentController.OnItemsReplaced += HandleItemsReplaced;
+
+                healthField.Initialize(Player.ValuesController.CharacterValues.Health);
+                damageField.Initialize(Player.ValuesController.CharacterValues.Damage);
+                criticalChanceField.Initialize(Player.ValuesController.CharacterValues.CritChance);
+                attackSpeedField.Initialize(Player.ValuesController.CharacterValues.AttackSpeed);
+                defenceField.Initialize(Player.ValuesController.CharacterValues.Defence);
+                lifeStealField.Initialize(Player.ValuesController.CharacterValues.LifeSteal);
+                movementSpeedField.Initialize(Player.ValuesController.CharacterValues.MovementSpeed);
+                luckField.Initialize(Player.ValuesController.CharacterValues.Luck);
             }
         }
         protected override void DetachEvents()
@@ -73,6 +93,15 @@ namespace UI.Window.Inventory
                 Player.EquipmentController.OnItemUnequipped -= HandleItemUnequiped;
                 Player.EquipmentController.OnItemsReplaced -= HandleItemsReplaced;
             }
+
+            healthField.CleanUp();
+            damageField.CleanUp();
+            criticalChanceField.CleanUp();
+            attackSpeedField.CleanUp();
+            defenceField.CleanUp();
+            lifeStealField.CleanUp();
+            movementSpeedField.CleanUp();
+            luckField.CleanUp();
         }
 
         private void FullyRefreshSlots()

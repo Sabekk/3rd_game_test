@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Gameplay.Values
 {
-    public class ModifiableValue
+    public class ModifiableValue : ValueBase
     {
         #region ACTIONS
 
@@ -15,8 +15,9 @@ namespace Gameplay.Values
 
         #region VARIABLES
 
-        [SerializeField] private float rawValue;
+        [SerializeField] private float currentRawValue;
         [SerializeField] private float currentValue;
+        [SerializeField] private ValueType valueType;
         [SerializeField] private List<ModifiableValue> additionalComponents;
         [SerializeField] private List<Modifier> modifiers;
         [SerializeField] private bool needRefresh;
@@ -35,94 +36,129 @@ namespace Gameplay.Values
             }
         }
 
+        public float CurrentRawValue
+        {
+            get
+            {
+                if (needRefresh)
+                    RecalculateCurrentValue();
+                return currentRawValue;
+            }
+        }
+
         #endregion
 
         #region CONSTRUCTORS
 
         public ModifiableValue() { }
-        public ModifiableValue(float startingValue)
+        public ModifiableValue(float startingValue, ValueType valueType = ValueType.OVERALL) : base(startingValue, valueType)
         {
             additionalComponents = new();
             modifiers = new();
-            SetBaseValue(startingValue);
+            SetRawValue(startingValue);
         }
 
         #endregion
 
         #region METHODS
 
-        public void AddToBaseValue(float value)
+        public override void SetRawValue(float value)
         {
-            rawValue += value;
-            if (value != 0)
-            {
-                needRefresh = true;
-                OnValueChanged?.Invoke();
-            }
+            base.SetRawValue(value);
+            ForceRefreshValue();
         }
 
-        public void SetBaseValue(float baseValue)
+        public override void AddToRawValue(float value)
         {
-            rawValue = baseValue;
-            needRefresh = true;
-            OnValueChanged?.Invoke();
+            base.AddToRawValue(value);
+            if (value != 0)
+                ForceRefreshValue();
         }
 
         public void AddNewComponent(ModifiableValue newComponent)
         {
             additionalComponents.Add(newComponent);
+            newComponent.OnValueChanged += HandleComponentValueChanged;
 
             if (newComponent.CurrentValue != 0)
-            {
-                needRefresh = true;
-                OnValueChanged?.Invoke();
-            }
+                ForceRefreshValue();
         }
 
         public void RemoveComponent(ModifiableValue componentToRemove)
         {
             additionalComponents.Remove(componentToRemove);
+            componentToRemove.OnValueChanged -= HandleComponentValueChanged;
 
             if (componentToRemove.CurrentValue != 0)
-            {
-                needRefresh = true;
-                OnValueChanged?.Invoke();
-            }
+                ForceRefreshValue();
         }
 
         public void AddModifier(Modifier modifier)
         {
             modifiers.Add(modifier);
 
-            if (modifier.ModifierValue != 0)
-            {
-                needRefresh = true;
-                OnValueChanged?.Invoke();
-            }
+            if (modifier.Value != 0)
+                ForceRefreshValue();
         }
 
         public void RemoveModifier(Modifier modifier)
         {
             modifiers.Remove(modifier);
 
-            if (modifier.ModifierValue != 0)
+            if (modifier.Value != 0)
+                ForceRefreshValue();
+        }
+
+        public string GetValueToShow()
+        {
+            string suffix = "";
+            switch (ValueType)
             {
-                needRefresh = true;
-                OnValueChanged?.Invoke();
+                case ValueType.OVERALL:
+                    break;
+                case ValueType.PERCENTAGE:
+                    suffix = "%";
+                    break;
+                default:
+                    break;
             }
+
+            return string.Format("{0}{1}", CurrentRawValue, suffix);
         }
 
         private void RecalculateCurrentValue()
         {
-            float newValue = rawValue;
+            float newValue = RawValue;
 
-            for (int i = 0; i < additionalComponents.Count; i++)
-                newValue += additionalComponents[i].CurrentValue;
-
+            newValue = CompleteValue(newValue);
             newValue = GetModifiedValue(newValue);
-            currentValue = newValue;
+
+            currentRawValue = newValue;
+            currentValue = ConvfertValueToType(currentRawValue);
 
             needRefresh = false;
+        }
+
+        private float CompleteValue(float baseValue)
+        {
+            float completedValue = baseValue;
+
+            for (int i = 0; i < additionalComponents.Count; i++)
+            {
+                switch (additionalComponents[i].ValueType)
+                {
+                    case ValueType.OVERALL:
+                        completedValue += additionalComponents[i].CurrentValue;
+                        break;
+                    case ValueType.PERCENTAGE:
+                        completedValue += baseValue * additionalComponents[i].CurrentValue;
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            return completedValue;
         }
 
         private float GetModifiedValue(float valueToModify)
@@ -131,13 +167,13 @@ namespace Gameplay.Values
 
             for (int i = 0; i < modifiers.Count; i++)
             {
-                switch (modifiers[i].ModifierType)
+                switch (modifiers[i].ValueType)
                 {
-                    case ModifierType.ADD:
-                        modifiedValue += modifiers[i].ModifierValue;
+                    case ValueType.OVERALL:
+                        modifiedValue += modifiers[i].Value;
                         break;
-                    case ModifierType.PERCENTAGE_ADD:
-                        modifiedValue += valueToModify * modifiers[i].ModifierValue;
+                    case ValueType.PERCENTAGE:
+                        modifiedValue += valueToModify * modifiers[i].Value;
                         break;
                     default:
                         break;
@@ -146,6 +182,21 @@ namespace Gameplay.Values
 
             return modifiedValue;
         }
+
+        private void ForceRefreshValue()
+        {
+            needRefresh = true;
+            OnValueChanged?.Invoke();
+        }
+
+        #region HANDLERS
+
+        private void HandleComponentValueChanged()
+        {
+            ForceRefreshValue();
+        }
+
+        #endregion
 
         #endregion
     }

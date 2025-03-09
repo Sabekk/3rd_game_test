@@ -36,7 +36,7 @@ namespace Gameplay.Character
         public override float Health
         {
             get => CharacterValues.CurrentHealth.CurrentValue;
-            set => CharacterValues.CurrentHealth.SetBaseValue(value);
+            set => CharacterValues.CurrentHealth.SetRawValue(value);
         }
 
         public override float MaxHealth => CharacterValues.Health.CurrentValue;
