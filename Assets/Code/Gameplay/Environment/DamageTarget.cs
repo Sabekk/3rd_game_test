@@ -21,7 +21,7 @@ namespace Gameplay.Targeting
         public abstract float Health { get; set; }
         public abstract float MaxHealth { get; }
         public abstract bool IsKilled { get; set; }
-        public bool IsAlive =>  Health > 0;
+        public bool IsAlive => Health > 0;
 
         #endregion
 
@@ -41,7 +41,7 @@ namespace Gameplay.Targeting
                 {
                     healthBar = ObjectPool.Instance.GetFromPool(HEALTH_BAR, "HUD").GetComponent<HealthBarHUD>();
                     healthBar.Initiliaze(transform);
-                    healthBar.OnDisposed += () => HandleHealthBarRemoved(healthBar);
+                    healthBar.OnDisposed += HandleHealthBarRemoved;
                 }
 
                 healthBar.UpdateStatus(Health / MaxHealth);
@@ -60,11 +60,11 @@ namespace Gameplay.Targeting
 
         #region HANDLERS
 
-        void HandleHealthBarRemoved(HealthBarHUD healthBar)
+        void HandleHealthBarRemoved()
         {
-            if (this.healthBar == healthBar)
+            if (healthBar)
             {
-                healthBar.OnDisposed -= () => HandleHealthBarRemoved(healthBar);
+                healthBar.OnDisposed -= HandleHealthBarRemoved;
                 this.healthBar = null;
             }
         }
