@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI.HUD
+namespace UI.HUD.FadingItem
 {
     public class HealthBarHUD : FadingHUDElement
     {

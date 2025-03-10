@@ -123,7 +123,12 @@ MonoBehaviour:
     - groupName: FadingElements
       instances:
       - id: -102900421
-        name: HUD_healthBar
+        name: HealthBar_HUD
         poolObject: {fileID: 1184561215905739285, guid: 5b8150761e67bb04aa74dd206616cf8e,
           type: 3}
         size: 2
+      - id: -1241362727
+        name: HitInformation_HUD
+        poolObject: {fileID: 1184561215905739285, guid: 957322617b6ce1a4c9274dd8b7bb302a,
+          type: 3}
+        size: 3

@@ -1,5 +1,6 @@
 using ObjectPooling;
 using UI.HUD;
+using UI.HUD.FadingItem;
 using UnityEngine;
 
 namespace Gameplay.Targeting
@@ -9,10 +10,14 @@ namespace Gameplay.Targeting
         #region VARIABLES
 
         [SerializeField] private bool useHealthBar;
+        [SerializeField] private bool showDamageValue;
 
         private HealthBarHUD healthBar;
 
-        const string HEALTH_BAR = "HUD_healthBar";
+        const string HEALTH_BAR = "HealthBar_HUD";
+        const string HIT_INFORMATION = "HitInformation_HUD";
+
+        const string HUD_CATEGORY = "HUD";
 
         #endregion
 
@@ -39,13 +44,22 @@ namespace Gameplay.Targeting
             {
                 if (!healthBar)
                 {
-                    healthBar = ObjectPool.Instance.GetFromPool(HEALTH_BAR, "HUD").GetComponent<HealthBarHUD>();
+                    healthBar = ObjectPool.Instance.GetFromPool(HEALTH_BAR, HUD_CATEGORY).GetComponent<HealthBarHUD>();
                     healthBar.Initiliaze(transform);
                     healthBar.OnDisposed += HandleHealthBarRemoved;
                 }
 
                 healthBar.UpdateStatus(Health / MaxHealth);
             }
+
+            if (showDamageValue)
+            {
+                HitDamageInformationHUD hitInformation = ObjectPool.Instance.GetFromPool(HIT_INFORMATION, HUD_CATEGORY).GetComponent<HitDamageInformationHUD>();
+                hitInformation.Initiliaze();
+                hitInformation.SetValue(damage.ToString());
+                hitInformation.transform.position = transform.position;
+            }
+
 
             if (!IsAlive)
                 Kill();

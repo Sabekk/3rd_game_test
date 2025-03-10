@@ -129,6 +129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   useHealthBar: 1
+  showDamageValue: 1
   HP: 300
   objectCollider: {fileID: 7491142105189512000}
   spawnDestroyedPrefab: 0
