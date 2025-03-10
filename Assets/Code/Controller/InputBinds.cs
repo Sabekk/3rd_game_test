@@ -236,6 +236,17 @@ public partial class @InputBinds: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""05e9a503-1a81-404c-8f18-ed278ace5865"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Inventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""0c163300-fd60-47a3-a220-cec692eb055b"",
                     ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
