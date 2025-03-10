@@ -15,6 +15,7 @@ namespace Gameplay.Inputs
         public UIInputs UiInputs { get; private set; }
         public CharacterInputs CharacterInputs { get; private set; }
         public PauseInputs PauseInputs { get; private set; }
+        public MenuInputs MenuInputs { get; private set; }
         public static InputBinds Input
         {
             get
@@ -44,6 +45,7 @@ namespace Gameplay.Inputs
             UiInputs = new(Input);
             CharacterInputs = new(Input);
             PauseInputs = new(Input);
+            MenuInputs = new(Input);
         }
 
         public override void LateInitialzie()
@@ -77,21 +79,31 @@ namespace Gameplay.Inputs
                         CharacterInputs.Enable();
                         UiInputs.Enable();
                         PauseInputs.Disable();
+                        MenuInputs.Disable();
                         break;
                     case GameStateType.WINDOW_VIEW:
                         CharacterInputs.Disable();
                         UiInputs.Enable();
                         PauseInputs.Disable();
+                        MenuInputs.Disable();
                         break;
                     case GameStateType.PAUSE:
                         CharacterInputs.Disable();
                         UiInputs.Disable();
                         PauseInputs.Enable();
+                        MenuInputs.Disable();
+                        break;
+                    case GameStateType.MENU:
+                        CharacterInputs.Disable();
+                        UiInputs.Disable();
+                        PauseInputs.Disable();
+                        MenuInputs.Enable();
                         break;
                     default:
                         CharacterInputs.Enable();
                         UiInputs.Enable();
                         PauseInputs.Disable();
+                        MenuInputs.Disable();
                         break;
                 }
         }

@@ -37,7 +37,7 @@ namespace Gameplay.GameStates
         public override void LateInitialzie()
         {
             base.LateInitialzie();
-            SetStartingState();
+            CheckStateByScene();
         }
 
         protected override void AttachEvents()
@@ -62,7 +62,26 @@ namespace Gameplay.GameStates
             SceneManager.activeSceneChanged -= HandleSceneLoaded;
         }
 
-        private void SetStartingState()
+        private void CheckStateByScene()
+        {
+            if (ScenesManager.Instance != null)
+                switch (ScenesManager.Instance.GetCurrentSceneType())
+                {
+                    case SceneType.NONE:
+                        CheckStateInGameplay();
+                        break;
+                    case SceneType.MENU:
+                        ChangeState(GameStateType.MENU);
+                        break;
+                    case SceneType.GAMEPLAY:
+                        CheckStateInGameplay();
+                        break;
+                    default:
+                        break;
+                }
+        }
+
+        private void CheckStateInGameplay()
         {
             bool setted = false;
             if (UIManager.Instance)
@@ -91,26 +110,11 @@ namespace Gameplay.GameStates
             OnCurrentGameStated?.Invoke();
         }
 
-
         #region HANDLERS
 
         private void HandleSceneLoaded(Scene scene1, Scene scene2)
         {
-            if (ScenesManager.Instance != null)
-                switch (ScenesManager.Instance.GetCurrentSceneType())
-                {
-                    case SceneType.NONE:
-                        SetStartingState();
-                        break;
-                    case SceneType.MENU:
-                        ChangeState(GameStateType.PAUSE);
-                        break;
-                    case SceneType.GAMEPLAY:
-                        SetStartingState();
-                        break;
-                    default:
-                        break;
-                }
+            CheckStateByScene();
         }
 
         private void HandleWindowOpened(UIWindowBase window)

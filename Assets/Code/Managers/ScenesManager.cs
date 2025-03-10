@@ -1,5 +1,6 @@
 using Core.Drawer;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using UI;
 using UnityEngine;
@@ -26,6 +27,7 @@ namespace Gameplay.Scenes
 
         public string MenuScene => menuScene;
         public string GameplayScene => gameplayScene;
+        private CancellationTokenSource TokenSource { get; set; }
 
         #endregion
 
@@ -58,8 +60,14 @@ namespace Gameplay.Scenes
 
         private async Task LoadSceneAsync(string sceneName)
         {
+            TokenSource?.Cancel();
+            TokenSource?.Dispose();
+            TokenSource = new ();
+
+            CancellationToken token = TokenSource.Token;
+
             await Task.Yield();
-            var sceneLoading = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneName, UnityEngine.SceneManagement.LoadSceneMode.Single);
+            var sceneLoading = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
 
             sceneLoading.allowSceneActivation = false;
 
@@ -68,6 +76,12 @@ namespace Gameplay.Scenes
                 if (sceneLoading.progress >= 0.9f)
                 {
                     break;
+                }
+
+                if (token.IsCancellationRequested)
+                {
+                    Debug.LogError("Loading scene failed");
+                    return;
                 }
 
                 await Task.Yield();
