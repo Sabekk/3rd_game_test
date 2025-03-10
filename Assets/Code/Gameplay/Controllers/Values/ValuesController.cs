@@ -36,6 +36,7 @@ namespace Gameplay.Character.Values
             base.AttachEvents();
             Character.EquipmentController.OnItemEquipped += HandleItemEquipped;
             Character.EquipmentController.OnItemUnequipped += HandleItemUnequipped;
+            Character.EquipmentController.OnItemsReplaced += HandleItemsReplaced;
         }
 
         public override void DetachEvents()
@@ -43,11 +44,10 @@ namespace Gameplay.Character.Values
             base.DetachEvents();
             Character.EquipmentController.OnItemEquipped -= HandleItemEquipped;
             Character.EquipmentController.OnItemUnequipped -= HandleItemUnequipped;
+            Character.EquipmentController.OnItemsReplaced -= HandleItemsReplaced;
         }
 
-        #region HANDLERS
-
-        private void HandleItemEquipped(Item item)
+        private void AddItemValues(Item item)
         {
             characterValues.Damage.AddNewComponent(item.Damage);
             characterValues.Health.AddNewComponent(item.HealthPoints);
@@ -59,7 +59,7 @@ namespace Gameplay.Character.Values
             characterValues.Luck.AddNewComponent(item.Luck);
         }
 
-        private void HandleItemUnequipped(Item item)
+        private void RemoveItemValues(Item item)
         {
             characterValues.Damage.RemoveComponent(item.Damage);
             characterValues.Health.RemoveComponent(item.HealthPoints);
@@ -69,6 +69,24 @@ namespace Gameplay.Character.Values
             characterValues.AttackSpeed.RemoveComponent(item.AttackSpeed);
             characterValues.MovementSpeed.RemoveComponent(item.MovementSpeed);
             characterValues.Luck.RemoveComponent(item.Luck);
+        }
+
+        #region HANDLERS
+
+        private void HandleItemsReplaced(Item newItem, Item oldItem)
+        {
+            RemoveItemValues(oldItem);
+            AddItemValues(newItem);
+        }
+
+        private void HandleItemEquipped(Item item)
+        {
+            AddItemValues(item);
+        }
+
+        private void HandleItemUnequipped(Item item)
+        {
+            RemoveItemValues(item);
         }
 
         #endregion
