@@ -1800,6 +1800,41 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3101839807220367200, guid: fe7e0510ed500b64a9e9eadd97ad0fb0,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3101839807220367200, guid: fe7e0510ed500b64a9e9eadd97ad0fb0,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3101839807220367200, guid: fe7e0510ed500b64a9e9eadd97ad0fb0,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4554263831868569258}
+    - target: {fileID: 3101839807220367200, guid: fe7e0510ed500b64a9e9eadd97ad0fb0,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3101839807220367200, guid: fe7e0510ed500b64a9e9eadd97ad0fb0,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CloseFromUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3101839807220367200, guid: fe7e0510ed500b64a9e9eadd97ad0fb0,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UI.Window.UIWindowBase, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3101839807220367200, guid: fe7e0510ed500b64a9e9eadd97ad0fb0,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3708037476257823723, guid: fe7e0510ed500b64a9e9eadd97ad0fb0,
         type: 3}
       propertyPath: m_text
