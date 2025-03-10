@@ -14,3 +14,9 @@ END USER may not incorporate the Asset into a product whose primary purpose is t
 
 Extension Asset
 One license required for each individual user.
+
+
+GUI Parts
+Source: https://assetstore.unity.com/packages/2d/gui/icons/gui-parts-159068#content
+Licence: Extension Asset
+One license required for each individual user.

@@ -40,7 +40,7 @@ MonoBehaviour:
       instances:
       - id: -2008946247
         name: InventoryWindow
-        poolObject: {fileID: 8201746004194123709, guid: ffc8abdba511f044ca4f766cccbc0677,
+        poolObject: {fileID: 2303041833672862454, guid: ee355fc2b32623b46ad4787583eeb430,
           type: 3}
         size: 1
       - id: 792685087
@@ -48,9 +48,11 @@ MonoBehaviour:
         poolObject: {fileID: 1664994831226736172, guid: df64a872518b757428ff96cdc2060ecf,
           type: 3}
         size: 10
-      - id: -539504724
+    - groupName: Pause
+      instances:
+      - id: -125967150
         name: PauseWindow
-        poolObject: {fileID: 4343135550529402255, guid: 333b83fb90c4f8d41a857ec81bf2b6ad,
+        poolObject: {fileID: 7307713189773251989, guid: 2d7ed12d24c65f144b2af5d7fde729e7,
           type: 3}
         size: 1
   - id: 1629130278

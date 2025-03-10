@@ -122,7 +122,11 @@ namespace UI
                 OnWindowOpened?.Invoke(window);
             }
 
-            window.gameObject.transform.SetParent(mainCanvas.transform, false);
+
+            if (window.TryGetComponent<Canvas>(out _) == false)
+                window.transform.SetParent(mainCanvas.transform, false);
+            else
+                window.transform.SetParentWithReset(transform);
 
             return window;
         }
