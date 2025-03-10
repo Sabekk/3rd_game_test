@@ -27,13 +27,12 @@ namespace Gameplay.Character
             this.character = character;
             SetModules();
 
-            AttachEvents();
             modules.ForEach(c => c.Initialize(character));
         }
 
         public virtual void CleanUp()
         {
-            DetachEvents();
+            
             modules.ForEach(c => c.CleanUp());
         }
 
@@ -47,8 +46,15 @@ namespace Gameplay.Character
             modules = new();
         }
 
-        public virtual void AttachEvents() { }
-        public virtual void DetachEvents() { }
+        public virtual void AttachEvents() 
+        {
+            modules.ForEach(c => c.AttachEvents());
+        }
+
+        public virtual void DetachEvents() 
+        {
+            modules.ForEach(c => c.DetachEvents());
+        }
 
         #endregion
     }

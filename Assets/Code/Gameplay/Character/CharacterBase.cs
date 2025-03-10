@@ -79,8 +79,20 @@ namespace Gameplay.Character
             isInitialzied = true;
         }
 
+        public void AttachEvents()
+        {
+            AttachControllers();
+        }
+
+        public void DetachEvents()
+        {
+            DetachControllers();
+        }
+
+
         public void CleanUp()
         {
+            CleanUpControllers();
             if (CharacterInGame)
             {
                 CharacterInGame.OnKill -= HandleCharacterKill;
@@ -140,6 +152,15 @@ namespace Gameplay.Character
             controllers.ForEach(m => m.CleanUp());
         }
 
+        protected void AttachControllers()
+        {
+            controllers.ForEach(m => m.AttachEvents());
+        }
+
+        protected void DetachControllers()
+        {
+            controllers.ForEach(m => m.DetachEvents());
+        }
 
         #region HANDLERS
 

@@ -19,7 +19,7 @@ namespace Gameplay.Equipment
 
         #region METHODS
 
-        protected override void AttachEvents()
+        public override void AttachEvents()
         {
             base.AttachEvents();
             Character.EquipmentController.OnItemEquipped += HandleItemEquipped;
@@ -27,7 +27,7 @@ namespace Gameplay.Equipment
             Character.EquipmentController.OnItemsReplaced += HandleItemsReplaced;
         }
 
-        protected override void DetachEvents()
+        public override void DetachEvents()
         {
             base.DetachEvents();
             Character.EquipmentController.OnItemEquipped -= HandleItemEquipped;

@@ -20,6 +20,12 @@ namespace Gameplay.Timing
 
         #region METHODS
 
+        public override void CleanUp()
+        {
+            Time.timeScale = defaultTimeScale;
+            base.CleanUp();
+        }
+
         public void TryToggleTime(bool state)
         {
             if (TimeIsStopped && state == true)

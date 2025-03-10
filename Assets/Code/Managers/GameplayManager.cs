@@ -4,7 +4,8 @@ namespace Gameplay
 {
     public abstract class GameplayManager<T> : MonoSingleton<T>, IGameplayManager where T : MonoBehaviour
     {
-        public virtual void Initialzie() { }
+        public bool Initialized { get; protected set; }
+        public virtual void Initialzie() { Initialized = true; }
         /// <summary>
         /// Late initialization with attaching events
         /// </summary>
@@ -18,6 +19,7 @@ namespace Gameplay
         public virtual void CleanUp()
         {
             DetachEvents();
+            Initialized = false;
         }
         protected virtual void AttachEvents() { }
         protected virtual void DetachEvents() { }

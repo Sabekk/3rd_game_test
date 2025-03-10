@@ -14,7 +14,7 @@ namespace Gameplay.Character.Movement
 
         #region METHODS
 
-        protected override void AttachEvents()
+        public override void AttachEvents()
         {
             base.AttachEvents();
             if (InputManager.Instance)
@@ -24,7 +24,7 @@ namespace Gameplay.Character.Movement
             }
         }
 
-        protected override void DetachEvents()
+        public override void DetachEvents()
         {
             base.DetachEvents();
             if (InputManager.Instance)

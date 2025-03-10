@@ -1,7 +1,11 @@
+using Gameplay.Scenes;
+using Sirenix.OdinInspector;
 using System;
 using UI;
 using UI.Window;
 using UI.Window.Pause;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Gameplay.GameStates
 {
@@ -9,6 +13,7 @@ namespace Gameplay.GameStates
     {
         #region ACTION
 
+        [SerializeField] GameStateType currentGameState;
         public event Action OnCurrentGameStated;
 
         #endregion
@@ -19,7 +24,11 @@ namespace Gameplay.GameStates
 
         #region PROPERTIES
 
-        public GameStateType CurrentGameState { get; private set; }
+        public GameStateType CurrentGameState
+        {
+            get { return currentGameState; }
+            private set { currentGameState = value; }
+        }
 
         #endregion
 
@@ -38,6 +47,8 @@ namespace Gameplay.GameStates
                 UIManager.Instance.OnWindowOpened += HandleWindowOpened;
                 UIManager.Instance.OnWindowClosed += HandleWindowClosed;
             }
+
+            SceneManager.activeSceneChanged += HandleSceneLoaded;
         }
 
         protected override void DetachEvents()
@@ -47,6 +58,8 @@ namespace Gameplay.GameStates
                 UIManager.Instance.OnWindowOpened -= HandleWindowOpened;
                 UIManager.Instance.OnWindowClosed -= HandleWindowClosed;
             }
+
+            SceneManager.activeSceneChanged -= HandleSceneLoaded;
         }
 
         private void SetStartingState()
@@ -80,6 +93,25 @@ namespace Gameplay.GameStates
 
 
         #region HANDLERS
+
+        private void HandleSceneLoaded(Scene scene1, Scene scene2)
+        {
+            if (ScenesManager.Instance != null)
+                switch (ScenesManager.Instance.GetCurrentSceneType())
+                {
+                    case SceneType.NONE:
+                        SetStartingState();
+                        break;
+                    case SceneType.MENU:
+                        ChangeState(GameStateType.PAUSE);
+                        break;
+                    case SceneType.GAMEPLAY:
+                        SetStartingState();
+                        break;
+                    default:
+                        break;
+                }
+        }
 
         private void HandleWindowOpened(UIWindowBase window)
         {

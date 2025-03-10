@@ -1,3 +1,4 @@
+using Gameplay;
 using Gameplay.Timing;
 using ObjectPooling;
 using Sirenix.OdinInspector;
@@ -8,7 +9,7 @@ using UnityEngine;
 
 namespace UI
 {
-    public class UIManager : MonoSingleton<UIManager>
+    public class UIManager : GameplayManager<UIManager>
     {
         #region ACTION
 
@@ -35,26 +36,29 @@ namespace UI
 
         #region UNITY_METHODS
 
-        protected override void Awake()
-        {
-            base.Awake();
-            openedWindows = new();
-            bindsListener = new();
-        }
-
-        private void Start()
-        {
-            bindsListener.Initialize(this);
-        }
-
-        private void OnDestroy()
-        {
-            CleanUp();
-        }
-
         #endregion
 
         #region METHODS
+
+        public override void Initialzie()
+        {
+            base.Initialzie();
+            openedWindows = new();
+            bindsListener = new();
+
+        }
+
+        public override void LateInitialzie()
+        {
+            base.LateInitialzie();
+            bindsListener.Initialize(this);
+        }
+
+        public override void CleanUp()
+        {
+            CloseAllWindow();
+            bindsListener.CleanUp();
+        }
 
         public T OpenWindow<T>(int poolWindowId) where T : UIWindowBase
         {
@@ -204,12 +208,6 @@ namespace UI
             }
 
             return poolObject;
-        }
-
-        private void CleanUp()
-        {
-            CloseAllWindow();
-            bindsListener.CleanUp();
         }
 
         #endregion

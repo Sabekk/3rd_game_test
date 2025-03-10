@@ -61,6 +61,15 @@ namespace Gameplay.Character
                 CreatePlayer();
         }
 
+        public override void CleanUp()
+        {
+            //Only detach events. Dont clean up alive character for serialization
+            foreach (var character in characters)
+                character.DetachEvents();
+
+            base.CleanUp();
+        }
+
         /// <summary>
         /// Spawn setted character
         /// </summary>
@@ -88,6 +97,7 @@ namespace Gameplay.Character
 
             character.SetData(data);
             character.Initialize();
+            character.AttachEvents();
             if (character.TryCreateVisualization(transform))
                 charactersTmp.Add(character, true);
 
@@ -97,6 +107,7 @@ namespace Gameplay.Character
         public void RemoveCharacter<T>(T character) where T : CharacterBase
         {
             character.CleanUp();
+            character.DetachEvents();
             charactersTmp.Add(character, false);
         }
 

@@ -35,24 +35,24 @@ namespace UI
 
         private void AttachEvents()
         {
-            if (MainManager.Instance.Initialized)
+            if (InputManager.Instance != null)
             {
-                LateAttachEvents();
-            }
-            else if (MainManager.Instance != null)
-            {
-                MainManager.Instance.OnGameplayManagersInitialized += HandleGameplayManagersInitialized;
+                InputManager.Instance.UiInputs.OnToggleInventory += HandleToggleInventory;
+                InputManager.Instance.UiInputs.OnForceCloseLast += HandleForceCloseLast;
+
+                InputManager.Instance.PauseInputs.OnTogglePause += HandleTogglePause;
             }
         }
 
         private void DetachEvents()
         {
-            if (MainManager.Instance != null)
+            if (InputManager.Instance != null)
             {
-                MainManager.Instance.OnGameplayManagersInitialized -= HandleGameplayManagersInitialized;
-            }
+                InputManager.Instance.UiInputs.OnToggleInventory -= HandleToggleInventory;
+                InputManager.Instance.UiInputs.OnForceCloseLast -= HandleForceCloseLast;
 
-            DetachLateEvents();
+                InputManager.Instance.PauseInputs.OnTogglePause -= HandleTogglePause;
+            }
         }
 
         private void LateAttachEvents()

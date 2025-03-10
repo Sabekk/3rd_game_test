@@ -8,17 +8,17 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainManager : MonoSingleton<MainManager>
+public abstract class ManagersParent : MonoSingleton<ManagersParent>
 {
     #region ACTION
 
-    public event Action OnGameplayManagersInitialized;
+    public event Action OnManagersInitialized;
 
     #endregion
 
     #region VARIABLES
 
-    [SerializeField] private List<IGameplayManager> managers = new();
+    [SerializeField] protected List<IGameplayManager> managers = new();
 
     #endregion
 
@@ -36,7 +36,7 @@ public class MainManager : MonoSingleton<MainManager>
         LateInitializeManagers();
 
         Initialized = true;
-        OnGameplayManagersInitialized?.Invoke();
+        OnManagersInitialized?.Invoke();
     }
 
     private void OnDestroy()
@@ -53,13 +53,7 @@ public class MainManager : MonoSingleton<MainManager>
         if (managers == null)
             managers = new();
 
-        managers.Add(ItemsManager.Instance);
-        managers.Add(InputManager.Instance);
-        managers.Add(CharacterManager.Instance);
-        managers.Add(CamerasManager.Instance);
-        managers.Add(TimeManager.Instance);
-        managers.Add(GameStateManager.Instance);
-
+        SetManagers();
 
         for (int i = 0; i < managers.Count; i++)
             managers[i].Initialzie();
@@ -76,6 +70,8 @@ public class MainManager : MonoSingleton<MainManager>
         for (int i = 0; i < managers.Count; i++)
             managers[i].CleanUp();
     }
+
+    protected abstract void SetManagers();
 
     #endregion
 }

@@ -22,12 +22,11 @@ namespace Gameplay.Controller.Module
         public virtual void Initialize(CharacterBase character)
         {
             this.character = character;
-            AttachEvents();
         }
 
         public virtual void CleanUp()
         {
-            DetachEvents();
+
         }
 
         public virtual void OnUpdate()
@@ -35,11 +34,12 @@ namespace Gameplay.Controller.Module
 
         }
 
-        protected virtual void AttachEvents()
+        public virtual void AttachEvents()
         {
 
         }
-        protected virtual void DetachEvents()
+
+        public virtual void DetachEvents()
         {
 
         }
