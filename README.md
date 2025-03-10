@@ -1,4 +1,4 @@
-# Gamory_test
+# Garmory_test
 Unity version: 2021.3.44f1
 
 Prosty 3rd osobowa gra z niszczeniem przedmiotów
