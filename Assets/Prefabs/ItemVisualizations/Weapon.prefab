@@ -111,4 +111,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf5a3e4f49c6cf24b8a29a7b1af8e98c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  visualizationCollider: {fileID: 64158726136227414}
   interracting: 1

@@ -1,12 +1,12 @@
 using Database;
 using Database.Character.Data;
+using Gameplay.Character.Attacking;
+using Gameplay.Character.Movement;
 using Gameplay.Character.Values;
 using Gameplay.Equipment;
-using Gameplay.Targeting;
 using ObjectPooling;
 using Sirenix.OdinInspector;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -27,8 +27,10 @@ namespace Gameplay.Character
         [SerializeField] private bool isInitialzied;
         [SerializeField] private int dataId;
 
-        [SerializeField, FoldoutGroup("Controllers")] private ValuesController valuesController;
-        [SerializeField, FoldoutGroup("Controllers")] private EquipmentController equipmentController;
+        [SerializeField, FoldoutGroup("Controllers")] protected ValuesController valuesController;
+        [SerializeField, FoldoutGroup("Controllers")] protected CharacterMovementController movementController;
+        [SerializeField, FoldoutGroup("Controllers")] protected EquipmentController equipmentController;
+        [SerializeField, FoldoutGroup("Controllers")] protected AttackingController attackingController;
 
         private CharacterInGame characterInGame;
         private CharacterData data;
@@ -50,14 +52,17 @@ namespace Gameplay.Character
         public CharacterInGame CharacterInGame => characterInGame;
         public EquipmentController EquipmentController => equipmentController;
         public ValuesController ValuesController => valuesController;
-
-        public bool CanAttack => true;
+        public AttackingController AttackingController => attackingController;
+        public CharacterMovementController MovementController => movementController;
 
         #endregion
 
         #region CONSTRUCTORS
 
-        public CharacterBase() { }
+        public CharacterBase()
+        {
+            CreateControllers();
+        }
 
         #endregion
 
@@ -117,6 +122,7 @@ namespace Gameplay.Character
             characterInGame = ObjectPool.Instance.GetFromPool(Data.CharacterInGamePoolId, -1).GetComponent<CharacterInGame>();
             if (characterInGame != null)
             {
+                characterInGame.Initialize(this);
                 characterInGame.OnKill += HandleCharacterKill;
                 characterInGame.transform.SetParent(parent);
                 OnCharacterInGameCreated?.Invoke();
@@ -126,15 +132,22 @@ namespace Gameplay.Character
                 return false;
         }
 
+        protected virtual void CreateControllers()
+        {
+            valuesController = new ValuesController();
+            equipmentController = new EquipmentController();
+            attackingController = new AttackingController();
+            movementController = new CharacterMovementController();
+        }
+
         protected virtual void SetControllers()
         {
             controllers = new();
 
-            valuesController = new();
-            equipmentController = new();
-
             controllers.Add(valuesController);
             controllers.Add(equipmentController);
+            controllers.Add(movementController);
+            controllers.Add(attackingController);
         }
 
         protected void InitializeControllers()

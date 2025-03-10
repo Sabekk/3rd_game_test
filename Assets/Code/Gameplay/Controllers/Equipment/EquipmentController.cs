@@ -38,13 +38,20 @@ namespace Gameplay.Equipment
 
         #region METHODS
 
+        public override void CreateModules()
+        {
+            inventoryModule = new InventoryModule();
+            equipmentModule = new EquipmentModule();
+            visualizationModule = new VisualizationModule();
+        }
+
         public override void SetModules()
         {
             base.SetModules();
 
-            modules.Add(inventoryModule = new());
-            modules.Add(equipmentModule = new());
-            modules.Add(visualizationModule = new());
+            modules.Add(inventoryModule);
+            modules.Add(equipmentModule);
+            modules.Add(visualizationModule);
         }
 
         public bool IsEquiped(Item item)

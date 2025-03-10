@@ -20,6 +20,15 @@ namespace Gameplay.Character
 
         #endregion
 
+        #region CONSTRUCTORS
+
+        public CharacterControllerBase()
+        {
+            CreateModules();
+        }
+
+        #endregion
+
         #region METHODS
 
         public virtual void Initialize(CharacterBase character)
@@ -32,7 +41,7 @@ namespace Gameplay.Character
 
         public virtual void CleanUp()
         {
-            
+
             modules.ForEach(c => c.CleanUp());
         }
 
@@ -41,17 +50,22 @@ namespace Gameplay.Character
             modules.ForEach(c => c.OnUpdate());
         }
 
+        public virtual void CreateModules()
+        {
+
+        }
+
         public virtual void SetModules()
         {
             modules = new();
         }
 
-        public virtual void AttachEvents() 
+        public virtual void AttachEvents()
         {
             modules.ForEach(c => c.AttachEvents());
         }
 
-        public virtual void DetachEvents() 
+        public virtual void DetachEvents()
         {
             modules.ForEach(c => c.DetachEvents());
         }

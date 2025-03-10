@@ -20,6 +20,7 @@ namespace Gameplay.Character.Movement
         #region PROPERTIES
 
         public Animator CharacterAnimator => Character.CharacterInGame.Aniamtor;
+        public bool DuringAttackAnimation => CharacterAnimator ? CharacterAnimator.GetCurrentAnimatorStateInfo(1).IsTag("Attack") : false;
         private int MoveDirectionX => Animator.StringToHash("MoveDirX");
         private int MoveDirectionY => Animator.StringToHash("MoveDirY");
 
@@ -45,7 +46,7 @@ namespace Gameplay.Character.Movement
 
         protected virtual void TriggerAttack()
         {
-            if (Character.CanAttack)
+            if (Character.AttackingController.CanAttack)
                 CharacterAnimator.SetTrigger("Attack");
         }
 

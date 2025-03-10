@@ -60,7 +60,7 @@ namespace Gameplay.Targeting
 
         #region HANDLERS
 
-        void HandleHealthBarRemoved()
+        private void HandleHealthBarRemoved()
         {
             if (healthBar)
             {

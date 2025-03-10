@@ -204,6 +204,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5242924795695324292}
   - component: {fileID: 1240105645837899759}
+  - component: {fileID: -6288559860403520219}
   m_Layer: 0
   m_Name: Armor
   m_TagString: Untagged
@@ -242,7 +243,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d9f72418a8491a40a3e3719d31122c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  visualizationCollider: {fileID: -6288559860403520219}
   interracting: 0
+--- !u!64 &-6288559860403520219
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4281468764863913798}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1 &4472750786899467835
 GameObject:
   m_ObjectHideFlags: 0

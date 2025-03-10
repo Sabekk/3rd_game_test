@@ -1,6 +1,7 @@
 using Gameplay.Character.Items;
 using Gameplay.Character.Values;
 using Gameplay.Targeting;
+using JetBrains.Annotations;
 using ObjectPooling;
 using Sirenix.OdinInspector;
 using System;
@@ -32,13 +33,11 @@ namespace Gameplay.Character
         public Animator Aniamtor => aniamtor;
         public CharacterController CharacterController => characterController;
         public List<ItemSocket> ItemSockets => itemSockets;
-
         public override float Health
         {
             get => CharacterValues.CurrentHealth.CurrentValue;
             set => CharacterValues.CurrentHealth.SetRawValue(value);
         }
-
         public override float MaxHealth => CharacterValues.Health.CurrentValue;
         public override bool IsKilled { get; set; }
         public PoolObject Poolable { get; set; }
@@ -54,9 +53,28 @@ namespace Gameplay.Character
             OnKill?.Invoke();
         }
 
+        public void Initialize(CharacterBase character)
+        {
+            Character = character;
+        }
+
         public void AssignPoolable(PoolObject poolable)
         {
             Poolable = poolable;
+        }
+
+        [UsedImplicitly]
+        public void SetAttackFrames()
+        {
+            if (Character != null && Character.AttackingController != null)
+                Character.AttackingController.SetAttackFrames();
+        }
+
+        [UsedImplicitly]
+        public void DisableAttackFrames()
+        {
+            if (Character != null && Character.AttackingController != null)
+                Character.AttackingController.DisableAttackFrames();
         }
 
 

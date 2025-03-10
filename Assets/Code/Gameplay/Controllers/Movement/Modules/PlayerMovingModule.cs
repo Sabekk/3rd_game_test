@@ -13,7 +13,7 @@ namespace Gameplay.Character.Movement
         #region PROPERTIES
 
         protected Player Player => Character as Player;
-        public FollowingCamera CharacterCamera => Player.MovementController.CameraModule.CharacterCamera;
+        public FollowingCamera CharacterCamera => Player.PlayerMovementController.CameraModule.CharacterCamera;
 
         #endregion
 

@@ -1,6 +1,4 @@
 using Gameplay.Character.Movement;
-using Sirenix.OdinInspector;
-using UnityEngine;
 
 namespace Gameplay.Character
 {
@@ -8,22 +6,20 @@ namespace Gameplay.Character
     {
         #region VARIABLES
 
-        [SerializeField, FoldoutGroup("Controllers")] private PlayerMovementController movementController;
-
         #endregion
 
         #region PROPERTIES
 
-        public PlayerMovementController MovementController => movementController;
+        public PlayerMovementController PlayerMovementController => movementController as PlayerMovementController;
 
         #endregion
 
         #region METHODS
 
-        protected override void SetControllers()
+        protected override void CreateControllers()
         {
-            base.SetControllers();
-            controllers.Add(movementController = new());
+            base.CreateControllers();
+            movementController = new PlayerMovementController();
         }
 
         #endregion
