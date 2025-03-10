@@ -33,6 +33,18 @@ namespace Gameplay.Scenes
 
         #region METHODS
 
+        public override void CleanUp()
+        {
+            if (TokenSource != null)
+            {
+                if (!TokenSource.IsCancellationRequested)
+                    TokenSource.Cancel();
+                TokenSource.Dispose();
+            }
+
+            base.CleanUp();
+        }
+
         public async void LoadMenuScene()
         {
             if (UIManager.Instance)
@@ -80,6 +92,7 @@ namespace Gameplay.Scenes
 
                 if (token.IsCancellationRequested)
                 {
+                    //TODO Add returning to menu scene etc
                     Debug.LogError("Loading scene failed");
                     return;
                 }
