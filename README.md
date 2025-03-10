@@ -1,7 +1,7 @@
 # Gamory_test
 Unity version: 2021.3.44f1
 
-Prosty 3th osobowa gra z niszczeniem przedmiotów
+Prosty 3rd osobowa gra z niszczeniem przedmiotów
 
 Użyto:
  - ScritableObjects
@@ -9,6 +9,7 @@ Użyto:
  - Player input
  - Sirenix
  - Threading
+ - Cinemachine
 
 # Sterowanie
 Gra obsługuje sterowanie zarówno na klawiaturze jak i gamepadzie
