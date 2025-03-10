@@ -55,34 +55,7 @@ namespace UI
             }
         }
 
-        private void LateAttachEvents()
-        {
-            if (InputManager.Instance != null)
-            {
-                InputManager.Instance.UiInputs.OnToggleInventory += HandleToggleInventory;
-                InputManager.Instance.UiInputs.OnForceCloseLast += HandleForceCloseLast;
-
-                InputManager.Instance.PauseInputs.OnTogglePause += HandleTogglePause;
-            }
-        }
-
-        private void DetachLateEvents()
-        {
-            if (InputManager.Instance != null)
-            {
-                InputManager.Instance.UiInputs.OnToggleInventory -= HandleToggleInventory;
-                InputManager.Instance.UiInputs.OnForceCloseLast -= HandleForceCloseLast;
-
-                InputManager.Instance.PauseInputs.OnTogglePause -= HandleTogglePause;
-            }
-        }
-
         #region HANDLERS
-
-        private void HandleGameplayManagersInitialized()
-        {
-            LateAttachEvents();
-        }
 
         private void HandleToggleInventory()
         {
