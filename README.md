@@ -31,7 +31,9 @@ Gamepad for example Xbox:
 - Start - pause/close current window or go back to previous
 
 # Items
-The player receives random items at the beginning of the game. Each of them affects the player's statistics. Items can be equipped to your character in the inventory window
+The player receives random items at the beginning of the game. Each of them affects the player's statistics. Items can be equipped to your character in the inventory window.
+Currently the item is equipped with the character rig. In the future, it will be changed to a character mesh replacement
+
 ![image](https://github.com/user-attachments/assets/e67791f1-f2c3-4b29-91d9-bbeb614719ec)
 ![image](https://github.com/user-attachments/assets/8723b9bc-bcb8-4bba-9f6c-7caa0db6dfc9)
 
